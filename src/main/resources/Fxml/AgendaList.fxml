@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox id="agendaListPane" prefHeight="700.0" prefWidth="2200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dechivejavafx.gui.AgendaListController">
+
+	<Label text="Agendar Nova Extração">
+		<font>
+			<Font name="System Bold" size="14.0" />
+		</font>
+		<padding>
+			<Insets left="5.0" top="5.0" />
+		</padding>
+	</Label>
+
+	<ToolBar prefHeight="40.0" prefWidth="200.0">
+		<items>
+			<Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="Registrar" />
+		</items>
+	</ToolBar>
+
+	<HBox spacing="10" HBox.hgrow="ALWAYS">
+		<Label text="Código da Agenda:" />
+		<TextField fx:id="txtCodAgenda" />
+		<Button onAction="#handleSearch" text="Pesquisar" />
+		<Label text="Dias:" />
+		<TextField fx:id="txtDias" onAction="#PesquisarTipoDoc" />
+		<ComboBox fx:id="comboTipoDoc" onAction="#PesquisarTipoDoc" promptText="Tipo de Documento">
+			<!-- Os itens do ComboBox serão preenchidos dinamicamente no código Java -->
+		</ComboBox>
+		<Label text="Arquivos:" />
+		<Label text="Total:" />
+		<Label fx:id="txtTotalArquivo" />
+		<Label text="Com Dados:" />
+		<Label fx:id="txtComDados" />
+		<Button fx:id="btFechar" mnemonicParsing="false" onAction="#fecharAplicacao" text="Fechar" />
+
+	</HBox>
+	<HBox spacing="10" HBox.hgrow="ALWAYS">
+		<TableView fx:id="tableViewAgenda" maxWidth="-Infinity" prefHeight="573.0" prefWidth="1185.0" VBox.vgrow="ALWAYS">
+			<columns>
+				<TableColumn fx:id="tableColumnCodigo" minWidth="-1.0" prefWidth="90.0" text="Codigo" />
+				<TableColumn fx:id="tableColumnTipo" minWidth="0.0" prefWidth="110.0" text="Tipo" />
+				<TableColumn fx:id="tableColumnInicio" prefWidth="140.0" text="Inicio" />
+				<TableColumn fx:id="tableColumnFim" prefWidth="140.0" text="Fim" />
+				<TableColumn fx:id="tableColumnArquivo" prefWidth="140.0" text="Arquivo" />
+				<TableColumn fx:id="tableColumnQuantidade" text="Quantidade" />
+				<TableColumn fx:id="tableColumnSituacao" text="Situacao" />
+				<TableColumn fx:id="tableColumnEDIT" minWidth="0.0" />
+				<TableColumn fx:id="tableColumnREMOVE" minWidth="0.0" />
+			</columns>
+		</TableView>
+		<PieChart fx:id="pieChart" maxWidth="-Infinity" onDragDetected="#updateTableView" prefHeight="573.0" prefWidth="996.0" />
+	</HBox>
+	<LineChart fx:id="lineChart">
+		<xAxis>
+			<CategoryAxis side="BOTTOM" />
+		</xAxis>
+		<yAxis>
+			<NumberAxis side="LEFT" />
+		</yAxis>
+	</LineChart>
+</VBox>

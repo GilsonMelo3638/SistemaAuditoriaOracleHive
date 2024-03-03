@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox id="oracleHivePane" prefHeight="700.0" prefWidth="2200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dechivejavafx.gui.OracleHiveController">
+	<!-- Restante do conteúdo do VBox -->
+	<Label text="Diferença de Quantidade entre Oracle e Hive.">
+		<font>
+			<Font name="System Bold" size="14.0" />
+		</font>
+		<padding>
+			<Insets left="5.0" top="5.0" />
+		</padding>
+	</Label>
+	<HBox spacing="10" HBox.hgrow="ALWAYS">
+		<Label text="Selecione a Tabela do Hive:" />
+		<ComboBox fx:id="comboTipoDoc" VBox.vgrow="ALWAYS" prefWidth="175" />
+	</HBox>
+	<HBox spacing="10" HBox.hgrow="ALWAYS">
+		<TableView fx:id="tableViewOracleHive" VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="800.0">
+			<columns>
+				<TableColumn fx:id="columnArquivo" text="Arquivo" />
+				<TableColumn fx:id="columnTipoDoc" text="Documento" />
+				<TableColumn fx:id="columnTabelaOracle" text="Tabela Oracle" />
+				<TableColumn fx:id="columnTabelaHive" text="Tabela Hive" />
+				<TableColumn fx:id="columnTotalOracle" text="Total Oracle" />
+				<TableColumn fx:id="columnTotalHive" text="Total Hive" />
+				<TableColumn fx:id="columnDiferenca" text="Diferença" />
+			</columns>
+			<columnResizePolicy>
+				<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+			</columnResizePolicy>
+		</TableView>
+	</HBox>
+</VBox>

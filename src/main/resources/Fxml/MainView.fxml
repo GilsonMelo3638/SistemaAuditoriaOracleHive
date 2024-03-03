@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<ScrollPane fx:id="mainScrollPane" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.dechivejavafx.gui.MainViewController">
+    <content>
+        <VBox fx:id="mainVBox" prefHeight="326.0" prefWidth="513.0">
+            <children>
+                <MenuBar >
+                    <menus>
+                        <Menu mnemonicParsing="false" text="Oracle">
+                            <items>
+                                <MenuItem fx:id="menuItemAgenda"
+                                          mnemonicParsing="false" onAction="#onMenuItemAgendaAction"
+                                          text="Agendamentos" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Hive">
+                            <items>
+                                <MenuItem fx:id="menuItemTotalizacaoNfe"
+                                          mnemonicParsing="false" onAction="#onMenuItemTotalizacaoNfeAction"
+                                          text="Soma Nfe" />
+                                <MenuItem fx:id="menuItemQuantidadeDocumentoArquivo"
+                                          mnemonicParsing="false" onAction="#onMenuItemQuantidadeDocumentoArquivoAction"
+                                          text="Quantidades" />
+                                <MenuItem fx:id="menuItemDetNFeNFCeInf"
+                                          mnemonicParsing="false" onAction="#onMenuItemDetNFeNFCeInfAction"
+                                          text="Divergências Itens" />
+                                <MenuItem fx:id="menuItemOracleHive"
+                                          mnemonicParsing="false" onAction="#onMenuItemOracleHive"
+                                          text="Pendências" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Oracle e Hive">
+                            <items>
+                                <MenuItem fx:id="menuProcessarPendencia"
+                                          mnemonicParsing="false" onAction="#onMenuProcessarPendenciaAction"
+                                          text="Processar Pendências" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Excluir">
+                            <items>
+                                <MenuItem fx:id="menuItemFecharAgenda"
+                                          mnemonicParsing="false" onAction="#handleRemoveAgendaList"
+                                          text="Agendamento(Oracle)" />
+                                <MenuItem fx:id="menuItemFecharTotalizacaoNfe"
+                                          mnemonicParsing="false" onAction="#handleRemoverNfeTotalizacao"
+                                          text="Soma Nfe(Hive)" />
+                                <MenuItem fx:id="menuItemFecharQuantidadeDocumentoArquivo"
+                                          mnemonicParsing="false" onAction="#handleRemoverFormulario"
+                                          text="Quantidade(Hive)" />
+                                <MenuItem fx:id="menuItemFecharDetNFeNFCeInf"
+                                          mnemonicParsing="false" onAction="#handleRemoveDetNFeNFCeInf"
+                                          text="Divergências Itens(Hive)" />
+                                <MenuItem fx:id="menuItemFecharOracleHive"
+                                          mnemonicParsing="false" onAction="#handleRemoveOracleHive"
+                                          text="Pendências(Hive)" />
+                                <MenuItem fx:id="menuItemFecharAbout"
+                                          mnemonicParsing="false" onAction="#handleRemoveAboutForm"
+                                          text="Ajuda" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Ajuda">
+                            <items>
+                                <MenuItem fx:id="menuItemAbout" mnemonicParsing="false"
+                                          onAction="#onMenuItemAboutAction" text="Ajuda" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+                <HBox spacing="10">
+                    <TitledPane fx:id="titledPanecomboTipoDocCentral" text="Selecionar Oracle e Hive" prefWidth="200" maxWidth="200" visible="false">
+                        <ComboBox fx:id="comboTipoDocCentral" VBox.vgrow="ALWAYS" prefWidth="100">
+                            <items>
+                                <!-- Adicione os itens do ComboBox conforme necessário -->
+                            </items>
+                        </ComboBox>
+                    </TitledPane>
+                </HBox>
+            </children>
+        </VBox>
+    </content>
+</ScrollPane>
