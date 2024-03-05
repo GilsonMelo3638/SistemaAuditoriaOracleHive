@@ -6,9 +6,9 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox id = "aboutPane" prefHeight="309.0" prefWidth="512.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21">
+<VBox id = "9900Pane" prefHeight="309.0" prefWidth="512.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21">
    <children>
-      <Label prefHeight="49.0" prefWidth="97.0" text="Gerar SPED 9900">
+      <Label prefHeight="49.0" prefWidth="97.0" text="Sped_9900">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

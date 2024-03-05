@@ -2,6 +2,7 @@ package com.example.dechivejavafx.gui;
 
 import com.example.dechivejavafx.Validacoes.TipoDoc;
 import com.example.dechivejavafx.application.Main;
+import com.example.dechivejavafx.db.OracleSpedDatabaseOperations;
 import com.example.dechivejavafx.gui.util.Alerts;
 import com.example.dechivejavafx.gui.util.CSVUtils;
 import com.example.dechivejavafx.model.entities.Agenda;
@@ -50,6 +51,9 @@ public class MainViewController implements Initializable {
     private MenuItem menuItemAgenda;
     @FXML
     private MenuItem menuItemFecharAgenda;
+
+    @FXML
+    private MenuItem menuItemSped_9900;
 
     @FXML
     private MenuItem menuItemAbout;
@@ -105,6 +109,7 @@ public class MainViewController implements Initializable {
     private QuantidadeDocumentoArquivoController quantidadeDocumentoArquivoController;
 
     private AgendaListController agendaListController;
+    private static OracleSpedDatabaseOperations oracleSpedDatabaseOperations;
     private SchedulerManager schedulerManager;
 
     // Método de inicialização do controlador
@@ -129,6 +134,17 @@ public class MainViewController implements Initializable {
     @FXML
     public void onMenuItemAboutAction() {
         loadView("/Fxml/About.fxml", x -> {});
+    }
+    @FXML
+    public void onMenuItemSped9900Action() {
+        // Define a cena atual e carrega a view de quantidade de documentos em arquivo
+        SceneManager.setCurrentScene(Main.getMainScene());
+        // Inicializa a instância de OracleSpedDatabaseOperations
+        oracleSpedDatabaseOperations = new OracleSpedDatabaseOperations();
+
+        // Chama o método após a inicialização
+        oracleSpedDatabaseOperations.executeQueryAndSaveToCSV();
+        loadView("/Fxml/Sped9900.fxml", x -> {});
     }
 
     @FXML

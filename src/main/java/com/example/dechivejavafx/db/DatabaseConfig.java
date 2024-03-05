@@ -1,5 +1,7 @@
 package com.example.dechivejavafx.db;
 
+import com.example.dechivejavafx.Validacoes.ConnectionStatus;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +17,12 @@ public class DatabaseConfig {
     private static final String CONFIG_FILE = "db.properties";
     private static Properties properties;
     private static Connection conn;
+
+    private static ConnectionStatus connectionStatus = ConnectionStatus.DISABLED;
+
+    public static void setConnectionStatus(ConnectionStatus status) {
+        connectionStatus = status;
+    }
 
     static {
         loadConfigurations();
@@ -62,6 +70,11 @@ public class DatabaseConfig {
     }
 
     public static Connection getConnection() {
+        if (connectionStatus == ConnectionStatus.DISABLED) {
+            System.out.println("Connection is disabled."); // Adicione esta linha
+            return null;
+        }
+
         if (conn == null) {
             try {
                 loadConfigurations(); // Certifique-se de que as configurações estejam carregadas
@@ -75,6 +88,11 @@ public class DatabaseConfig {
         }
         return conn;
     }
+
+ /*         // System.err.println("Error connecting to database: " + e.getMessage()); // Adicione esta linha
+            //  e.printStackTrace(); // Adicione esta linha para imprimir o stack trace da exceção
+           //  throw new DatabaseExceptions.DbException(e.getMessage());
+           return null;*/
 
     public static void closeConnection() {
         if (conn != null) {
