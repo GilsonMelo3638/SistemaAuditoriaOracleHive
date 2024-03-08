@@ -1,7 +1,7 @@
 package com.example.dechivejavafx.gui;
 
 import com.example.dechivejavafx.db.DatabaseConfig;
-import com.example.dechivejavafx.db.HiveDatabaseOperations;
+import com.example.dechivejavafx.db.HiveDecDatabaseOperations;
 import com.example.dechivejavafx.model.entities.DetNFeNFCeInf;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -11,8 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.List;
 import java.util.function.Function;
 
@@ -29,7 +27,7 @@ public class DetNFeNFCeInfController {
     @FXML private TableColumn<DetNFeNFCeInf, String> columnTabelaDetalhe;
     @FXML private TableColumn<DetNFeNFCeInf, Integer> columnQuantidadeNsuchave;
     // Operações no banco de dados Hive
-    private HiveDatabaseOperations hiveDatabaseOperations;
+    private HiveDecDatabaseOperations hiveDatabaseOperations;
     // Configurações do banco de dados
     private DatabaseConfig databaseConfig = new DatabaseConfig();
     // Método de inicialização chamado pelo JavaFX quando o arquivo FXML é carregado
@@ -65,7 +63,7 @@ public class DetNFeNFCeInfController {
         column.setSortType(TableColumn.SortType.ASCENDING);
     }
     // Método para criar uma instância de HiveDatabaseOperations
-    private HiveDatabaseOperations createHiveDatabaseOperations() {
+    private HiveDecDatabaseOperations createHiveDatabaseOperations() {
         String jdbcUrl = System.getenv("HIVE_JDBC_URL");
         String username = System.getenv("HIVE_USERNAME");
         String password = System.getenv("HIVE_PASSWORD");
@@ -74,7 +72,7 @@ public class DetNFeNFCeInfController {
             System.err.println("Erro: As variáveis de ambiente não estão configuradas corretamente.");
             return null;
         }
-        return new HiveDatabaseOperations(jdbcUrl, username, password);
+        return new HiveDecDatabaseOperations(jdbcUrl, username, password);
     }
     private void executeQueryAndUpdateUI() {
         if (hiveDatabaseOperations != null) {

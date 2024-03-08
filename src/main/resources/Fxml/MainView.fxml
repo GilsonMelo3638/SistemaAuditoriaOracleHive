@@ -68,7 +68,11 @@
                         <Menu mnemonicParsing="false" text="Sped">
                             <items>
                                 <MenuItem fx:id="menuItemSped_9900" mnemonicParsing="false"
-                                          onAction="#onMenuItemSped9900Action" text="Gerar SPED 9900" />
+                                          onAction="#onMenuItemSped9900Action" text="Gerar Oracle SPED 9900" />
+                            </items>
+                            <items>
+                                <MenuItem fx:id="menuItemHiveSped_9900" mnemonicParsing="false"
+                                          onAction="#onMenuItemHiveSped9900Action" text="Gerar Hive SPED 9900" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Ajuda">

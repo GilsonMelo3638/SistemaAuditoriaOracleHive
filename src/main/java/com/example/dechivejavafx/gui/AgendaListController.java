@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -79,6 +80,8 @@ public class AgendaListController implements Initializable, DataChangeListener {
 	private Label txtTotalArquivo;
 	@FXML
 	private Label txtComDados;
+	@FXML
+	private Label txtQuantidadeProcessado;
 	@FXML
 	private Button btNew; // Botão para adicionar nova agenda
 	@FXML
@@ -162,9 +165,18 @@ public class AgendaListController implements Initializable, DataChangeListener {
 	 * Calcula e define os rótulos (labels) na interface gráfica.
 	 */
 	private void calculateAndSetLabels() {
-		txtTotalArquivo.setText(String.valueOf(obsList.size()));
+		DecimalFormat decimalFormat = new DecimalFormat("#,###"); // Define o formato desejado
+
+		// Obtém a soma da quantidade
+		BigDecimal sumQuantity = obsList.stream()
+				.filter(item -> item.getQuantidade() != null)
+				.map(Agenda::getQuantidade)
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+		txtTotalArquivo.setText(decimalFormat.format(obsList.size())); // Aplica o formato na quantidade total
 		long totalLinesComDados = obsList.stream().filter(item -> item.getQuantidade() != null && item.getQuantidade().compareTo(BigDecimal.ZERO) > 0).count();
-		txtComDados.setText(String.valueOf(totalLinesComDados));
+		txtComDados.setText(decimalFormat.format(totalLinesComDados)); // Aplica o formato na quantidade com dados
+		txtQuantidadeProcessado.setText(decimalFormat.format(sumQuantity)); // Aplica o formato na soma da quantidade
 	}
 	/**
 	 * Método para filtrar a lista de acordo com o tipo selecionado.
@@ -233,19 +245,32 @@ public class AgendaListController implements Initializable, DataChangeListener {
 			originalAgendaList = service.findAll();
 			obsList = FXCollections.observableArrayList(originalAgendaList);
 			tableViewAgenda.setItems(obsList);
+
 			// Inicializa os botões de edição e remoção
 			initEditButtons();
 			initRemoveButtons();
+
 			// Calcula e define o total de linhas
 			Utils.calculateAndSetTotalLines();
+
 			// Calcula e define o total de linhas com dados
 			Utils.calculateAndSetTotalLinesComDados();
+
+			// Calcula a soma da quantidade e a define no txtQuantidadeProcessado
+			BigDecimal somaQuantidade = calcularSomaQuantidade();
+			txtQuantidadeProcessado.setText(String.valueOf(somaQuantidade));
+
+			// Atualiza os gráficos
 			updateCharts(originalAgendaList);
+
+			// Calcula e define os rótulos (labels) na interface gráfica
 			calculateAndSetLabels();
+
 			// Salva todos os dados em um único arquivo
 			CSVUtils.saveAllDataToFile(originalAgendaList);
 		}
 	}
+
 	/**
 	 * Cria um formulário de diálogo para adicionar ou editar uma agenda.
 	 *
@@ -459,5 +484,12 @@ public class AgendaListController implements Initializable, DataChangeListener {
 	 */
 	public void selecionarTipoDoc(TipoDoc tipoDoc) {
 		comboTipoDoc.setValue(tipoDoc);
+	}
+
+	private BigDecimal calcularSomaQuantidade() {
+		return tableViewAgenda.getItems().stream()
+				.map(Agenda::getQuantidade)
+				.filter(Objects::nonNull)
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 }

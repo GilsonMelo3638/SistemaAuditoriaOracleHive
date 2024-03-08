@@ -17,9 +17,7 @@ public class DatabaseConfig {
     private static final String CONFIG_FILE = "db.properties";
     private static Properties properties;
     private static Connection conn;
-
-    private static ConnectionStatus connectionStatus = ConnectionStatus.DISABLED;
-
+    private static ConnectionStatus connectionStatus = ConnectionStatus.ENABLED;
     public static void setConnectionStatus(ConnectionStatus status) {
         connectionStatus = status;
     }

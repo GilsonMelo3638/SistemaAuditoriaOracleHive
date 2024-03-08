@@ -14,10 +14,10 @@ import java.util.logging.Logger;
 public class ManipuladorBancoDados {
     // Logger para registro de mensagens
     private static final Logger LOGGER = Logger.getLogger(QuantidadeDocumentoArquivoController.class.getName());
-    private HiveDatabaseOperations operacoesBancoDadosHive;
+    private HiveDecDatabaseOperations operacoesBancoDadosHive;
 
     public ManipuladorBancoDados(String jdbcURL, String username, String password) {
-        operacoesBancoDadosHive = new HiveDatabaseOperations(jdbcURL, username, password);
+        operacoesBancoDadosHive = new HiveDecDatabaseOperations(jdbcURL, username, password);
     }
 
     public List<TipoDoc> obterTipoDocs() {
@@ -26,7 +26,7 @@ public class ManipuladorBancoDados {
 
     public List<QuantidadeDocumentoArquivo> executarSQLQuantidadeDocumentos(String tabela, String dataSelecionada) {
         try {
-            Connection connection = HiveDatabaseOperations.getHiveConnection(
+            Connection connection = HiveDecDatabaseOperations.getHiveConnection(
                     operacoesBancoDadosHive.getJdbcURL(),
                     operacoesBancoDadosHive.getUsername(),
                     operacoesBancoDadosHive.getPassword()

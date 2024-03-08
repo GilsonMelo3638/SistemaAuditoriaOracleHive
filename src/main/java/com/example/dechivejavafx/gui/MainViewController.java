@@ -24,6 +24,7 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,9 @@ public class MainViewController implements Initializable {
 
     @FXML
     private MenuItem menuItemSped_9900;
+
+    @FXML
+    private MenuItem menuItemHiveSped_9900;
 
     @FXML
     private MenuItem menuItemAbout;
@@ -144,6 +148,19 @@ public class MainViewController implements Initializable {
 
         // Chama o método após a inicialização
         oracleSpedDatabaseOperations.executeQueryAndSaveToCSV();
+        loadView("/Fxml/Sped9900.fxml", x -> {});
+    }
+
+    @FXML
+    public void onMenuItemHiveSped9900Action() {
+        // Define a cena atual e carrega a view de quantidade de documentos em arquivo
+        SceneManager.setCurrentScene(Main.getMainScene());
+
+        // Cria uma instância de HiveSpedController, que inicializa automaticamente as variáveis de ambiente
+        HiveSpedController hiveSpedController = new HiveSpedController();
+
+        hiveSpedController.executeQueryAndSaveToCSV();
+        // Carrega a view desejada
         loadView("/Fxml/Sped9900.fxml", x -> {});
     }
 

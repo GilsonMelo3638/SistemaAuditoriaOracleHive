@@ -42,11 +42,12 @@
 		<ComboBox fx:id="comboTipoDoc" onAction="#PesquisarTipoDoc" promptText="Tipo de Documento">
 			<!-- Os itens do ComboBox serão preenchidos dinamicamente no código Java -->
 		</ComboBox>
-		<Label text="Arquivos:" />
-		<Label text="Total:" />
+		<Label text="Arquivo:" />
 		<Label fx:id="txtTotalArquivo" />
-		<Label text="Com Dados:" />
+		<Label text="Arquivos Dados:" />
 		<Label fx:id="txtComDados" />
+		<Label text="Processados:" />
+		<Label fx:id="txtQuantidadeProcessado" />
 		<Button fx:id="btFechar" mnemonicParsing="false" onAction="#fecharAplicacao" text="Fechar" />
 
 	</HBox>

@@ -14,14 +14,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
-public class HiveDatabaseOperations {
+public class HiveDecDatabaseOperations {
     protected String jdbcURL;
     protected String username;
     protected String password;
     private List<TotalizacaoNfe> queryResults;
     private List<DetNFeNFCeInf> queryResultsDet;
 
-    public HiveDatabaseOperations(String jdbcURL, String username, String password) {
+    public HiveDecDatabaseOperations(String jdbcURL, String username, String password) {
         this.jdbcURL = jdbcURL;
         this.username = username;
         this.password = password;

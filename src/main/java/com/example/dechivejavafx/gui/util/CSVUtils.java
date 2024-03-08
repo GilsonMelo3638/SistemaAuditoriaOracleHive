@@ -12,6 +12,7 @@ import com.example.dechivejavafx.model.entities.QuantidadeDocumentoArquivo;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -303,6 +304,34 @@ public class CSVUtils {
             e.printStackTrace();
             // Registra a exceção no log
             Logger.getLogger(OracleHiveController.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public static void saveSpedHiveToCsv(ResultSet resultSet, String filePath) {
+        try (FileWriter csvWriter = new FileWriter(filePath);
+             BufferedWriter bufferedWriter = new BufferedWriter(csvWriter)) {
+
+            // Escreve o cabeçalho do CSV
+            bufferedWriter.write("Data/Hora de Processamento,ID Base,Linha,Quantidade Reg Blc,Reg,Reg Blc\n");
+
+            // Processa os resultados e escreve no arquivo CSV
+            while (resultSet.next()) {
+                String datahoraProcessamento = resultSet.getString("datahora_fin");
+                int idBase = resultSet.getInt("id_base");
+                String linha = resultSet.getString("linha");
+                int qtdRegBlc = resultSet.getInt("qtd_reg_blc");
+                String reg = resultSet.getString("reg");
+                String regBlc = resultSet.getString("reg_blc");
+
+                // Escreve uma linha no CSV
+                bufferedWriter.write(datahoraProcessamento + "," + idBase + "," + linha + ","
+                        + qtdRegBlc + "," + reg + "," + regBlc + "\n");
+            }
+
+            System.out.println("Dados salvos com sucesso no arquivo CSV: " + filePath);
+
+        } catch (Exception e) {
+            System.err.println("Erro ao salvar no arquivo CSV: " + e.getMessage());
         }
     }
 

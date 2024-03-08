@@ -58,7 +58,7 @@ public class OracleSpedDatabaseOperations {
                     "AND b.datahora_processamento <= TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS')";
 
             // Nome do arquivo CSV e caminho
-            String filePath = "X:\\Dados\\SPED\\SPED_9900.csv";
+            String filePath = "X:\\Dados\\SPED\\ORACLE_SPED_9900.csv";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 // Configura os parâmetros da consulta

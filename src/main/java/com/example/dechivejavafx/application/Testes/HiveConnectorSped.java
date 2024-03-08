@@ -83,7 +83,7 @@ public class HiveConnectorSped {
         HiveConnectorSped connector = new HiveConnectorSped();
 
         // Obtém a data atual e subtrai 30 dias
-        LocalDateTime dataAtual = LocalDateTime.now().minusDays(360);
+        LocalDateTime dataAtual = LocalDateTime.now().minusDays(15);
         String dataFormatada = dataAtual.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
         // Constrói a nova query com a condição de data

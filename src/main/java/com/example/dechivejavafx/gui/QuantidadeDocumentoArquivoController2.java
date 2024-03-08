@@ -2,7 +2,7 @@ package com.example.dechivejavafx.gui;
 
 import com.example.dechivejavafx.Validacoes.TipoDoc;
 import com.example.dechivejavafx.db.DatabaseConfig;
-import com.example.dechivejavafx.db.HiveDatabaseOperations;
+import com.example.dechivejavafx.db.HiveDecDatabaseOperations;
 import com.example.dechivejavafx.gui.util.CSVUtils;
 import com.example.dechivejavafx.gui.util.ChartsUtils;
 import com.example.dechivejavafx.gui.util.ComboBoxUtil;
@@ -80,7 +80,7 @@ public class QuantidadeDocumentoArquivoController2 implements Initializable {
     private StackPane quantidadeDocumentoArquivoPane;
 
     // Instância para operações no banco de dados Hive
-    private HiveDatabaseOperations hiveDatabaseOperations;
+    private HiveDecDatabaseOperations hiveDatabaseOperations;
 
     // Instância única do controlador
     private static QuantidadeDocumentoArquivoController2 instance;
@@ -240,8 +240,8 @@ public class QuantidadeDocumentoArquivoController2 implements Initializable {
                 // Verifica se o tipoDoc selecionado está ativo
                 if (tipoDoc != null && tiposAtivos.contains(tipoDoc)) {
                     // Execute a consulta SQL para um tipoDoc específico
-                    List<QuantidadeDocumentoArquivo> resultados = HiveDatabaseOperations.executeSQLQuantidadeDocumentos(
-                            HiveDatabaseOperations.getHiveConnection(
+                    List<QuantidadeDocumentoArquivo> resultados = HiveDecDatabaseOperations.executeSQLQuantidadeDocumentos(
+                            HiveDecDatabaseOperations.getHiveConnection(
                                     System.getenv("HIVE_JDBC_URL"),
                                     System.getenv("HIVE_USERNAME"),
                                     System.getenv("HIVE_PASSWORD")),
@@ -259,8 +259,8 @@ public class QuantidadeDocumentoArquivoController2 implements Initializable {
             } else if (radioGerarArquivosTodos.isSelected()) {
                 // Execute a consulta SQL para todos os tipos de documentos ativos
                 for (TipoDoc tipo : tiposAtivos) {
-                    List<QuantidadeDocumentoArquivo> resultadosTipo = HiveDatabaseOperations.executeSQLQuantidadeDocumentos(
-                            HiveDatabaseOperations.getHiveConnection(
+                    List<QuantidadeDocumentoArquivo> resultadosTipo = HiveDecDatabaseOperations.executeSQLQuantidadeDocumentos(
+                            HiveDecDatabaseOperations.getHiveConnection(
                                     System.getenv("HIVE_JDBC_URL"),
                                     System.getenv("HIVE_USERNAME"),
                                     System.getenv("HIVE_PASSWORD")),

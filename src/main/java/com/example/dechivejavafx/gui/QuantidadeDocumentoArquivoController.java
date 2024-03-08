@@ -2,7 +2,7 @@ package com.example.dechivejavafx.gui;
 
 import com.example.dechivejavafx.Validacoes.TipoDoc;
 import com.example.dechivejavafx.db.DatabaseConfig;
-import com.example.dechivejavafx.db.HiveDatabaseOperations;
+import com.example.dechivejavafx.db.HiveDecDatabaseOperations;
 import com.example.dechivejavafx.db.ManipuladorBancoDados;
 import com.example.dechivejavafx.gui.util.*;
 import com.example.dechivejavafx.model.entities.QuantidadeDocumentoArquivo;
@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -75,7 +74,7 @@ public class QuantidadeDocumentoArquivoController implements Initializable {
     @FXML
     private StackPane quantidadeDocumentoArquivoPane;
     // Instância para operações no banco de dados Hive
-    private HiveDatabaseOperations hiveDatabaseOperations;
+    private HiveDecDatabaseOperations hiveDatabaseOperations;
     // Instância única do controlador
     private static QuantidadeDocumentoArquivoController instance;
     // Referência ao controlador da lista de agenda
@@ -221,8 +220,8 @@ public class QuantidadeDocumentoArquivoController implements Initializable {
                 // Verifica se o tipoDoc selecionado está ativo
                 if (tipoDoc != null && tiposAtivos.contains(tipoDoc)) {
                     // Execute a consulta SQL para um tipoDoc específico
-                    List<QuantidadeDocumentoArquivo> resultados = HiveDatabaseOperations.executeSQLQuantidadeDocumentos(
-                            HiveDatabaseOperations.getHiveConnection(
+                    List<QuantidadeDocumentoArquivo> resultados = HiveDecDatabaseOperations.executeSQLQuantidadeDocumentos(
+                            HiveDecDatabaseOperations.getHiveConnection(
                                     System.getenv("HIVE_JDBC_URL"),
                                     System.getenv("HIVE_USERNAME"),
                                     System.getenv("HIVE_PASSWORD")),
@@ -240,8 +239,8 @@ public class QuantidadeDocumentoArquivoController implements Initializable {
             } else if (radioGerarArquivosTodos.isSelected()) {
                 // Execute a consulta SQL para todos os tipos de documentos ativos
                 for (TipoDoc tipo : tiposAtivos) {
-                    List<QuantidadeDocumentoArquivo> resultadosTipo = HiveDatabaseOperations.executeSQLQuantidadeDocumentos(
-                            HiveDatabaseOperations.getHiveConnection(
+                    List<QuantidadeDocumentoArquivo> resultadosTipo = HiveDecDatabaseOperations.executeSQLQuantidadeDocumentos(
+                            HiveDecDatabaseOperations.getHiveConnection(
                                     System.getenv("HIVE_JDBC_URL"),
                                     System.getenv("HIVE_USERNAME"),
                                     System.getenv("HIVE_PASSWORD")),

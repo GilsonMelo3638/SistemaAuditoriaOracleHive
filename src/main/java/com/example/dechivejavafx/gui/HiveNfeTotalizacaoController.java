@@ -1,7 +1,7 @@
 package com.example.dechivejavafx.gui;
 
 import com.example.dechivejavafx.db.DatabaseConfig;
-import com.example.dechivejavafx.db.HiveDatabaseOperations;
+import com.example.dechivejavafx.db.HiveDecDatabaseOperations;
 import com.example.dechivejavafx.model.entities.TotalizacaoNfe;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -55,7 +55,7 @@ public class HiveNfeTotalizacaoController {
     @FXML private TableColumn<TotalizacaoNfe, Double> columnVFCPUFDest;
 
     // Operações no banco de dados Hive
-    private HiveDatabaseOperations hiveDatabaseOperations;
+    private HiveDecDatabaseOperations hiveDatabaseOperations;
 
     // Configurações do banco de dados
     private DatabaseConfig databaseConfig = new DatabaseConfig();
@@ -123,7 +123,7 @@ public class HiveNfeTotalizacaoController {
     }
 
     // Método para criar uma instância de HiveDatabaseOperations
-    private HiveDatabaseOperations createHiveDatabaseOperations() {
+    private HiveDecDatabaseOperations createHiveDatabaseOperations() {
         String jdbcUrl = System.getenv("HIVE_JDBC_URL");
         String username = System.getenv("HIVE_USERNAME");
         String password = System.getenv("HIVE_PASSWORD");
@@ -134,7 +134,7 @@ public class HiveNfeTotalizacaoController {
             return null;
         }
 
-        return new HiveDatabaseOperations(jdbcUrl, username, password);
+        return new HiveDecDatabaseOperations(jdbcUrl, username, password);
     }
 
     // Método para executar a consulta e atualizar a interface gráfica
