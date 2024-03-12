@@ -1,28 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-
-<VBox id = "9900Pane" prefHeight="309.0" prefWidth="512.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21">
-   <children>
-      <Label prefHeight="49.0" prefWidth="97.0" text="Sped_9900">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-         <padding>
-            <Insets bottom="10.0" left="20.0" top="10.0" />
-         </padding>
-      </Label>
-      <Label prefHeight="27.0" prefWidth="151.0" text="JavaFX Application Demo">
-         <padding>
-            <Insets left="20.0" />
-         </padding>
-      </Label>
-   </children>
-   <padding>
-      <Insets bottom="10.0" right="20.0" top="10.0" />
-   </padding>
+<VBox id = "tableViewOPendenciaHive
+" prefHeight="309.0" prefWidth="512.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.example.dechivejavafx.gui.HiveSpedController">
+   <Label text="Declaração no Oraprd12(SPED) e ausente no HIVE.">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+      <padding>
+         <Insets left="5.0" top="5.0" />
+      </padding>
+   </Label>
+   <HBox spacing="10" HBox.hgrow="ALWAYS">
+      <Label text="Selecione a Tabela do Hive:" />
+      <ComboBox fx:id="comboTipoDoc" VBox.vgrow="ALWAYS" prefWidth="175" />
+   </HBox>
+   <HBox spacing="10" HBox.hgrow="ALWAYS">
+      <TableView fx:id="tableViewOPendenciaHive" VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="800.0">
+         <columns>
+            <TableColumn fx:id="columnTabelaidBase" text="ID Base" />
+            <TableColumn fx:id="columnTabeladhProcessamento" text="Hora de Processamento" />
+            <TableColumn fx:id="columnTabelastatusProcessamento" text="Status" />
+            <TableColumn fx:id="columnTabelalinha" text="Linha" />
+            <TableColumn fx:id="columnTabelaquantidadeRegBloco" text="Quantidade de Registro no Bloco" />
+            <TableColumn fx:id="columnTabelaregistro" text="Registro" />
+            <TableColumn fx:id="columnTabelaregistroBloco" text="Registro Bloco" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </HBox>
 </VBox>

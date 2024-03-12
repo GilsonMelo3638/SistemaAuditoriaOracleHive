@@ -60,6 +60,9 @@ public class MainViewController implements Initializable {
     private MenuItem menuItemHiveSped_9900;
 
     @FXML
+    private MenuItem menuItemPendenciaProcessamento0000;
+
+    @FXML
     private MenuItem menuItemAbout;
 
     @FXML
@@ -162,6 +165,29 @@ public class MainViewController implements Initializable {
         hiveSpedController.executeQueryAndSaveToCSV();
         // Carrega a view desejada
         loadView("/Fxml/Sped9900.fxml", x -> {});
+    }
+
+    @FXML
+    public void onMenuItemPendenciaProcessamento0000() {
+        String oracleFilePath = "X:\\Dados\\SPED\\ORACLE_SPED_9900.csv";
+        String hiveFilePath = "X:\\Dados\\SPED\\HIVE_SPED_9900.csv";
+        String outputFilePath = "X:\\Dados\\SPED\\Pendencia_Processamento_0000.csv";
+
+        // Inicializa a instância de OracleSpedDatabaseOperations
+        oracleSpedDatabaseOperations = new OracleSpedDatabaseOperations();
+
+        // Chama o método após a inicialização
+        oracleSpedDatabaseOperations.executeQueryAndSaveToCSV();
+
+        // Cria uma instância de HiveSpedController, que inicializa automaticamente as variáveis de ambiente
+        HiveSpedController hiveSpedController = new HiveSpedController();
+
+        hiveSpedController.executeQueryAndSaveToCSV();
+
+        CSVUtils.FileComparisonService.compareAndSaveDifferences(oracleFilePath, hiveFilePath, outputFilePath);
+        // Carrega a view desejada
+        loadView("/Fxml/Sped9900.fxml", x -> {});
+
     }
 
     @FXML

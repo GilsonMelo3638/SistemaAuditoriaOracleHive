@@ -74,6 +74,10 @@
                                 <MenuItem fx:id="menuItemHiveSped_9900" mnemonicParsing="false"
                                           onAction="#onMenuItemHiveSped9900Action" text="Gerar Hive SPED 9900" />
                             </items>
+                            <items>
+                                <MenuItem fx:id="menuItemPendenciaProcessamento0000" mnemonicParsing="false"
+                                          onAction="#onMenuItemPendenciaProcessamento0000" text="Pendencia Processamento 0000" />
+                            </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Ajuda">
                             <items>

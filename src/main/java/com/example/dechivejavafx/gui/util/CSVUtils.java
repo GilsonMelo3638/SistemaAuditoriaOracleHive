@@ -9,10 +9,16 @@ import com.example.dechivejavafx.gui.QuantidadeDocumentoArquivoController;
 import com.example.dechivejavafx.model.entities.Agenda;
 import com.example.dechivejavafx.model.entities.OracleHive;
 import com.example.dechivejavafx.model.entities.QuantidadeDocumentoArquivo;
+import com.example.dechivejavafx.model.entities.Sped9900;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.ResultSet;
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,12 +27,23 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * Classe utilitária para manipulação de arquivos CSV.
  */
 public class CSVUtils {
 
     private static final Logger LOGGER = Logger.getLogger(QuantidadeDocumentoArquivoController.class.getName());
+
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
     private static final String CSV_HEADER = "chave,tabelaHive,totalHive";
     private static final String DIRECTORY_PATH = "\\\\svmcifs\\ExtracaoXML\\NovoDEC\\Pendencia\\";
     // Caminho do arquivo CSV do resultado final de diferenças de quantidades de documentos no Oracle e Hive
@@ -312,7 +329,7 @@ public class CSVUtils {
              BufferedWriter bufferedWriter = new BufferedWriter(csvWriter)) {
 
             // Escreve o cabeçalho do CSV
-            bufferedWriter.write("Data/Hora de Processamento,ID Base,Linha,Quantidade Reg Blc,Reg,Reg Blc\n");
+            bufferedWriter.write("Data Processamento,ID Base,Linha,Quantidade Reg Blc,Reg,Reg Blc\n");
 
             // Processa os resultados e escreve no arquivo CSV
             while (resultSet.next()) {
@@ -398,6 +415,106 @@ public class CSVUtils {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
             return 0; // Ou outro valor padrão adequado
+        }
+    }
+
+    public class FileComparisonService {
+
+        /**
+         * Compara dois arquivos CSV, identifica linhas no primeiro arquivo que não estão no segundo
+         * baseado em uma chave específica, e salva essas linhas em um novo arquivo.
+         *
+         * @param oracleFilePath Caminho para o arquivo Oracle CSV.
+         * @param hiveFilePath Caminho para o arquivo Hive CSV.
+         * @param outputFilePath Caminho para o arquivo de saída com as diferenças.
+         */
+        public static void compareAndSaveDifferences(String oracleFilePath, String hiveFilePath, String outputFilePath) {
+            Set<String> hiveIDs = new HashSet<>();
+
+            // Leitura dos IDs do arquivo Hive
+            try (Stream<String> hiveStream = Files.lines(Paths.get(hiveFilePath))) {
+                hiveIDs.addAll(hiveStream.map(line -> line.split(",")[1].trim()).collect(Collectors.toSet()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Comparação e escrita das diferenças no arquivo de saída
+            try (Stream<String> oracleStream = Files.lines(Paths.get(oracleFilePath));
+                 var writer = Files.newBufferedWriter(Paths.get(outputFilePath))) {
+
+                final boolean[] isHeader = {true};
+                oracleStream.forEach(line -> {
+                    if (isHeader[0]) {
+                        try {
+                            writer.write(line);
+                            writer.newLine();
+                            isHeader[0] = false;
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        String[] fields = line.split(",");
+                        String oracleID = fields[0].trim();
+                        if ("0000".equals(fields[fields.length - 1].trim()) && !hiveIDs.contains(oracleID)) {
+                            try {
+                                writer.write(line);
+                                writer.newLine();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
+                System.out.println("Arquivo gravado com sucesso em: " + outputFilePath);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public static List<Sped9900> loadSped9900FromCsv(String filePath) {
+        List<Sped9900> dataList = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            // Ignora a primeira linha (cabeçalhos)
+            reader.readLine();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                try {
+                    Sped9900 sped9900 = parseLineToSped9900(line);
+                    if (sped9900 != null) {
+                        dataList.add(sped9900);
+                    }
+                } catch (IllegalArgumentException e) {
+                    LOGGER.log(Level.SEVERE, "Erro ao processar linha: {0}", line);
+                }
+            }
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Erro ao ler o arquivo", e);
+        }
+
+        return dataList;
+    }
+
+    private static Sped9900 parseLineToSped9900(String line) {
+        String[] values = line.split(",");
+        if (values.length != 7) {
+            throw new IllegalArgumentException("Número incorreto de campos.");
+        }
+
+        try {
+            BigInteger idBase = new BigInteger(values[0].trim());
+            LocalDateTime dhProcessamento = LocalDateTime.parse(values[1].trim(), dateTimeFormatter);
+            int statusProcessamento = Integer.parseInt(values[2].trim());
+            int linha = Integer.parseInt(values[3].trim());
+            int quantidadeRegBloco = Integer.parseInt(values[4].trim());
+            String registro = values[5].trim();
+            String registroBloco = values[6].trim();
+
+            return new Sped9900(idBase, dhProcessamento, statusProcessamento, linha, quantidadeRegBloco, registro, registroBloco);
+        } catch (NumberFormatException | DateTimeParseException e) {
+            LOGGER.log(Level.SEVERE, "Erro ao converter valores da linha", e);
+            return null;
         }
     }
 }

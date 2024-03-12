@@ -150,6 +150,11 @@ public class AgendaListController implements Initializable, DataChangeListener {
 		txtDias.setText(String.valueOf(Configuracao.dias)); // Configura o campo de texto com o valor padrão de dias obtido da classe de configurações
 		comboTipoDoc.setItems(FXCollections.observableArrayList(TipoDoc.values())); // Preenche o ComboBox com os valores do enum TipoDoc
 		comboTipoDoc.valueProperty().addListener((obs, oldVal, newVal) -> updateFilteredContent()); // Adiciona um ouvinte para detectar alterações na seleção do ComboBox
+		comboTipoDoc.valueProperty().addListener((observable, oldValue, newValue) -> {
+			// O código dentro deste bloco será executado quando o valor do comboTipoDoc for alterado
+			updateFilteredContent(); // Atualiza a tabela com base no tipo de documento selecionado
+			updateQuantidadeProcessado(); // Atualiza o valor do txtQuantidadeProcessado
+		});
 	}
 	/**
 	 * Atualiza o conteúdo filtrado com base no tipo de documento selecionado.
@@ -491,5 +496,14 @@ public class AgendaListController implements Initializable, DataChangeListener {
 				.map(Agenda::getQuantidade)
 				.filter(Objects::nonNull)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
+	private void updateQuantidadeProcessado() {
+		BigDecimal sumQuantity = obsList.stream()
+				.filter(item -> item.getQuantidade() != null)
+				.map(Agenda::getQuantidade)
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+		DecimalFormat decimalFormat = new DecimalFormat("#,###");
+		txtQuantidadeProcessado.setText(decimalFormat.format(sumQuantity));
 	}
 }
