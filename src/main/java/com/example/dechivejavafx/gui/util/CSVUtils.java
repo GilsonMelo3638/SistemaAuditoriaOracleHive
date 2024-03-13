@@ -42,8 +42,7 @@ import java.util.stream.Stream;
 public class CSVUtils {
 
     private static final Logger LOGGER = Logger.getLogger(QuantidadeDocumentoArquivoController.class.getName());
-
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final String CSV_HEADER = "chave,tabelaHive,totalHive";
     private static final String DIRECTORY_PATH = "\\\\svmcifs\\ExtracaoXML\\NovoDEC\\Pendencia\\";
     // Caminho do arquivo CSV do resultado final de diferenças de quantidades de documentos no Oracle e Hive
@@ -475,46 +474,45 @@ public class CSVUtils {
     }
     public static List<Sped9900> loadSped9900FromCsv(String filePath) {
         List<Sped9900> dataList = new ArrayList<>();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            // Ignora a primeira linha (cabeçalhos)
-            reader.readLine();
+            reader.readLine(); // Ignorar a primeira linha (cabeçalhos)
+
             String line;
             while ((line = reader.readLine()) != null) {
+                String[] values = line.split(",");
+
+                // Verifica se a linha possui todos os campos esperados
+                if (values.length != 7) {
+                    System.err.println("Erro ao processar linha: " + line + ". Número incorreto de campos.");
+                    continue; // Ignora esta linha e passa para a próxima
+                }
+
+                // Tenta converter os valores da linha para os tipos corretos
                 try {
-                    Sped9900 sped9900 = parseLineToSped9900(line);
-                    if (sped9900 != null) {
-                        dataList.add(sped9900);
-                    }
-                } catch (IllegalArgumentException e) {
-                    LOGGER.log(Level.SEVERE, "Erro ao processar linha: {0}", line);
+                    BigInteger idBase = new BigInteger(values[0].trim());
+                    LocalDateTime dhProcessamento = LocalDateTime.parse(values[1].trim(), dateTimeFormatter);
+                    int statusProcessamento = Integer.parseInt(values[2].trim());
+                    int linha = Integer.parseInt(values[3].trim());
+                    int quantidadeRegBloco = Integer.parseInt(values[4].trim());
+                    String registro = values[5].trim(); // Mantém como String
+                    String registroBloco = values[6].trim(); // Mantém como String
+
+                    // Cria um objeto Sped9900 com os valores extraídos da linha e adiciona à lista
+                    Sped9900 sped9900 = new Sped9900(idBase, dhProcessamento, statusProcessamento,
+                            linha, quantidadeRegBloco, registro, registroBloco);
+                    dataList.add(sped9900);
+                } catch (NumberFormatException | DateTimeParseException e) {
+                    // Se ocorrer um erro ao processar a linha, imprime uma mensagem de erro
+                    System.err.println("Erro ao processar linha: " + line);
+                    e.printStackTrace(); // Imprime o rastreamento da pilha para entender melhor o erro
                 }
             }
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Erro ao ler o arquivo", e);
+            e.printStackTrace(); // Trate adequadamente as exceções conforme necessário
         }
 
         return dataList;
     }
 
-    private static Sped9900 parseLineToSped9900(String line) {
-        String[] values = line.split(",");
-        if (values.length != 7) {
-            throw new IllegalArgumentException("Número incorreto de campos.");
-        }
-
-        try {
-            BigInteger idBase = new BigInteger(values[0].trim());
-            LocalDateTime dhProcessamento = LocalDateTime.parse(values[1].trim(), dateTimeFormatter);
-            int statusProcessamento = Integer.parseInt(values[2].trim());
-            int linha = Integer.parseInt(values[3].trim());
-            int quantidadeRegBloco = Integer.parseInt(values[4].trim());
-            String registro = values[5].trim();
-            String registroBloco = values[6].trim();
-
-            return new Sped9900(idBase, dhProcessamento, statusProcessamento, linha, quantidadeRegBloco, registro, registroBloco);
-        } catch (NumberFormatException | DateTimeParseException e) {
-            LOGGER.log(Level.SEVERE, "Erro ao converter valores da linha", e);
-            return null;
-        }
-    }
 }
