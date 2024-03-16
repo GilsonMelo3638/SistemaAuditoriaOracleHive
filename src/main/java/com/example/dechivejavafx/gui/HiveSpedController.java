@@ -2,6 +2,7 @@ package com.example.dechivejavafx.gui;
 
 import com.example.dechivejavafx.db.HiveSpedDatabaseOperations;
 import com.example.dechivejavafx.gui.util.CSVUtils;
+import com.example.dechivejavafx.gui.util.Configuracao;
 import com.example.dechivejavafx.model.entities.Sped9900;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -88,7 +89,7 @@ public class HiveSpedController {
         this.databaseOperations = new HiveSpedDatabaseOperations(jdbcUrl, user, password);
 
         // Define startDate e filePath
-        this.startDate = LocalDateTime.now().minusDays(15);
+        this.startDate = LocalDateTime.now().minusDays(Configuracao.diasSpedHive);
         this.filePath = "X:\\Dados\\SPED\\HIVE_SPED_9900.csv";
     }
 

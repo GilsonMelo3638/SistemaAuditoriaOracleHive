@@ -187,7 +187,6 @@ public class MainViewController implements Initializable {
         CSVUtils.FileComparisonService.compareAndSaveDifferences(oracleFilePath, hiveFilePath, outputFilePath);
         // Carrega a view desejada
         loadView("/Fxml/Sped9900.fxml", x -> {});
-
     }
 
     @FXML

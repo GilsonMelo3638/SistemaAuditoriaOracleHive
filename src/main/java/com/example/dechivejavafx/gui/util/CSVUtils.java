@@ -328,7 +328,7 @@ public class CSVUtils {
              BufferedWriter bufferedWriter = new BufferedWriter(csvWriter)) {
 
             // Escreve o cabeçalho do CSV
-            bufferedWriter.write("Data Processamento,ID Base,Linha,Quantidade Reg Blc,Reg,Reg Blc\n");
+            bufferedWriter.write("Data Processamento,id_base,Linha,Quantidade Reg Blc,Reg,Reg Blc\n");
 
             // Processa os resultados e escreve no arquivo CSV
             while (resultSet.next()) {

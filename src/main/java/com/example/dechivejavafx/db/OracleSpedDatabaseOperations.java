@@ -70,7 +70,7 @@ public class OracleSpedDatabaseOperations {
                      FileWriter csvWriter = new FileWriter(filePath)) {
 
                     // Escreve o cabeçalho do CSV
-                    csvWriter.append("ID Base,Data Processamento,Status de Processamento,Linha,Quantidade Reg Blc,Reg,Reg Blc\n");
+                    csvWriter.append("id_base,Data Processamento,Status de Processamento,Linha,Quantidade Reg Blc,Reg,Reg Blc\n");
 
                     // Processa os resultados e escreve no arquivo CSV
                     while (resultSet.next()) {

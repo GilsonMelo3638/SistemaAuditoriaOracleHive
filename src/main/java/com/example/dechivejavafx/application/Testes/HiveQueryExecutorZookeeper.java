@@ -18,7 +18,8 @@ public class HiveQueryExecutorZookeeper {
         String password = System.getenv("HIVE_PASSWORD");
 
         // Consulta Hive
-        String hiveQuery = "SELECT datahora_fin FROM seec_prd_financeiro.ddar";
+        String hiveQuery = "SELECT id_base, datahora_fin\n" +
+                "FROM seec_prd_declaracao_fiscal.tb_sped_reg_0000 where id_base = '941703331'";
 
         // Bloco try-with-resources para garantir que as conexões sejam fechadas corretamente
         try (

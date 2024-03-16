@@ -29,6 +29,7 @@ public class HiveSpedDatabaseOperations {
 
             // Define os parâmetros da consulta
             preparedStatement.setString(1, startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            System.out.println("Query executada: " + query);
 
             return preparedStatement.executeQuery();
         } catch (SQLException e) {
