@@ -2,6 +2,7 @@ package com.example.dechivejavafx.gui;
 
 import com.example.dechivejavafx.Validacoes.TipoDoc;
 import com.example.dechivejavafx.application.Main;
+import com.example.dechivejavafx.db.HiveDecDatabaseOperations;
 import com.example.dechivejavafx.db.OracleSpedDatabaseOperations;
 import com.example.dechivejavafx.gui.util.Alerts;
 import com.example.dechivejavafx.gui.util.CSVUtils;
@@ -24,15 +25,17 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 // Controlador principal da aplicação
 public class MainViewController implements Initializable {
@@ -96,6 +99,9 @@ public class MainViewController implements Initializable {
     private MenuItem menuProcessarPendencia;
 
     @FXML
+    private MenuItem MenuProcessarDuplicidadeId;
+
+    @FXML
     private ComboBox<TipoDoc> comboTipoDoc;
 
     @FXML
@@ -135,6 +141,7 @@ public class MainViewController implements Initializable {
         // Inicializa o gerenciador de agendamento
         schedulerManager = new SchedulerManager(this);
         schedulerManager.iniciarAgendamento();
+        schedulerManager.agendarProcessamentoDuplicidadeId(); // Agendamento do método ProcessarDuplicidadeId
     }
 
     // Método chamado quando a opção "About" no menu é selecionada
@@ -213,6 +220,14 @@ public class MainViewController implements Initializable {
     // Método chamado quando a opção "Agenda" no menu é selecionada
     @FXML
     public void onMenuProcessarPendenciaAction() {
+//        // Obtém os valores das variáveis de ambiente
+//        String jdbcURL = System.getenv("HIVE_JDBC_URL");
+//        String username = System.getenv("HIVE_USERNAME");
+//        String password = System.getenv("HIVE_PASSWORD");
+//        // Gerar arquivo de duplicidades de Id das tabelas principais.
+//        HiveDecDatabaseOperations.executeHiveQueryIdDuplicidadePrincipal(jdbcURL, username, password);
+//        // Gerar arquivo de duplicidades de Id e itens das tabelas detalhe.
+//        HiveDecDatabaseOperations.executeHiveQueryIdDuplicidadeDetalhe(jdbcURL, username, password);
         // Limpar a cena antes de carregar novas visualizações
         if (isFormularioPresente("agendaListPane")) {
             handleRemoveAgendaList();
@@ -246,7 +261,17 @@ public class MainViewController implements Initializable {
         loadView("/Fxml/DetNFeNFCeInf.fxml", x -> {});
         CSVUtils.deleteFilesExceptPendencia("\\\\svmcifs\\ExtracaoXML\\NovoDEC\\Pendencia\\");
     }
-
+    @FXML
+    public void onMenuProcessarDuplicidadeIdAction() {
+        // Obtém os valores das variáveis de ambiente
+        String jdbcURL = System.getenv("HIVE_JDBC_URL");
+        String username = System.getenv("HIVE_USERNAME");
+        String password = System.getenv("HIVE_PASSWORD");
+        // Gerar arquivo de duplicidades de Id das tabelas principais.
+        HiveDecDatabaseOperations.executeHiveQueryIdDuplicidadePrincipal(jdbcURL, username, password);
+        // Gerar arquivo de duplicidades de Id e itens das tabelas detalhe.
+        HiveDecDatabaseOperations.executeHiveQueryIdDuplicidadeDetalhe(jdbcURL, username, password);
+    }
     // Verifica se um formulário específico está presente na cena
     private boolean isFormularioPresente(String formId) {
         VBox mainVBox = (VBox) ((ScrollPane) Main.getMainScene().getRoot()).getContent();
@@ -552,4 +577,19 @@ public class MainViewController implements Initializable {
         // Chama o método genérico para remover o formulário, passando o ID do formulário e o item de menu correspondente
         removeForm("aboutPane", menuItemFecharAbout);
     }
+
+    public void iniciarAgendamentoDuplicidadeId(ScheduledExecutorService scheduler) {
+        scheduler.scheduleAtFixedRate(this::onMenuProcessarDuplicidadeIdAction, 0, 7, TimeUnit.DAYS); // Agendar para rodar a cada 7 dias
+    }
+
+    public void pararAgendamento(ScheduledExecutorService scheduler) {
+        if (scheduler != null && !scheduler.isShutdown()) {
+            scheduler.shutdown();
+        }
+    }
+
+    public void setSchedulerManager(SchedulerManager schedulerManager) {
+        this.schedulerManager = schedulerManager;
+    }
+
 }

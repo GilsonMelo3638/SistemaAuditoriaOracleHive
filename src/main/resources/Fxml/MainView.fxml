@@ -34,6 +34,9 @@
                                 <MenuItem fx:id="menuItemOracleHive"
                                           mnemonicParsing="false" onAction="#onMenuItemOracleHive"
                                           text="Pendências" />
+                                <MenuItem fx:id="MenuProcessarDuplicidadeId"
+                                          mnemonicParsing="false" onAction="#onMenuProcessarDuplicidadeIdAction"
+                                          text="Processar Duplicidades de IDs" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Oracle e Hive">

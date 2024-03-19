@@ -50,6 +50,8 @@ public class CSVUtils {
     private static final String PENDENCIA_FILE_NAME = "pendencias.csv";
     private static final String Resultado_FILE_NAME = "Resultado.csv";
     private static final String AGENDA_FILE_NAME = "Agenda.csv";
+    private static final String DUPLICIDADE_PRINCIPAL_FILE_NAME = "DuplicidadeIdPrincipal.csv";
+    private static final String DUPLICIDADE_DETALHE_FILE_NAME = "DuplicidadeIdDetalhe.csv";
     private static final String CONSOLIDATED_FILE_NAME = "CargasHive.csv";
     private static List<String> concatenatedData = new ArrayList<>();
     private static QuantidadeDocumentoArquivoController quantidadeDocumentoArquivoController;
@@ -169,6 +171,10 @@ public class CSVUtils {
                             && !file.getName().equalsIgnoreCase(AGENDA_FILE_NAME)
                             // Mantém arquivos relacionados a Agendas (AgendaFileName)
                             && !file.getName().equalsIgnoreCase(Resultado_FILE_NAME)
+                            // Mantém arquivos relacionados a Agendas (DUPLICIDADE_PRINCIPAL_FILE_NAME)
+                            && !file.getName().equalsIgnoreCase(DUPLICIDADE_PRINCIPAL_FILE_NAME)
+                            // Mantém arquivos relacionados a Agendas (DUPLICIDADE_DETALHE_FILE_NAME)
+                            && !file.getName().equalsIgnoreCase(DUPLICIDADE_DETALHE_FILE_NAME)
 
             );
 

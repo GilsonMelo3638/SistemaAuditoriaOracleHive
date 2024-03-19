@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
 
-public class HiveQueryDuplicidade {
+public class HiveQueryDuplicidadeDetalhe {
 
     public static void main(String[] args) {
         executeHiveQuery();
@@ -25,16 +25,16 @@ public class HiveQueryDuplicidade {
 
         // Lista de tabelas com seus respectivos nomes
         List<String> tables = Arrays.asList(
-                "tb_nfe_infnfe",
-                "tb_nf3e_infnf3e",
-                "tb_nfce_infnfce",
-                "tb_cte_infcte",
-                "tb_mdfe_infmdfe"
+                "tb_nfe_detnfe",
+                "tb_nfe",
+                "tb_nf3e_detnf3e",
+                "tb_nfce_detnfce",
+                "tb_nfce"
         );
 
         // Diretório e nome do arquivo CSV
         String directory = "\\\\svmcifs\\ExtracaoXML\\NovoDEC\\Pendencia\\";
-        String fileName = "DuplicidadeId.csv";
+        String fileName = "DuplicidadeIdDetalhe.csv";
         String filePath = directory + fileName;
 
         // Bloco try-with-resources para garantir que as conexões sejam fechadas corretamente
@@ -44,12 +44,11 @@ public class HiveQueryDuplicidade {
             for (String table : tables) {
                 // Consulta Hive com a adição da coluna "tabela" para indicar a origem
                 String hiveQuery = "SELECT DISTINCT arquivo, '" + table + "' AS tabela FROM ( " +
-                        "    SELECT arquivo, id FROM seec_prd_documento_fiscal." + table + " " +
+                        "    SELECT arquivo, id, nitem FROM seec_prd_documento_fiscal." + table + " " +
                         "    WHERE arquivo >= "+ Configuracao.inicioDuplicidade +
-                        "    GROUP BY arquivo, id " +
+                        "    GROUP BY arquivo, id, nitem " +
                         "    HAVING COUNT(*) > 1 " +
                         ") AS subquery";
-
                 // Imprime os valores
                 System.out.println("Query a ser executada para a tabela " + table + ": " + hiveQuery);
 

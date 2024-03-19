@@ -6,6 +6,8 @@ import com.example.dechivejavafx.model.entities.DetNFeNFCeInf;
 import com.example.dechivejavafx.model.entities.QuantidadeDocumentoArquivo;
 import com.example.dechivejavafx.model.entities.TotalizacaoNfe;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -188,6 +190,124 @@ public class HiveDecDatabaseOperations {
         // Retorna a lista completa de resultados
         queryResultsDet = resultados;
     }
+
+    public static void executeHiveQueryIdDuplicidadePrincipal(String jdbcURL, String username, String password) {
+        // Lista de tabelas com seus respectivos nomes
+        List<String> tables = Arrays.asList(
+                "tb_nfe_infnfe",
+                "tb_nf3e_infnf3e",
+                "tb_nfce_infnfce",
+                "tb_cte_infcte",
+                "tb_mdfe_infmdfe"
+        );
+
+        // Diretório e nome do arquivo CSV
+        String directory = "\\\\svmcifs\\ExtracaoXML\\NovoDEC\\Pendencia\\";
+        String fileName = "DuplicidadeIdPrincipal.csv";
+        String filePath = directory + fileName;
+
+        // Bloco try-with-resources para garantir que as conexões sejam fechadas corretamente
+        try (Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+             FileWriter writer = new FileWriter(filePath)) {
+
+            for (String table : tables) {
+                // Consulta Hive com a adição da coluna "tabela" para indicar a origem
+                String hiveQuery = "SELECT DISTINCT arquivo, '" + table + "' AS tabela FROM ( " +
+                        "    SELECT arquivo, id FROM seec_prd_documento_fiscal." + table + " " +
+                        "    WHERE arquivo >= "+ Configuracao.inicioDuplicidade +
+                        "    GROUP BY arquivo, id " +
+                        "    HAVING COUNT(*) > 1 " +
+                        ") AS subquery";
+
+                // Imprime os valores
+                System.out.println("Query a ser executada para a tabela " + table + ": " + hiveQuery);
+
+                try (Statement statement = connection.createStatement();
+                     ResultSet resultSet = statement.executeQuery(hiveQuery)) {
+
+                    // Processar os resultados e escrever no arquivo CSV
+                    while (resultSet.next()) {
+                        // Obtém os valores do resultado
+                        String tabela = resultSet.getString("tabela");
+                        String arquivo = resultSet.getString("arquivo");
+
+                        // Escrever no arquivo CSV
+                        writer.append(arquivo);
+                        writer.append(",");
+                        writer.append(tabela);
+                        writer.append("\n");
+                        // Imprimir no console
+                        System.out.println("Tabela: " + tabela + ", Arquivo: " + arquivo);
+                    }
+                }
+            }
+            System.out.println("Consulta concluída. Resultados salvos em: " + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void executeHiveQueryIdDuplicidadeDetalhe(String jdbcURL, String username, String password) {
+        // Lista de tabelas com seus respectivos nomes
+
+        // Lista de tabelas com seus respectivos nomes
+        List<String> tables = Arrays.asList(
+                "tb_nfe_detnfe",
+                "tb_nfe",
+                "tb_nf3e_detnf3e",
+                "tb_nfce_detnfce",
+                "tb_nfce"
+        );
+
+        // Diretório e nome do arquivo CSV
+        String directory = "\\\\svmcifs\\ExtracaoXML\\NovoDEC\\Pendencia\\";
+        String fileName = "DuplicidadeIdDetalhe.csv";
+        String filePath = directory + fileName;
+
+        // Bloco try-with-resources para garantir que as conexões sejam fechadas corretamente
+        try (Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+             FileWriter writer = new FileWriter(filePath)) {
+
+            for (String table : tables) {
+                // Consulta Hive com a adição da coluna "tabela" para indicar a origem
+                String hiveQuery = "SELECT DISTINCT arquivo, '" + table + "' AS tabela FROM ( " +
+                        "    SELECT arquivo, id, nitem FROM seec_prd_documento_fiscal." + table + " " +
+                        "    WHERE arquivo >= "+ Configuracao.inicioDuplicidade +
+                        "    GROUP BY arquivo, id, nitem " +
+                        "    HAVING COUNT(*) > 1 " +
+                        ") AS subquery";
+                // Imprime os valores
+                System.out.println("Query a ser executada para a tabela " + table + ": " + hiveQuery);
+
+                try (Statement statement = connection.createStatement();
+                     ResultSet resultSet = statement.executeQuery(hiveQuery)) {
+
+                    // Processar os resultados e escrever no arquivo CSV
+                    while (resultSet.next()) {
+                        // Obtém os valores do resultado
+                        String tabela = resultSet.getString("tabela");
+                        String arquivo = resultSet.getString("arquivo");
+
+                        // Escrever no arquivo CSV
+                        writer.append(arquivo);
+                        writer.append(",");
+                        writer.append(tabela);
+                        writer.append("\n");
+                        // Imprimir no console
+                        System.out.println("Tabela: " + tabela + ", Arquivo: " + arquivo);
+                    }
+                }
+            }
+            System.out.println("Consulta concluída. Resultados salvos em: " + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<TotalizacaoNfe> getQueryResults() {
         return queryResults;
     }
