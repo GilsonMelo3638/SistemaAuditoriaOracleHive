@@ -16,6 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.Separator?>
 <VBox id="agendaListPane" prefHeight="700.0" prefWidth="2200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dechivejavafx.gui.AgendaListController">
 
 	<Label text="Agendar Nova Extração">
@@ -75,4 +76,8 @@
 			<NumberAxis side="LEFT" />
 		</yAxis>
 	</LineChart>
+	<!-- Linha divisória -->
+	<!-- Linha divisória -->
+	<Separator style="-fx-border-color: black; -fx-border-width: 2px;" />
+
 </VBox>

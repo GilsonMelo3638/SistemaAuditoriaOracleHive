@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<StackPane fx:id="pendenciasHivePane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dechivejavafx.gui.PendenciasHiveController">
+	<VBox alignment="TOP_LEFT" fillWidth="true" prefHeight="700.0" prefWidth="2200.0" style="-fx-padding: 10px;">
+		<HBox spacing="10">
+			<VBox alignment="TOP_LEFT" fillWidth="true" VBox.vgrow="ALWAYS" HBox.hgrow="SOMETIMES" style="-fx-pref-width: 20%;">
+				<!-- Tabela DetNFeNFCeInf -->
+				<Label text="ARQUIVOS NAS TABELAS DETALHES E AUSENTES NAS TABELAS DETALHE" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+				<BorderPane VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="1185.0" style="-fx-border-color: black; -fx-border-width: 1px;">
+					<center>
+						<TableView fx:id="tableViewDetNFeNFCeInf" prefHeight="573.0" prefWidth="1185.0">
+							<columns>
+								<TableColumn fx:id="columnArquivo" text="Arquivo" prefWidth="200">
+									<cellValueFactory>
+										<PropertyValueFactory property="arquivo" />
+									</cellValueFactory>
+								</TableColumn>
+								<TableColumn fx:id="columnTabelaDetalhe" text="Tabela de Detalhe" prefWidth="200">
+									<cellValueFactory>
+										<PropertyValueFactory property="tabelaDetalhe" />
+									</cellValueFactory>
+								</TableColumn>
+								<TableColumn fx:id="columnQuantidadeNsuchave" text="Quantidade de nsuchave" prefWidth="200">
+									<cellValueFactory>
+										<PropertyValueFactory property="quantidadeNsuchave" />
+									</cellValueFactory>
+								</TableColumn>
+							</columns>
+							<columnResizePolicy>
+								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+							</columnResizePolicy>
+						</TableView>
+					</center>
+				</BorderPane>
+			</VBox>
+			<!-- Tabela DuplicidadeId -->
+			<VBox alignment="TOP_LEFT" fillWidth="true" VBox.vgrow="ALWAYS" HBox.hgrow="SOMETIMES" style="-fx-pref-width: 20%;">
+				<Label text="ARQUIVOS COM DUPLICIDADE DE ID OU NITEM" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+				<BorderPane VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="1185.0" style="-fx-border-color: black; -fx-border-width: 1px;">
+					<center>
+						<TableView fx:id="tableDuplicidadeId" prefHeight="573.0" prefWidth="1185.0">
+							<columns>
+								<TableColumn fx:id="columnArquivoDuplicidade" text="Arquivo" prefWidth="200">
+									<cellValueFactory>
+										<PropertyValueFactory property="arquivo" />
+									</cellValueFactory>
+								</TableColumn>
+								<TableColumn fx:id="columnTabelaDuplicidade" text="Tabela de Detalhe" prefWidth="200">
+									<cellValueFactory>
+										<PropertyValueFactory property="tabelaDetalhe" />
+									</cellValueFactory>
+								</TableColumn>
+							</columns>
+							<columnResizePolicy>
+								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+							</columnResizePolicy>
+						</TableView>
+					</center>
+				</BorderPane>
+			</VBox>
+			<!-- Tabela DiferencaQuantidadeOracleHive -->
+			<VBox alignment="TOP_LEFT" fillWidth="true" VBox.vgrow="ALWAYS" HBox.hgrow="SOMETIMES" style="-fx-pref-width: 60%;">
+				<HBox spacing="10">
+					<HBox spacing="10">
+						<VBox spacing="5">
+							<Label text="DIVERGÊNCIA ORACLE E HIVE" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+						</VBox>
+						<HBox spacing="5" alignment="CENTER_LEFT">
+							<Label text="Selecionar Documento" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+							<ComboBox fx:id="comboTipoDoc" VBox.vgrow="ALWAYS" prefWidth="175" />
+						</HBox>
+					</HBox>
+					<!-- Outros elementos aqui -->
+				</HBox>
+				<BorderPane VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="1785.0" style="-fx-border-color: black; -fx-border-width: 1px;">
+					<center>
+						<TableView fx:id="tableViewOracleHive" prefHeight="573.0" prefWidth="1185.0">
+							<columns>
+								<TableColumn fx:id="columnArquivoOracle" text="Arquivo" />
+								<TableColumn fx:id="columnTipoDoc" text="Documento" />
+								<TableColumn fx:id="columnTabelaOracle" text="Tabela Oracle" />
+								<TableColumn fx:id="columnTabelaHive" text="Tabela Hive" />
+								<TableColumn fx:id="columnTotalOracle" text="Total Oracle" />
+								<TableColumn fx:id="columnTotalHive" text="Total Hive" />
+								<TableColumn fx:id="columnDiferenca" text="Diferença" />
+							</columns>
+							<columnResizePolicy>
+								<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+							</columnResizePolicy>
+						</TableView>
+					</center>
+				</BorderPane>
+			</VBox>
+		</HBox>
+	</VBox>
+</StackPane>

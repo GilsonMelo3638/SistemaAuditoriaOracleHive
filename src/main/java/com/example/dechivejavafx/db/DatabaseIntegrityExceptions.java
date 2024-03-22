@@ -1,6 +1,6 @@
 package com.example.dechivejavafx.db;
 
-import com.example.dechivejavafx.model.entities.DetNFeNFCeInf;
+import com.example.dechivejavafx.model.entities.PendenciasHive;
 import com.example.dechivejavafx.model.entities.TotalizacaoNfe;
 
 import java.sql.ResultSet;
@@ -35,8 +35,8 @@ public class DatabaseIntegrityExceptions {
         return nFeInfo;
     }
 
-    public static DetNFeNFCeInf mapResultSetToDetNFeNFCeInf(ResultSet resultSetDet) throws SQLException {
-        DetNFeNFCeInf detInfo = new DetNFeNFCeInf();
+    public static PendenciasHive mapResultSetToDetNFeNFCeInf(ResultSet resultSetDet) throws SQLException {
+        PendenciasHive detInfo = new PendenciasHive();
         detInfo.setArquivo(resultSetDet.getString("arquivo"));
         detInfo.setTabelaDetalhe(resultSetDet.getString("tabela")); // Ajuste para refletir o nome correto da coluna
         detInfo.setQuantidadeNsuchave(resultSetDet.getInt("quantidade_nsuchave")); // Ajuste para refletir o nome correto da coluna

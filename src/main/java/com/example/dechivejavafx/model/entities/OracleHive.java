@@ -16,15 +16,17 @@ public class OracleHive {
         // Pode inicializar atributos com valores padrão, se necessário
     }
 
-    public OracleHive(String arquivo, String tipoDoc, String tabelaOracle, String tabelaHive, int totalOracle, int totalHive) {
+
+    public OracleHive(String arquivo, String tipoDoc, String tabelaOracle, String tabelaHive, int totalOracle, int totalHive, int diferenca) {
         this.arquivo = arquivo;
         this.tipoDoc = tipoDoc;
         this.tabelaOracle = tabelaOracle;
         this.tabelaHive = tabelaHive;
         this.totalOracle = totalOracle;
         this.totalHive = totalHive;
-        calcularDiferenca();
+        this.diferenca = diferenca;
     }
+
 
     public String getArquivo() {
         return arquivo;

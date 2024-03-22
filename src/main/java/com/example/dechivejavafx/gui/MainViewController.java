@@ -29,7 +29,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
@@ -44,6 +43,7 @@ public class MainViewController implements Initializable {
 
     // Serviço para manipulação de agendas
     private final AgendaService service = new AgendaService();
+    public MenuItem menuItemPendenciasHive;
 
     private Stage primaryStage;
 
@@ -78,10 +78,7 @@ public class MainViewController implements Initializable {
     private MenuItem menuItemFecharTotalizacaoNfe;
 
     @FXML
-    private MenuItem menuItemDetNFeNFCeInf;
-
-    @FXML
-    private MenuItem menuItemFecharDetNFeNFCeInf;
+    private MenuItem menuItemProcessarPendenciaHive;
 
     @FXML
     private MenuItem menuItemFecharOracleHive;
@@ -220,21 +217,13 @@ public class MainViewController implements Initializable {
     // Método chamado quando a opção "Agenda" no menu é selecionada
     @FXML
     public void onMenuProcessarPendenciaAction() {
-//        // Obtém os valores das variáveis de ambiente
-//        String jdbcURL = System.getenv("HIVE_JDBC_URL");
-//        String username = System.getenv("HIVE_USERNAME");
-//        String password = System.getenv("HIVE_PASSWORD");
-//        // Gerar arquivo de duplicidades de Id das tabelas principais.
-//        HiveDecDatabaseOperations.executeHiveQueryIdDuplicidadePrincipal(jdbcURL, username, password);
-//        // Gerar arquivo de duplicidades de Id e itens das tabelas detalhe.
-//        HiveDecDatabaseOperations.executeHiveQueryIdDuplicidadeDetalhe(jdbcURL, username, password);
         // Limpar a cena antes de carregar novas visualizações
         if (isFormularioPresente("agendaListPane")) {
             handleRemoveAgendaList();
         }
 
-        if (isFormularioPresente("detNFeNFCeInfPane")) {
-            handleRemoveDetNFeNFCeInf();
+        if (isFormularioPresente("processarPendenciasPane")) {
+            handleRemoveProcessarPendenciaHive();
         }
 
         if (isFormularioPresente("oracleHivePane")) {
@@ -258,7 +247,8 @@ public class MainViewController implements Initializable {
         // Chama o método para processar a seleção do tipo de documento central e tabelas
         selecionarTipoDocCentralETabelas(tipoDocNFCeCanc);
         loadView("/Fxml/OracleHive.fxml", x -> {});
-        loadView("/Fxml/DetNFeNFCeInf.fxml", x -> {});
+        loadView("/Fxml/PendenciasHive.fxml", x -> {});
+        handleRemoveOracleHive();
         CSVUtils.deleteFilesExceptPendencia("\\\\svmcifs\\ExtracaoXML\\NovoDEC\\Pendencia\\");
     }
     @FXML
@@ -277,6 +267,14 @@ public class MainViewController implements Initializable {
         VBox mainVBox = (VBox) ((ScrollPane) Main.getMainScene().getRoot()).getContent();
         return mainVBox.lookup("#" + formId) != null;
     }
+
+    @FXML
+    public void onMenuItemProcessarPendenciaHiveAction() {
+        // Define a cena atual e carrega a view de quantidade de documentos em arquivo
+        SceneManager.setCurrentScene(Main.getMainScene());
+        loadView("/Fxml/PendenciasHive.fxml", x -> {});
+    }
+
 
     @FXML
     public void onMenuItemDetNFeNFCeInfAction() {
@@ -345,7 +343,7 @@ public class MainViewController implements Initializable {
     private void configurarVisibilidadeInicialItensMenu() {
         // Lista dos itens de menu a serem configurados
         Arrays.asList(menuItemFecharAgenda, menuItemFecharTotalizacaoNfe,
-                        menuItemFecharDetNFeNFCeInf, menuItemFecharQuantidadeDocumentoArquivo, menuItemFecharOracleHive,
+                        menuItemProcessarPendenciaHive, menuItemFecharQuantidadeDocumentoArquivo, menuItemFecharOracleHive,
                         menuItemFecharAbout)
                 .forEach(menuItem -> menuItem.setVisible(false));
     }
@@ -365,7 +363,7 @@ public class MainViewController implements Initializable {
                 "#nfeTotalizacaoPane", menuItemFecharTotalizacaoNfe,
                 "#quantidadeDocArquivoPane", menuItemFecharQuantidadeDocumentoArquivo,
                 "#agendaListPane", menuItemFecharAgenda,
-                "#detNFeNFCeInfPane", menuItemFecharDetNFeNFCeInf,
+                "#pendenciasHivePane", menuItemProcessarPendenciaHive,
                 "#oracleHivePane", menuItemFecharOracleHive,
                 "#aboutPane", menuItemFecharAbout
         );
@@ -520,7 +518,7 @@ public class MainViewController implements Initializable {
         boolean isNfeTotalizacaoActive = mainVBox.lookup("#nfeTotalizacaoPane") != null;
         boolean isQuantidadeDocumentoArquivoActive = mainVBox.lookup("#quantidadeDocArquivoPane") != null;
         boolean isAgendaListActive = mainVBox.lookup("#agendaListPane") != null;
-        boolean isDetNFeNFCeInfPaneActive = mainVBox.lookup("#detNFeNFCeInfPane") != null;
+        boolean isPendenciaHiveActive = mainVBox.lookup("#pendenciasHivePane") != null;
         boolean isOracleHiveActive = mainVBox.lookup("#OracleHivePane") != null;
         boolean isAboutActive = mainVBox.lookup("#aboutPane") != null;
 
@@ -531,7 +529,7 @@ public class MainViewController implements Initializable {
         correspondingMenuItem.setVisible(isQuantidadeDocumentoArquivoActive);
         correspondingMenuItem.setVisible(isNfeTotalizacaoActive);
         correspondingMenuItem.setVisible(isAgendaListActive);
-        correspondingMenuItem.setVisible(isDetNFeNFCeInfPaneActive);
+        correspondingMenuItem.setVisible(isPendenciaHiveActive);
         correspondingMenuItem.setVisible(isOracleHiveActive);
         correspondingMenuItem.setVisible(isAboutActive);
     }
@@ -557,11 +555,11 @@ public class MainViewController implements Initializable {
         removeForm("agendaListPane", menuItemFecharAgenda);
     }
 
-    // Manipula a ação de remoção do formulário "detNFeNFCeInfPane"
+    // Manipula a ação de remoção do formulário "processarPendenciasPane"
     @FXML
-    private void handleRemoveDetNFeNFCeInf() {
+    private void handleRemoveProcessarPendenciaHive() {
         // Chama o método genérico para remover o formulário, passando o ID do formulário e o item de menu correspondente
-        removeForm("detNFeNFCeInfPane", menuItemFecharDetNFeNFCeInf);
+        removeForm("pendenciasHivePane", menuItemProcessarPendenciaHive);
     }
 
     // Manipula a ação de remoção do formulário "OracleHivePane"

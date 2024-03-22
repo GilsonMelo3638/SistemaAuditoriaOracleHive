@@ -28,12 +28,12 @@
                                 <MenuItem fx:id="menuItemQuantidadeDocumentoArquivo"
                                           mnemonicParsing="false" onAction="#onMenuItemQuantidadeDocumentoArquivoAction"
                                           text="Quantidades" />
-                                <MenuItem fx:id="menuItemDetNFeNFCeInf"
-                                          mnemonicParsing="false" onAction="#onMenuItemDetNFeNFCeInfAction"
-                                          text="Divergências Itens" />
+                                <MenuItem fx:id="menuItemPendenciasHive"
+                                          mnemonicParsing="false" onAction="#onMenuItemProcessarPendenciaHiveAction"
+                                          text="Processar Pendências Hive(fxml)" />
                                 <MenuItem fx:id="menuItemOracleHive"
                                           mnemonicParsing="false" onAction="#onMenuItemOracleHive"
-                                          text="Pendências" />
+                                          text="Diferença Oracle e Hive" />
                                 <MenuItem fx:id="MenuProcessarDuplicidadeId"
                                           mnemonicParsing="false" onAction="#onMenuProcessarDuplicidadeIdAction"
                                           text="Processar Duplicidades de IDs" />
@@ -43,7 +43,7 @@
                             <items>
                                 <MenuItem fx:id="menuProcessarPendencia"
                                           mnemonicParsing="false" onAction="#onMenuProcessarPendenciaAction"
-                                          text="Processar Pendências" />
+                                          text="Processar Pendências Manual" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Excluir">
@@ -57,9 +57,9 @@
                                 <MenuItem fx:id="menuItemFecharQuantidadeDocumentoArquivo"
                                           mnemonicParsing="false" onAction="#handleRemoverFormulario"
                                           text="Quantidade(Hive)" />
-                                <MenuItem fx:id="menuItemFecharDetNFeNFCeInf"
-                                          mnemonicParsing="false" onAction="#handleRemoveDetNFeNFCeInf"
-                                          text="Divergências Itens(Hive)" />
+                                <MenuItem fx:id="menuItemProcessarPendenciaHive"
+                                          mnemonicParsing="false" onAction="#handleRemoveProcessarPendenciaHive"
+                                          text="Processar Pendências Hive" />
                                 <MenuItem fx:id="menuItemFecharOracleHive"
                                           mnemonicParsing="false" onAction="#handleRemoveOracleHive"
                                           text="Pendências(Hive)" />

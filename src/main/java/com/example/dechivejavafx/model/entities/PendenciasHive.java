@@ -1,16 +1,16 @@
 package com.example.dechivejavafx.model.entities;
 
-public class DetNFeNFCeInf {
+public class PendenciasHive {
 
     private String arquivo;
     private String tabelaDetalhe;
     private int quantidadeNsuchave;
 
-    public DetNFeNFCeInf() {
+    public PendenciasHive() {
         // Pode inicializar atributos com valores padrão, se necessário
     }
 
-    public DetNFeNFCeInf(String arquivo, String tabelaDetalhe , int quantidadeNsuchave) {
+    public PendenciasHive(String arquivo, String tabelaDetalhe , int quantidadeNsuchave) {
         this.arquivo = arquivo;
         this.tabelaDetalhe = tabelaDetalhe;
         this.quantidadeNsuchave = quantidadeNsuchave;

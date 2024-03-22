@@ -2,7 +2,7 @@ package com.example.dechivejavafx.db;
 
 import com.example.dechivejavafx.Validacoes.TipoDoc;
 import com.example.dechivejavafx.gui.util.Configuracao;
-import com.example.dechivejavafx.model.entities.DetNFeNFCeInf;
+import com.example.dechivejavafx.model.entities.PendenciasHive;
 import com.example.dechivejavafx.model.entities.QuantidadeDocumentoArquivo;
 import com.example.dechivejavafx.model.entities.TotalizacaoNfe;
 
@@ -21,7 +21,7 @@ public class HiveDecDatabaseOperations {
     protected String username;
     protected String password;
     private List<TotalizacaoNfe> queryResults;
-    private List<DetNFeNFCeInf> queryResultsDet;
+    private List<PendenciasHive> queryResultsDet;
 
     public HiveDecDatabaseOperations(String jdbcURL, String username, String password) {
         this.jdbcURL = jdbcURL;
@@ -141,7 +141,7 @@ public class HiveDecDatabaseOperations {
     }
 
     private void executeQueryDetFaltante(Connection connection) throws SQLException {
-        List<DetNFeNFCeInf> resultados = new ArrayList<>();
+        List<PendenciasHive> resultados = new ArrayList<>();
         String[] detTables = {"tb_nfe_detnfe", "tb_nfe", "tb_nfce_detnfce", "tb_nfce", "tb_nf3e_detnf3e"};
         String[] infTables = {"tb_nfe_infnfe", "tb_nfe_infnfe", "tb_nfce_infnfce", "tb_nfce_infnfce", "tb_nf3e_infnf3e"};
 
@@ -176,11 +176,11 @@ public class HiveDecDatabaseOperations {
                         System.out.println("Resultado da query - Tabela: " + detTables[i] + ", Arquivo: " + arquivo +  ", Dia: " + dia + ", Contagem: " + count);
 
                         // Criar instância de DetNFeNFCeInf e adicioná-la à lista de resultados
-                        DetNFeNFCeInf detInfo = DatabaseIntegrityExceptions.mapResultSetToDetNFeNFCeInf(resultSet);
+                        PendenciasHive detInfo = DatabaseIntegrityExceptions.mapResultSetToDetNFeNFCeInf(resultSet);
                        // resultados.add(detInfo);
 
                         // Criar instância de DetNFeNFCeInf para representar o resultado
-                        DetNFeNFCeInf resultadoDet = new DetNFeNFCeInf(arquivo, detTables[i], count);
+                        PendenciasHive resultadoDet = new PendenciasHive(arquivo, detTables[i], count);
                         resultados.add(resultadoDet);
                     }
                 }
@@ -312,7 +312,7 @@ public class HiveDecDatabaseOperations {
         return queryResults;
     }
 
-    public List<DetNFeNFCeInf> getQueryResultsDet() {
+    public List<PendenciasHive> getQueryResultsDet() {
         return queryResultsDet;
     }
 
