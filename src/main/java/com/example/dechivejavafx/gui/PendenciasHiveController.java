@@ -10,10 +10,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 
 import java.io.BufferedReader;
@@ -28,6 +25,7 @@ import java.util.stream.Collectors;
 public class PendenciasHiveController {
 
     public StackPane pendenciasHivePane;
+    public Button btLimpar;
     // Labels para exibição de resultados individuais
     @FXML private Label labelArquivo;
     @FXML private Label labelcolumnTabelaDetalhe;
@@ -244,6 +242,18 @@ public class PendenciasHiveController {
             tableViewOracleHive.setItems(filteredList);
         }
     }
+
+    // Método para limpar o filtro e restaurar a lista original
+    private void clearFilter() {
+        tableViewOracleHive.setItems(originalOracleHiveList);
+    }
+
+    // Método para configurar o botão de limpar filtro
+    @FXML
+    private void onBtLimparAction() {
+        btLimpar.setOnAction(event -> clearFilter());
+    }
+
     private void executeQueryAndUpdateUI() {
         if (hiveDatabaseOperations != null) {
             hiveDatabaseOperations.executeQueryAndPopulateResultsDet();

@@ -46,7 +46,7 @@
                                           text="Processar Pendências Manual" />
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Excluir">
+                        <Menu mnemonicParsing="false" text="Remover">
                             <items>
                                 <MenuItem fx:id="menuItemFecharAgenda"
                                           mnemonicParsing="false" onAction="#handleRemoveAgendaList"
@@ -57,12 +57,15 @@
                                 <MenuItem fx:id="menuItemFecharQuantidadeDocumentoArquivo"
                                           mnemonicParsing="false" onAction="#handleRemoverFormulario"
                                           text="Quantidade(Hive)" />
-                                <MenuItem fx:id="menuItemProcessarPendenciaHive"
+                                <MenuItem fx:id="menuItemFecharProcessarPendenciaHive"
                                           mnemonicParsing="false" onAction="#handleRemoveProcessarPendenciaHive"
                                           text="Processar Pendências Hive" />
                                 <MenuItem fx:id="menuItemFecharOracleHive"
                                           mnemonicParsing="false" onAction="#handleRemoveOracleHive"
-                                          text="Pendências(Hive)" />
+                                          text="Sped em Oraprd12 Ausente Hive" />
+                                <MenuItem fx:id="menuItemFecharSped9900"
+                                          mnemonicParsing="false" onAction="#handleRemoveSped9900"
+                                          text="Pendência 0000" />
                                 <MenuItem fx:id="menuItemFecharAbout"
                                           mnemonicParsing="false" onAction="#handleRemoveAboutForm"
                                           text="Ajuda" />
@@ -79,8 +82,14 @@
                             </items>
                             <items>
                                 <MenuItem fx:id="menuItemPendenciaProcessamento0000" mnemonicParsing="false"
-                                          onAction="#onMenuItemPendenciaProcessamento0000" text="Pendencia Processamento 0000" />
+                                          onAction="#onMenuItemPendenciaProcessamento0000" text="Gerar Pendências 0000(Completo)" />
                             </items>
+
+                            <items>
+                                <MenuItem fx:id="menuItemPendenciaFormulario0000" mnemonicParsing="false"
+                                          onAction="#onMenuItemPendenciaFormulario0000" text="Pendencias 0000" />
+                            </items>
+
                         </Menu>
                         <Menu mnemonicParsing="false" text="Ajuda">
                             <items>

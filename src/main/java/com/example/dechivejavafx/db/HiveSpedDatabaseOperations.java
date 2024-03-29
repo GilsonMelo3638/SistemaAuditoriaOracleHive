@@ -22,7 +22,7 @@ public class HiveSpedDatabaseOperations {
     }
 
     public ResultSet executeSpedReg9900Query(LocalDateTime startDate) {
-        String query = buildSpedReg9900Query(startDate);
+        String query = queryHiveSpedReg9900(startDate);
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -50,7 +50,7 @@ public class HiveSpedDatabaseOperations {
         }
     }
 
-    private String buildSpedReg9900Query(LocalDateTime startDate) {
+    private String queryHiveSpedReg9900(LocalDateTime startDate) {
         return "SELECT datahora_fin, id_base, linha, qtd_reg_blc, reg, reg_blc " +
                 "FROM seec_prd_declaracao_fiscal.tb_sped_reg_9900 " +
                 "WHERE datahora_fin >= ?";

@@ -1,6 +1,7 @@
 package com.example.dechivejavafx.db;
 
 import com.example.dechivejavafx.Validacoes.ConnectionStatus;
+import com.example.dechivejavafx.gui.util.Configuracao;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,9 +18,8 @@ public class DatabaseConfig {
     private static final String CONFIG_FILE = "db.properties";
     private static Properties properties;
     private static Connection conn;
-    private static ConnectionStatus connectionStatus = ConnectionStatus.ENABLED;
     public static void setConnectionStatus(ConnectionStatus status) {
-        connectionStatus = status;
+        Configuracao.connectionOraprd21Status = status;
     }
 
     static {
@@ -68,7 +68,7 @@ public class DatabaseConfig {
     }
 
     public static Connection getConnection() {
-        if (connectionStatus == ConnectionStatus.DISABLED) {
+        if (Configuracao.connectionOraprd21Status == ConnectionStatus.DISABLED) {
             System.out.println("Connection is disabled."); // Adicione esta linha
             return null;
         }

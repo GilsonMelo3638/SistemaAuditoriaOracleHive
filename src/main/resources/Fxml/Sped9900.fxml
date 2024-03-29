@@ -4,8 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<VBox id = "tableViewOPendenciaHive
-" prefHeight="309.0" prefWidth="512.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.example.dechivejavafx.gui.HiveSpedController">
+<VBox id = "sped9900Pane" alignment="TOP_LEFT" fillWidth="true" prefHeight="700.0" prefWidth="2200.0" style="-fx-padding: 10px;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.example.dechivejavafx.gui.HiveSpedController">
    <Label text="Declaração no Oraprd12(SPED) e ausente no HIVE.">
       <font>
          <Font name="System Bold" size="14.0" />
@@ -24,7 +23,7 @@
             <TableColumn fx:id="columnTabelaidBase" text="ID Base" />
             <TableColumn fx:id="columnTabeladhProcessamento" text="Hora de Processamento" />
             <TableColumn fx:id="columnTabelastatusProcessamento" text="Status" />
-            <TableColumn fx:id="columnTabelalinha" text="Linha" />
+            <TableColumn fx:id="columnTabelalinha" text="Linhas" />
             <TableColumn fx:id="columnTabelaquantidadeRegBloco" text="Quantidade de Registro no Bloco" />
             <TableColumn fx:id="columnTabelaregistro" text="Registro" />
             <TableColumn fx:id="columnTabelaregistroBloco" text="Registro Bloco" />

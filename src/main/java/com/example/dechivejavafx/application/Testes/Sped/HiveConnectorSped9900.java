@@ -1,4 +1,4 @@
-package com.example.dechivejavafx.application.Testes;
+package com.example.dechivejavafx.application.Testes.Sped;
 
 import com.example.dechivejavafx.db.HiveSpedDatabaseOperations;
 import com.example.dechivejavafx.gui.util.CSVUtils;

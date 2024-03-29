@@ -12,4 +12,5 @@ module com.example.dechivejavafx {
     exports com.example.dechivejavafx.gui;
     exports com.example.dechivejavafx.Validacoes;
     exports com.example.dechivejavafx.application.Testes;
+    exports com.example.dechivejavafx.application.Testes.Sped;
 }

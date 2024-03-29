@@ -7,10 +7,10 @@
 		<HBox spacing="10">
 			<VBox alignment="TOP_LEFT" fillWidth="true" VBox.vgrow="ALWAYS" HBox.hgrow="SOMETIMES" style="-fx-pref-width: 20%;">
 				<!-- Tabela DetNFeNFCeInf -->
-				<Label text="ARQUIVOS NAS TABELAS DETALHES E AUSENTES NAS TABELAS DETALHE" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+				<Label text="Arquivos em Tabelas Principal e Ausentes em Tabelas Detalhes" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
 				<BorderPane VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="1185.0" style="-fx-border-color: black; -fx-border-width: 1px;">
 					<center>
-						<TableView fx:id="tableViewDetNFeNFCeInf" prefHeight="573.0" prefWidth="1185.0">
+						<TableView fx:id="tableViewDetNFeNFCeInf" prefHeight="573.0" prefWidth="700.0">
 							<columns>
 								<TableColumn fx:id="columnArquivo" text="Arquivo" prefWidth="200">
 									<cellValueFactory>
@@ -37,10 +37,10 @@
 			</VBox>
 			<!-- Tabela DuplicidadeId -->
 			<VBox alignment="TOP_LEFT" fillWidth="true" VBox.vgrow="ALWAYS" HBox.hgrow="SOMETIMES" style="-fx-pref-width: 20%;">
-				<Label text="ARQUIVOS COM DUPLICIDADE DE ID OU NITEM" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+				<Label text="Arquivos com Duplicidade de Chave ou Item" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
 				<BorderPane VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="1185.0" style="-fx-border-color: black; -fx-border-width: 1px;">
 					<center>
-						<TableView fx:id="tableDuplicidadeId" prefHeight="573.0" prefWidth="1185.0">
+						<TableView fx:id="tableDuplicidadeId" prefHeight="573.0" prefWidth="700.0">
 							<columns>
 								<TableColumn fx:id="columnArquivoDuplicidade" text="Arquivo" prefWidth="200">
 									<cellValueFactory>
@@ -61,15 +61,16 @@
 				</BorderPane>
 			</VBox>
 			<!-- Tabela DiferencaQuantidadeOracleHive -->
-			<VBox alignment="TOP_LEFT" fillWidth="true" VBox.vgrow="ALWAYS" HBox.hgrow="SOMETIMES" style="-fx-pref-width: 60%;">
+			<VBox alignment="TOP_LEFT" fillWidth="true" VBox.vgrow="ALWAYS" HBox.hgrow="SOMETIMES" style="-fx-pref-width: 50%;">
 				<HBox spacing="10">
 					<HBox spacing="10">
 						<VBox spacing="5">
-							<Label text="DIVERGÊNCIA ORACLE E HIVE" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+							<Label text="Divergências Entre ORAPRD21 e HIVE" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
 						</VBox>
 						<HBox spacing="5" alignment="CENTER_LEFT">
-							<Label text="Selecionar Documento" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+							<Label text=" Selecionar Documento:  " style="-fx-font-weight: bold; -fx-font-size: 12px;"/>
 							<ComboBox fx:id="comboTipoDoc" VBox.vgrow="ALWAYS" prefWidth="175" />
+							<Button fx:id="btLimpar" layoutX="101.0" layoutY="261.0" mnemonicParsing="false" onAction="#onBtLimparAction" text="Limpar Seleção" />
 						</HBox>
 					</HBox>
 					<!-- Outros elementos aqui -->

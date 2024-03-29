@@ -43,84 +43,49 @@ public class MainViewController implements Initializable {
 
     // Serviço para manipulação de agendas
     private final AgendaService service = new AgendaService();
+    // Public MenuItems
     public MenuItem menuItemPendenciasHive;
+    public MenuItem menuItemPendenciaFormulario0000;
 
+    // Private Stage
     private Stage primaryStage;
 
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
+    // FXML MenuItems
+    @FXML private MenuItem menuItemAgenda; // FXML MenuItem
+    @FXML private MenuItem menuItemSped_9900; // FXML MenuItem
+    @FXML private MenuItem menuItemHiveSped_9900; // FXML MenuItem
+    @FXML private MenuItem menuItemPendenciaProcessamento0000; // FXML MenuItem
+    @FXML private MenuItem menuItemAbout; // FXML MenuItem
+    @FXML private MenuItem menuItemTotalizacaoNfe; // FXML MenuItem
+    @FXML private MenuItem menuItemQuantidadeDocumentoArquivo; // FXML MenuItem
+    @FXML private MenuItem menuItemOracleHive; // FXML MenuItem
+    @FXML private MenuItem menuProcessarPendencia; // FXML MenuItem
+    @FXML private MenuItem MenuProcessarDuplicidadeId; // FXML MenuItem
+    // FXML MenuItems Fechar
+    @FXML private MenuItem menuItemFecharAgenda; // FXML MenuItem
+    @FXML private MenuItem menuItemFecharAbout; // FXML MenuItem
+    @FXML private MenuItem menuItemFecharOracleHive; // FXML MenuItem
+    @FXML private MenuItem menuItemFecharProcessarPendenciaHive; // FXML MenuItem
+    @FXML private MenuItem menuItemFecharQuantidadeDocumentoArquivo; // FXML MenuItem
+    @FXML private MenuItem menuItemFecharSped9900; // FXML MenuItem
+    @FXML private MenuItem menuItemFecharTotalizacaoNfe; // FXML MenuItem
 
-    @FXML
-    private MenuItem menuItemAgenda;
-    @FXML
-    private MenuItem menuItemFecharAgenda;
+    // FXML ComboBox and TextField
+    @FXML private ComboBox<TipoDoc> comboTipoDoc; // FXML ComboBox
+    @FXML private ComboBox<TipoDoc> comboTipoDocCentral; // FXML ComboBox
+    @FXML private TextField txtDias; // FXML TextField
 
-    @FXML
-    private MenuItem menuItemSped_9900;
+    // FXML TitledPane and Layout Nodes
+    @FXML private TitledPane titledPanecomboTipoDocCentral; // FXML TitledPane
+    @FXML private VBox mainVBox; // FXML VBox
+    @FXML private ScrollPane mainScrollPane; // FXML ScrollPane
 
-    @FXML
-    private MenuItem menuItemHiveSped_9900;
+    // Other Controllers and Managers
+    private QuantidadeDocumentoArquivoController quantidadeDocumentoArquivoController; // Controller
+    private AgendaListController agendaListController; // Controller
+    private static OracleSpedDatabaseOperations oracleSpedDatabaseOperations; // Manager
+    private SchedulerManager schedulerManager; // Manager
 
-    @FXML
-    private MenuItem menuItemPendenciaProcessamento0000;
-
-    @FXML
-    private MenuItem menuItemAbout;
-
-    @FXML
-    private MenuItem menuItemFecharAbout;
-
-    @FXML
-    private MenuItem menuItemTotalizacaoNfe;
-
-    @FXML
-    private MenuItem menuItemFecharTotalizacaoNfe;
-
-    @FXML
-    private MenuItem menuItemProcessarPendenciaHive;
-
-    @FXML
-    private MenuItem menuItemFecharOracleHive;
-
-    @FXML
-    private MenuItem menuItemQuantidadeDocumentoArquivo;
-
-    @FXML
-    private MenuItem menuItemFecharQuantidadeDocumentoArquivo;
-
-    @FXML
-    private MenuItem menuItemOracleHive;
-
-    @FXML
-    private MenuItem menuProcessarPendencia;
-
-    @FXML
-    private MenuItem MenuProcessarDuplicidadeId;
-
-    @FXML
-    private ComboBox<TipoDoc> comboTipoDoc;
-
-    @FXML
-    private TextField txtDias;
-
-    @FXML
-    private ComboBox<TipoDoc> comboTipoDocCentral;
-
-    @FXML
-    private TitledPane titledPanecomboTipoDocCentral;
-
-    @FXML
-    private VBox mainVBox;
-
-    @FXML
-    private ScrollPane mainScrollPane;
-
-    private QuantidadeDocumentoArquivoController quantidadeDocumentoArquivoController;
-
-    private AgendaListController agendaListController;
-    private static OracleSpedDatabaseOperations oracleSpedDatabaseOperations;
-    private SchedulerManager schedulerManager;
 
     // Método de inicialização do controlador
     @Override
@@ -194,6 +159,17 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
+    public void onMenuItemPendenciaFormulario0000() {
+        String oracleFilePath = "X:\\Dados\\SPED\\ORACLE_SPED_9900.csv";
+        String hiveFilePath = "X:\\Dados\\SPED\\HIVE_SPED_9900.csv";
+        String outputFilePath = "X:\\Dados\\SPED\\Pendencia_Processamento_0000.csv";
+
+        CSVUtils.FileComparisonService.compareAndSaveDifferences(oracleFilePath, hiveFilePath, outputFilePath);
+        // Carrega a view desejada
+        loadView("/Fxml/Sped9900.fxml", x -> {});
+    }
+
+    @FXML
     public void onMenuItemTotalizacaoNfeAction() {
         // Carrega a view de totalização de Nfe
         loadView("/Fxml/NfeTotalizacao.fxml", x -> {});
@@ -222,7 +198,7 @@ public class MainViewController implements Initializable {
             handleRemoveAgendaList();
         }
 
-        if (isFormularioPresente("processarPendenciasPane")) {
+        if (isFormularioPresente("pendenciasHivePane")) {
             handleRemoveProcessarPendenciaHive();
         }
 
@@ -232,6 +208,10 @@ public class MainViewController implements Initializable {
 
         if (isFormularioPresente("quantidadeDocArquivoPane")) {
             handleRemoverFormulario();
+        }
+
+        if (isFormularioPresente("sped9900Pane")) {
+            handleRemoveSped9900();
         }
 
 
@@ -342,10 +322,9 @@ public class MainViewController implements Initializable {
     // Configura a visibilidade inicial dos itens de menu como false
     private void configurarVisibilidadeInicialItensMenu() {
         // Lista dos itens de menu a serem configurados
-        Arrays.asList(menuItemFecharAgenda, menuItemFecharTotalizacaoNfe,
-                        menuItemProcessarPendenciaHive, menuItemFecharQuantidadeDocumentoArquivo, menuItemFecharOracleHive,
-                        menuItemFecharAbout)
-                .forEach(menuItem -> menuItem.setVisible(false));
+        Arrays.asList(menuItemFecharAgenda, menuItemFecharTotalizacaoNfe, menuItemFecharProcessarPendenciaHive,
+                        menuItemFecharQuantidadeDocumentoArquivo, menuItemFecharOracleHive, menuItemFecharSped9900,
+                        menuItemFecharAbout).forEach(menuItem -> menuItem.setVisible(false));
     }
 
     /**
@@ -363,8 +342,9 @@ public class MainViewController implements Initializable {
                 "#nfeTotalizacaoPane", menuItemFecharTotalizacaoNfe,
                 "#quantidadeDocArquivoPane", menuItemFecharQuantidadeDocumentoArquivo,
                 "#agendaListPane", menuItemFecharAgenda,
-                "#pendenciasHivePane", menuItemProcessarPendenciaHive,
+                "#pendenciasHivePane", menuItemFecharProcessarPendenciaHive,
                 "#oracleHivePane", menuItemFecharOracleHive,
+                "#sped9900Pane", menuItemFecharSped9900,
                 "#aboutPane", menuItemFecharAbout
         );
 
@@ -520,6 +500,7 @@ public class MainViewController implements Initializable {
         boolean isAgendaListActive = mainVBox.lookup("#agendaListPane") != null;
         boolean isPendenciaHiveActive = mainVBox.lookup("#pendenciasHivePane") != null;
         boolean isOracleHiveActive = mainVBox.lookup("#OracleHivePane") != null;
+        boolean isOracleSped9900 = mainVBox.lookup("#sped9900Pane") != null;
         boolean isAboutActive = mainVBox.lookup("#aboutPane") != null;
 
         titledPanecomboTipoDocCentral.setVisible(isAgendaListActive && isQuantidadeDocumentoArquivoActive);
@@ -531,6 +512,7 @@ public class MainViewController implements Initializable {
         correspondingMenuItem.setVisible(isAgendaListActive);
         correspondingMenuItem.setVisible(isPendenciaHiveActive);
         correspondingMenuItem.setVisible(isOracleHiveActive);
+        correspondingMenuItem.setVisible(isOracleSped9900);
         correspondingMenuItem.setVisible(isAboutActive);
     }
 
@@ -559,7 +541,7 @@ public class MainViewController implements Initializable {
     @FXML
     private void handleRemoveProcessarPendenciaHive() {
         // Chama o método genérico para remover o formulário, passando o ID do formulário e o item de menu correspondente
-        removeForm("pendenciasHivePane", menuItemProcessarPendenciaHive);
+        removeForm("pendenciasHivePane", menuItemFecharProcessarPendenciaHive);
     }
 
     // Manipula a ação de remoção do formulário "OracleHivePane"
@@ -567,6 +549,13 @@ public class MainViewController implements Initializable {
     private void handleRemoveOracleHive() {
         // Chama o método genérico para remover o formulário, passando o ID do formulário e o item de menu correspondente
         removeForm("oracleHivePane", menuItemFecharOracleHive);
+    }
+
+    // Manipula a ação de remoção do formulário "OracleHivePane"
+    @FXML
+    private void handleRemoveSped9900() {
+        // Chama o método genérico para remover o formulário, passando o ID do formulário e o item de menu correspondente
+        removeForm("sped9900Pane", menuItemFecharSped9900);
     }
 
     // Manipula a ação de remoção do formulário "aboutPane"
