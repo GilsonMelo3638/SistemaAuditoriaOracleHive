@@ -5,10 +5,10 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class HiveConnectorSped {
+public class HiveConnectorSped0990xTabelasSped {
     private Connection connection;
 
-    public HiveConnectorSped() {
+    public HiveConnectorSped0990xTabelasSped() {
         try {
             // Carrega o driver JDBC do Hive
             Class.forName("org.apache.hive.jdbc.HiveDriver");
@@ -79,7 +79,7 @@ public class HiveConnectorSped {
 
     public static void main(String[] args) {
         // Cria uma instância da classe HiveConnectorSped
-        HiveConnectorSped connector = new HiveConnectorSped();
+        HiveConnectorSped0990xTabelasSped connector = new HiveConnectorSped0990xTabelasSped();
 
         // Obtém a data atual e subtrai 30 dias
         LocalDateTime dataAtual = LocalDateTime.now().minusDays(60);
@@ -94,7 +94,7 @@ public class HiveConnectorSped {
 
         // Diretório e nome do arquivo para salvar os resultados CSV
         String diretorio = "X:\\Dados\\SPED\\";
-        String nomeArquivo = diretorio + "resultados.csv";
+        String nomeArquivo = diretorio + "divergencia9900TabelasSped.csv";
 
 // Loop sobre o array de reg_blc
         for (String regBlc : regBlcArray) {

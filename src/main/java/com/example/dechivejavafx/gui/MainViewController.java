@@ -3,6 +3,7 @@ package com.example.dechivejavafx.gui;
 import com.example.dechivejavafx.Validacoes.TipoDoc;
 import com.example.dechivejavafx.application.Main;
 import com.example.dechivejavafx.db.HiveDecDatabaseOperations;
+import com.example.dechivejavafx.db.HiveSpedDatabaseOperations;
 import com.example.dechivejavafx.db.OracleSpedDatabaseOperations;
 import com.example.dechivejavafx.gui.util.Alerts;
 import com.example.dechivejavafx.gui.util.CSVUtils;
@@ -25,6 +26,7 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -43,9 +45,7 @@ public class MainViewController implements Initializable {
 
     // Serviço para manipulação de agendas
     private final AgendaService service = new AgendaService();
-    // Public MenuItems
-    public MenuItem menuItemPendenciasHive;
-    public MenuItem menuItemPendenciaFormulario0000;
+
 
     // Private Stage
     private Stage primaryStage;
@@ -69,6 +69,10 @@ public class MainViewController implements Initializable {
     @FXML private MenuItem menuItemFecharQuantidadeDocumentoArquivo; // FXML MenuItem
     @FXML private MenuItem menuItemFecharSped9900; // FXML MenuItem
     @FXML private MenuItem menuItemFecharTotalizacaoNfe; // FXML MenuItem
+    // Public MenuItems Sped
+    public MenuItem menuItemPendenciasHive;
+    public MenuItem menuItemPendenciaFormulario0000;
+    public MenuItem menuItemSped0990xTabelasSped;
 
     // FXML ComboBox and TextField
     @FXML private ComboBox<TipoDoc> comboTipoDoc; // FXML ComboBox
@@ -135,6 +139,37 @@ public class MainViewController implements Initializable {
         // Carrega a view desejada
         loadView("/Fxml/Sped9900.fxml", x -> {});
     }
+
+
+    @FXML
+    public void onMenuItemHivedivergencia9900TabelasSpedAction() {
+        // Define a cena atual e carrega a view de quantidade de documentos em arquivo
+        SceneManager.setCurrentScene(Main.getMainScene());
+
+        // Obtém os valores das variáveis de ambiente para conexão com o Hive
+        String jdbcURL = System.getenv("HIVE_JDBC_URL");
+        String username = System.getenv("HIVE_USERNAME");
+        String password = System.getenv("HIVE_PASSWORD");
+
+        // Cria uma instância de HiveSpedDatabaseOperations com os parâmetros de conexão
+        HiveSpedDatabaseOperations hiveSpedDB = new HiveSpedDatabaseOperations(jdbcURL, username, password);
+
+        // Obtém a data atual e subtrai 60 dias
+        LocalDateTime dataAtual = LocalDateTime.now().minusDays(60);
+
+        // Define o nome do arquivo CSV
+        String nomeArquivo = "X:\\Dados\\SPED\\divergencia9900TabelasSped.csv";
+
+        // Executa a consulta e grava no arquivo CSV
+        hiveSpedDB.divergencia9900TabelasSpedAndWriteToCSV(dataAtual, nomeArquivo);
+
+        // Certifique-se de desconectar após o uso
+        hiveSpedDB.disconnect();
+
+        // Carrega a view desejada
+        loadView("/Fxml/Sped9900.fxml", x -> {});
+    }
+
 
     @FXML
     public void onMenuItemPendenciaProcessamento0000() {

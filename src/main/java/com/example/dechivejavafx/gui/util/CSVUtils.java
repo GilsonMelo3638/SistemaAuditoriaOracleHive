@@ -6,10 +6,7 @@ import com.example.dechivejavafx.Validacoes.SituacaoProcessamento;
 import com.example.dechivejavafx.Validacoes.TipoDoc;
 import com.example.dechivejavafx.gui.OracleHiveController;
 import com.example.dechivejavafx.gui.QuantidadeDocumentoArquivoController;
-import com.example.dechivejavafx.model.entities.Agenda;
-import com.example.dechivejavafx.model.entities.OracleHive;
-import com.example.dechivejavafx.model.entities.QuantidadeDocumentoArquivo;
-import com.example.dechivejavafx.model.entities.Sped9900;
+import com.example.dechivejavafx.model.entities.*;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -18,7 +15,9 @@ import java.sql.ResultSet;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -521,4 +520,52 @@ public class CSVUtils {
         return dataList;
     }
 
+    public static List<Hive9900TabelasHive> loadHive9900TabelasHiveFromCsv(String filePath) {
+        List<Hive9900TabelasHive> dataList = new ArrayList<>();
+
+        // Cria um DateTimeFormatter local que pode lidar com os microssegundos
+        DateTimeFormatter localDateTimeFormatter = new DateTimeFormatterBuilder()
+                .appendPattern("yyyy-MM-dd HH:mm:ss")
+                .optionalStart()
+                .appendFraction(ChronoField.NANO_OF_SECOND, 0, 6, true)
+                .optionalEnd()
+                .toFormatter();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            reader.readLine(); // Ignorar a primeira linha (cabeçalhos)
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] values = line.split(",");
+
+                // Verifica se a linha possui todos os campos esperados
+                if (values.length != 6) {
+                    LOGGER.log(Level.SEVERE, "Erro ao processar linha: " + line + ". Número incorreto de campos.");
+                    continue; // Ignora esta linha e passa para a próxima
+                }
+
+                // Tenta converter os valores da linha para os tipos corretos
+                try {
+                    BigInteger idBase = new BigInteger(values[0].trim());
+                    LocalDateTime dhProcessamento = LocalDateTime.parse(values[1].trim(), localDateTimeFormatter);
+                    int statusProcessamento = Integer.parseInt(values[2].trim());
+                    LocalDateTime dataHoraFin = LocalDateTime.parse(values[3].trim(), localDateTimeFormatter);
+                    String registro = values[4].trim(); // Mantém como String
+                    String registroBloco = values[5].trim(); // Mantém como String
+
+                    // Cria um objeto Hive9900TabelasHive com os valores extraídos da linha e adiciona à lista
+                    Hive9900TabelasHive hive9900TabelasHive = new Hive9900TabelasHive(idBase, dhProcessamento, statusProcessamento, dataHoraFin,
+                            registro, registroBloco);
+                    dataList.add(hive9900TabelasHive);
+                } catch (NumberFormatException | DateTimeParseException e) {
+                    // Se ocorrer um erro ao processar a linha, imprime uma mensagem de erro
+                    LOGGER.log(Level.SEVERE, "Erro ao processar linha: " + line, e);
+                }
+            }
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Erro ao ler o arquivo CSV: " + filePath, e);
+        }
+
+        return dataList;
+    }
 }

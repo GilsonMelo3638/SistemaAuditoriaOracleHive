@@ -84,10 +84,13 @@
                                 <MenuItem fx:id="menuItemPendenciaProcessamento0000" mnemonicParsing="false"
                                           onAction="#onMenuItemPendenciaProcessamento0000" text="Gerar Pendências 0000(Completo)" />
                             </items>
-
                             <items>
                                 <MenuItem fx:id="menuItemPendenciaFormulario0000" mnemonicParsing="false"
                                           onAction="#onMenuItemPendenciaFormulario0000" text="Pendencias 0000" />
+                            </items>
+                            <items>
+                                <MenuItem fx:id="menuItemSped0990xTabelasSped" mnemonicParsing="false"
+                                          onAction="#onMenuItemHivedivergencia9900TabelasSpedAction" text="Divergência 9900 e Tabelas" />
                             </items>
 
                         </Menu>
