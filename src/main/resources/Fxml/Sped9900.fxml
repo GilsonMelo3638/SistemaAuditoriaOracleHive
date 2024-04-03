@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Font?>
 
 <VBox id="sped9900Pane" alignment="CENTER" fillWidth="true" prefHeight="700.0" prefWidth="2200.0" style="-fx-border-color: black; -fx-border-width: 1px;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.example.dechivejavafx.gui.HiveSpedController">
-   <Label text="          REGISTROS PENDENTES DE CARGAS TOTAL OU PARCIAL          ">
+   <Label text="REGISTROS PENDENTES DE CARGAS TOTAL OU PARCIAL">
       <font>
          <Font name="System Bold" size="25.0" />
       </font>
@@ -39,7 +39,11 @@
             <ComboBox fx:id="comboTabelasSped" VBox.vgrow="ALWAYS" prefWidth="175" />
             <Button fx:id="btLimpar" mnemonicParsing="false" onAction="#onBtLimparAction" text="Limpar Seleção" />
          </HBox>
-         <Label text="Registro 9900 Carregados no Hive e Ausentes em Outras Tabelas do Hive:" />
+         <HBox spacing="10">
+            <Label text="Registro 9900 Carregados no Hive e Ausentes em Outras Tabelas do Hive: " />
+            <Label text="Total de id_base:" />
+            <Label fx:id="txtTotalIdBase" />
+         </HBox>
          <TableView fx:id="tableViewHive9900TodasTabelasHive" VBox.vgrow="ALWAYS" prefHeight="573.0">
             <columns>
                <!-- Adicione as colunas desejadas aqui -->
@@ -55,6 +59,24 @@
             </columnResizePolicy>
          </TableView>
       </VBox>
+      <VBox spacing="10" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+         <HBox spacing="10">
+            <Label text="Registro 9900 Carregados no Oracle e Ausentes em Tabelas do Hive: " />
+            <Label text="Total de id_base:" />
+            <Label fx:id="txtTotalIdBaseFaltante" />
+         </HBox>
+         <TableView fx:id="tableViewHive9900TodasTabelasHiveFaltantes" VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="75.25">
+            <columns>
+               <!-- Adicione as colunas desejadas aqui -->
+               <TableColumn fx:id="columnTabelaidBase9900HiveFaltantes" text="ID Base" />
+               <TableColumn fx:id="columnTabelaregistroBloco9900HiveFaltantes" text="Registro Bloco" />
+            </columns>
+            <columnResizePolicy>
+               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+         </TableView>
+      </VBox>
+
    </HBox>
    <Separator style="-fx-border-color: black; -fx-border-width: 2px;" />
 </VBox>

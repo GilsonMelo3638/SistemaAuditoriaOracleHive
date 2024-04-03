@@ -5,10 +5,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class HiveConnectorTest {
+public class HiveConnectorQuerySimples {
     private Connection connection;
 
-    public HiveConnectorTest() {
+    public HiveConnectorQuerySimples() {
         try {
             // Carrega o driver JDBC do Hive
             Class.forName("org.apache.hive.jdbc.HiveDriver");
@@ -71,7 +71,7 @@ public class HiveConnectorTest {
 
     public static void main(String[] args) {
         // Cria uma instância da classe HiveConnector
-        HiveConnectorTest connector = new HiveConnectorTest();
+        HiveConnectorQuerySimples connector = new HiveConnectorQuerySimples();
 
         // Executa uma consulta (substitua pela sua própria consulta)
         String query = "SELECT \n" +

@@ -5,6 +5,7 @@ import com.example.dechivejavafx.db.HiveSpedDatabaseOperations;
 import com.example.dechivejavafx.gui.util.CSVUtils;
 import com.example.dechivejavafx.gui.util.Configuracao;
 import com.example.dechivejavafx.model.entities.Hive9900TabelasHive;
+import com.example.dechivejavafx.model.entities.Hive9900TabelasHiveFaltantes;
 import com.example.dechivejavafx.model.entities.Sped9900;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -25,6 +26,16 @@ import java.util.function.Function;
 public class HiveSpedController {
     private static HiveSpedDatabaseOperations databaseOperations;
     public Button btLimpar;
+    @FXML public Label txtTotalIdBase;
+    @FXML public Label txtTotalIdBaseFaltante;
+
+    @FXML private TableView<Sped9900> tableView9900Orapr12Hive0000;
+    @FXML private TableView<Hive9900TabelasHive> tableViewHive9900TodasTabelasHive;
+    @FXML private TableView <Hive9900TabelasHiveFaltantes> tableViewHive9900TodasTabelasHiveFaltantes;
+
+    @FXML private TableColumn <Hive9900TabelasHiveFaltantes, BigInteger> columnTabelaidBase9900HiveFaltantes;
+    @FXML private TableColumn <Hive9900TabelasHiveFaltantes, String> columnTabelaregistroBloco9900HiveFaltantes;
+
     @FXML private TableColumn<Hive9900TabelasHive, BigInteger>columnTabelaidBase9900Hive;
     @FXML private TableColumn<Hive9900TabelasHive, LocalDateTime> columnTabeladhProcessamentoSpedBase;
     @FXML private TableColumn<Hive9900TabelasHive, Integer> columnTabelastatusProcessamentoSpedBase;
@@ -45,10 +56,9 @@ public class HiveSpedController {
     @FXML private TableColumn<Sped9900, String> columnTabelaregistro;
     @FXML private TableColumn<Sped9900, String> columnTabelaregistroBloco;
     @FXML private ComboBox<TabelasSped> comboTabelasSped;
-    @FXML private TableView<Sped9900> tableView9900Orapr12Hive0000;
 
-    @FXML private TableView<Hive9900TabelasHive> tableViewHive9900TodasTabelasHive;
     private ObservableList<Hive9900TabelasHive> originalDataList = FXCollections.observableArrayList();
+    private ObservableList<Hive9900TabelasHiveFaltantes> originalDataListFaltantes = FXCollections.observableArrayList();
 
 
     @FXML
@@ -66,8 +76,11 @@ public class HiveSpedController {
         configureColumnHive9900TabelasHive(columnTabeladhProcessamentoSpedBase, Hive9900TabelasHive::getDhProcessamento);
         configureColumnHive9900TabelasHive(columnTabelastatusProcessamentoSpedBase, Hive9900TabelasHive::getStatusProcessamento);
         configureColumnHive9900TabelasHive(columnTabelasdataHoraFin9900Hive, Hive9900TabelasHive::getDataHoraFin);
-       configureColumnHive9900TabelasHive(columnTabelaregistro9900Hive, Hive9900TabelasHive::getRegistro);
+        configureColumnHive9900TabelasHive(columnTabelaregistro9900Hive, Hive9900TabelasHive::getRegistro);
         configureColumnHive9900TabelasHive(columnTabelaregistroBloco9900Hive, Hive9900TabelasHive::getRegistroBloco);
+
+        configureColumnHive9900TabelasHiveFaltantes(columnTabelaidBase9900HiveFaltantes, Hive9900TabelasHiveFaltantes::getIdBase);
+        configureColumnHive9900TabelasHiveFaltantes(columnTabelaregistroBloco9900HiveFaltantes, Hive9900TabelasHiveFaltantes::getRegistroBloco);
 
         // Inicializar o ComboBox com os valores da enumeração TabelasSped (sem o sublinhado)
         ObservableList<TabelasSped> tabelasSpedList = FXCollections.observableArrayList(TabelasSped.values());
@@ -85,21 +98,20 @@ public class HiveSpedController {
         comboTabelasSped.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 System.out.println("Item selecionado no ComboBox: " + newValue.getFormattedName());
-                filterTable(newValue); // Filtrar a tabela com base no valor selecionado no ComboBox
+                filterTable(newValue); // Filtrar as tabelas com base no valor selecionado no ComboBox
+                updateRowCounts(); // Atualizar a contagem de linhas quando o item do ComboBox mudar
             }
         });
-
-
-        // Imprimir o item selecionado inicialmente, se houver
-        TabelasSped itemSelecionado = comboTabelasSped.getSelectionModel().getSelectedItem();
-        if (itemSelecionado != null) {
-            System.out.println("Item selecionado inicialmente no ComboBox: " + itemSelecionado.getFormattedName());
-        }
 
         // Carregar os dados do arquivo CSV na TableView
         loadCSVData();
         loadCSVDataHive9900TabelasHive();
+        loadCSVDataHive9900TabelasHiveFaltante();
+
+        // Atualizar a contagem inicial de linhas
+        updateRowCounts();
     }
+
 
 
     private void filterTable(TabelasSped selectedValue) {
@@ -108,6 +120,8 @@ public class HiveSpedController {
 
         // Criar uma nova lista filtrada com base no valor formatado selecionado no ComboBox
         ObservableList<Hive9900TabelasHive> filteredDataList = FXCollections.observableArrayList();
+        ObservableList<Hive9900TabelasHiveFaltantes> filteredDataListFaltantes = FXCollections.observableArrayList();
+
         for (Hive9900TabelasHive item : originalDataList) {
             // Comparar o valor do registroBloco com o valor formatado selecionado
             if (item.getRegistroBloco().equals(selectedFormattedName)) {
@@ -115,9 +129,18 @@ public class HiveSpedController {
             }
         }
 
-        // Atualizar a TableView com os dados filtrados
+        for (Hive9900TabelasHiveFaltantes item : originalDataListFaltantes) {
+            // Comparar o valor do registroBloco com o valor formatado selecionado
+            if (item.getRegistroBloco().equals(selectedFormattedName)) {
+                filteredDataListFaltantes.add(item);
+            }
+        }
+
+        // Atualizar as TableViews com os dados filtrados
         tableViewHive9900TodasTabelasHive.setItems(filteredDataList);
+        tableViewHive9900TodasTabelasHiveFaltantes.setItems(filteredDataListFaltantes);
     }
+
     @FXML
     private void onBtLimparAction() {
         btLimpar.setOnAction(event -> clearFilter());
@@ -126,6 +149,7 @@ public class HiveSpedController {
     // Método para limpar o filtro e restaurar a lista original
     private void clearFilter() {
         tableViewHive9900TodasTabelasHive.setItems(originalDataList);
+        tableViewHive9900TodasTabelasHiveFaltantes.setItems(originalDataListFaltantes);
     }
 
     private void loadCSVData() {
@@ -139,6 +163,13 @@ public class HiveSpedController {
         originalDataList.addAll(dataList);
         ObservableList<Hive9900TabelasHive> observableDataList = FXCollections.observableArrayList(dataList);
         tableViewHive9900TodasTabelasHive.setItems(observableDataList);
+    }
+
+    private void loadCSVDataHive9900TabelasHiveFaltante() {
+        List<Hive9900TabelasHiveFaltantes> dataList = CSVUtils.loadHive9900TabelasHiveFromCsvFaltantes("X:\\Dados\\SPED\\ResultadoQuery.csv");
+        originalDataListFaltantes.addAll(dataList);
+        ObservableList<Hive9900TabelasHiveFaltantes> observableDataList = FXCollections.observableArrayList(dataList);
+        tableViewHive9900TodasTabelasHiveFaltantes.setItems(observableDataList);
     }
 
 
@@ -164,6 +195,26 @@ public class HiveSpedController {
 
     // Método para configurar coluna de texto na tabela
     private <T> void configureColumnHive9900TabelasHive(TableColumn<Hive9900TabelasHive, T> column, Function<Hive9900TabelasHive, T> valueExtractor) {
+        column.setCellValueFactory(cellData -> new SimpleObjectProperty<>(valueExtractor.apply(cellData.getValue())));
+
+        // Configurar comparadores para ordenação múltipla
+        column.setComparator((o1, o2) -> {
+            if (o1 == null && o2 == null) {
+                return 0;
+            } else if (o1 == null) {
+                return -1;
+            } else if (o2 == null) {
+                return 1;
+            }
+            return String.valueOf(o1).compareToIgnoreCase(String.valueOf(o2));
+        });
+
+        // Configurar a ordenação inicial
+        column.setSortType(TableColumn.SortType.ASCENDING);
+    }
+
+    // Método para configurar coluna de texto na tabela
+    private <T> void configureColumnHive9900TabelasHiveFaltantes(TableColumn<Hive9900TabelasHiveFaltantes, T> column, Function<Hive9900TabelasHiveFaltantes, T> valueExtractor) {
         column.setCellValueFactory(cellData -> new SimpleObjectProperty<>(valueExtractor.apply(cellData.getValue())));
 
         // Configurar comparadores para ordenação múltipla
@@ -217,5 +268,16 @@ public class HiveSpedController {
         if (databaseOperations != null) {
             databaseOperations.disconnect();
         }
+    }
+
+    // Método para atualizar a contagem de linhas nas TableView
+    private void updateRowCounts() {
+        // Contar e associar a quantidade de linhas à label txtTotalIdBase
+        int totalLinhasHive = tableViewHive9900TodasTabelasHive.getItems().size();
+        txtTotalIdBase.setText(String.valueOf(totalLinhasHive));
+
+        // Contar e associar a quantidade de linhas à label txtTotalIdBaseFaltante
+        int totalLinhasHiveFaltantes = tableViewHive9900TodasTabelasHiveFaltantes.getItems().size();
+        txtTotalIdBaseFaltante.setText(String.valueOf(totalLinhasHiveFaltantes));
     }
 }

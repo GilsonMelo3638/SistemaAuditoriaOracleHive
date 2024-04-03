@@ -568,4 +568,49 @@ public class CSVUtils {
 
         return dataList;
     }
+
+    public static List<Hive9900TabelasHiveFaltantes> loadHive9900TabelasHiveFromCsvFaltantes(String filePath) {
+        List<Hive9900TabelasHiveFaltantes> dataList = new ArrayList<>();
+
+        // Cria um DateTimeFormatter local que pode lidar com os microssegundos
+        DateTimeFormatter localDateTimeFormatter = new DateTimeFormatterBuilder()
+                .appendPattern("yyyy-MM-dd HH:mm:ss")
+                .optionalStart()
+                .appendFraction(ChronoField.NANO_OF_SECOND, 0, 6, true)
+                .optionalEnd()
+                .toFormatter();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            reader.readLine(); // Ignorar a primeira linha (cabeçalhos)
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] values = line.split(",");
+
+                // Verifica se a linha possui todos os campos esperados
+                if (values.length != 2) {
+                    LOGGER.log(Level.SEVERE, "Erro ao processar linha: " + line + ". Número incorreto de campos.");
+                    continue; // Ignora esta linha e passa para a próxima
+                }
+
+                // Tenta converter os valores da linha para os tipos corretos
+                try {
+                    BigInteger idBase = new BigInteger(values[0].trim());
+                    String registroBloco = values[1].trim(); // Mantém como String
+
+                    // Cria um objeto Hive9900TabelasHive com os valores extraídos da linha e adiciona à lista
+                    Hive9900TabelasHiveFaltantes hive9900TabelasHiveFaltantes = new Hive9900TabelasHiveFaltantes(idBase, registroBloco);
+                    dataList.add(hive9900TabelasHiveFaltantes);
+                } catch (NumberFormatException | DateTimeParseException e) {
+                    // Se ocorrer um erro ao processar a linha, imprime uma mensagem de erro
+                    LOGGER.log(Level.SEVERE, "Erro ao processar linha: " + line, e);
+                }
+            }
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Erro ao ler o arquivo CSV: " + filePath, e);
+        }
+
+        return dataList;
+    }
+
 }
