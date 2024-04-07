@@ -26,6 +26,7 @@ import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -45,8 +46,6 @@ public class MainViewController implements Initializable {
 
     // Serviço para manipulação de agendas
     private final AgendaService service = new AgendaService();
-
-
     // Private Stage
     private Stage primaryStage;
 
@@ -61,6 +60,8 @@ public class MainViewController implements Initializable {
     @FXML private MenuItem menuItemOracleHive; // FXML MenuItem
     @FXML private MenuItem menuProcessarPendencia; // FXML MenuItem
     @FXML private MenuItem MenuProcessarDuplicidadeId; // FXML MenuItem
+    @FXML private MenuItem menuItemGerarPendencia9900Oracle_TabelasHiveGeral;
+    @FXML private MenuItem menuItemGerarPendenciaSpedFormulario;
     // FXML MenuItems Fechar
     @FXML private MenuItem menuItemFecharAgenda; // FXML MenuItem
     @FXML private MenuItem menuItemFecharAbout; // FXML MenuItem
@@ -69,6 +70,7 @@ public class MainViewController implements Initializable {
     @FXML private MenuItem menuItemFecharQuantidadeDocumentoArquivo; // FXML MenuItem
     @FXML private MenuItem menuItemFecharSped9900; // FXML MenuItem
     @FXML private MenuItem menuItemFecharTotalizacaoNfe; // FXML MenuItem
+    @FXML private MenuItem menuItemGerarPendencia9900Oracle_TabelasHive;
     // Public MenuItems Sped
     public MenuItem menuItemPendenciasHive;
     public MenuItem menuItemPendenciaFormulario0000;
@@ -170,6 +172,36 @@ public class MainViewController implements Initializable {
         loadView("/Fxml/Sped9900.fxml", x -> {});
     }
 
+    public void onMenuItemPendencia9900OracleTabelasHiveAction() {
+        // Define a cena atual, se necessário
+        SceneManager.setCurrentScene(Main.getMainScene());
+
+        // Obtém os valores das variáveis de ambiente para conexão com o Hive
+        String jdbcURL = System.getenv("HIVE_JDBC_URL");
+        String username = System.getenv("HIVE_USERNAME");
+        String password = System.getenv("HIVE_PASSWORD");
+
+        // Cria uma instância de HiveSpedDatabaseOperations com os parâmetros de conexão
+        HiveSpedDatabaseOperations hiveSpedDB = new HiveSpedDatabaseOperations(jdbcURL, username, password);
+
+        // Define os caminhos para o arquivo de entrada e para o arquivo de saída
+        String inputFilePath = "X:\\Dados\\SPED\\ORACLE_SPED_9900.csv";
+        String outputFilePath9900OracleTabelasHive = "X:\\Dados\\SPED\\ResultadoQuery.csv";
+
+        try {
+            // Executa a consulta com join e escreve os resultados no arquivo CSV de saída
+            hiveSpedDB.executeQueryWithJoinAndWriteResults(inputFilePath, outputFilePath9900OracleTabelasHive);
+            System.out.println("Operação concluída com sucesso.");
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            // Certifique-se de desconectar após o uso
+            hiveSpedDB.disconnect();
+        }
+
+         loadView("/Fxml/Sped9900.fxml", x -> {});
+    }
+
 
     @FXML
     public void onMenuItemPendenciaProcessamento0000() {
@@ -200,6 +232,12 @@ public class MainViewController implements Initializable {
         String outputFilePath = "X:\\Dados\\SPED\\Pendencia_Processamento_0000.csv";
 
         CSVUtils.FileComparisonService.compareAndSaveDifferences(oracleFilePath, hiveFilePath, outputFilePath);
+        // Carrega a view desejada
+        loadView("/Fxml/Sped9900.fxml", x -> {});
+    }
+
+    @FXML
+    public void onMenuItemPendenciaFormulario() {
         // Carrega a view desejada
         loadView("/Fxml/Sped9900.fxml", x -> {});
     }
@@ -613,5 +651,57 @@ public class MainViewController implements Initializable {
     public void setSchedulerManager(SchedulerManager schedulerManager) {
         this.schedulerManager = schedulerManager;
     }
+    @FXML
+    public void onMenuItemPendencia9900OracleTabelasHiveGeralAction() {
+        String oracleFilePath = "X:\\Dados\\SPED\\ORACLE_SPED_9900.csv";
+        String hiveFilePath = "X:\\Dados\\SPED\\HIVE_SPED_9900.csv";
+        String outputFilePath = "X:\\Dados\\SPED\\Pendencia_Processamento_0000.csv";
 
+        // Inicializa a instância de OracleSpedDatabaseOperations
+        oracleSpedDatabaseOperations = new OracleSpedDatabaseOperations();
+
+        // Chama o método após a inicialização
+        oracleSpedDatabaseOperations.executeQueryAndSaveToCSV();
+
+        // Cria uma instância de HiveSpedController, que inicializa automaticamente as variáveis de ambiente
+        HiveSpedController hiveSpedController = new HiveSpedController();
+
+        hiveSpedController.executeQueryAndSaveToCSV();
+
+        CSVUtils.FileComparisonService.compareAndSaveDifferences(oracleFilePath, hiveFilePath, outputFilePath);
+
+        // Obtém os valores das variáveis de ambiente para conexão com o Hive
+        String jdbcURL = System.getenv("HIVE_JDBC_URL");
+        String username = System.getenv("HIVE_USERNAME");
+        String password = System.getenv("HIVE_PASSWORD");
+
+        // Cria uma instância de HiveSpedDatabaseOperations com os parâmetros de conexão
+        HiveSpedDatabaseOperations hiveSpedDB = new HiveSpedDatabaseOperations(jdbcURL, username, password);
+
+        // Obtém a data atual e subtrai 60 dias
+        LocalDateTime dataAtual = LocalDateTime.now().minusDays(60);
+
+        // Define o nome do arquivo CSV
+        String nomeArquivo = "X:\\Dados\\SPED\\divergencia9900TabelasSped.csv";
+
+        // Executa a consulta e grava no arquivo CSV
+        hiveSpedDB.divergencia9900TabelasSpedAndWriteToCSV(dataAtual, nomeArquivo);
+
+        // Define os caminhos para o arquivo de entrada e para o arquivo de saída
+        String inputFilePath = "X:\\Dados\\SPED\\ORACLE_SPED_9900.csv";
+        String outputFilePath9900OracleTabelasHive = "X:\\Dados\\SPED\\ResultadoQuery.csv";
+
+        try {
+            // Executa a consulta com join e escreve os resultados no arquivo CSV de saída
+            hiveSpedDB.executeQueryWithJoinAndWriteResults(inputFilePath, outputFilePath9900OracleTabelasHive);
+            System.out.println("Operação concluída com sucesso.");
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            // Certifique-se de desconectar após o uso
+            hiveSpedDB.disconnect();
+        }
+
+        loadView("/Fxml/Sped9900.fxml", x -> {});
+    }
 }

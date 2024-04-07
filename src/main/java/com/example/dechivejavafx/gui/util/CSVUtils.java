@@ -3,6 +3,7 @@ package com.example.dechivejavafx.gui.util;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import com.example.dechivejavafx.Validacoes.SituacaoProcessamento;
+import com.example.dechivejavafx.Validacoes.TabelasSped;
 import com.example.dechivejavafx.Validacoes.TipoDoc;
 import com.example.dechivejavafx.gui.OracleHiveController;
 import com.example.dechivejavafx.gui.QuantidadeDocumentoArquivoController;
@@ -477,11 +478,17 @@ public class CSVUtils {
             }
         }
     }
+    /**
+     * Carrega os dados do arquivo CSV para uma lista de objetos Sped9900.
+     *
+     * @param filePath O caminho do arquivo CSV.
+     * @return Uma lista de objetos Sped9900.
+     */
     public static List<Sped9900> loadSped9900FromCsv(String filePath) {
         List<Sped9900> dataList = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            reader.readLine(); // Ignorar a primeira linha (cabeçalhos)
+            reader.readLine(); // Ignora a primeira linha (cabeçalhos)
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -520,6 +527,12 @@ public class CSVUtils {
         return dataList;
     }
 
+    /**
+     * Carrega os dados do arquivo CSV para uma lista de objetos Hive9900TabelasHive.
+     *
+     * @param filePath O caminho do arquivo CSV.
+     * @return Uma lista de objetos Hive9900TabelasHive.
+     */
     public static List<Hive9900TabelasHive> loadHive9900TabelasHiveFromCsv(String filePath) {
         List<Hive9900TabelasHive> dataList = new ArrayList<>();
 
@@ -532,7 +545,7 @@ public class CSVUtils {
                 .toFormatter();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            reader.readLine(); // Ignorar a primeira linha (cabeçalhos)
+            reader.readLine(); // Ignora a primeira linha (cabeçalhos)
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -569,6 +582,12 @@ public class CSVUtils {
         return dataList;
     }
 
+    /**
+     * Carrega os dados do arquivo CSV para uma lista de objetos Hive9900TabelasHiveFaltantes.
+     *
+     * @param filePath O caminho do arquivo CSV.
+     * @return Uma lista de objetos Hive9900TabelasHiveFaltantes.
+     */
     public static List<Hive9900TabelasHiveFaltantes> loadHive9900TabelasHiveFromCsvFaltantes(String filePath) {
         List<Hive9900TabelasHiveFaltantes> dataList = new ArrayList<>();
 
@@ -598,7 +617,7 @@ public class CSVUtils {
                     BigInteger idBase = new BigInteger(values[0].trim());
                     String registroBloco = values[1].trim(); // Mantém como String
 
-                    // Cria um objeto Hive9900TabelasHive com os valores extraídos da linha e adiciona à lista
+                    // Cria um objeto Hive9900TabelasHiveFaltantes com os valores extraídos da linha e adiciona à lista
                     Hive9900TabelasHiveFaltantes hive9900TabelasHiveFaltantes = new Hive9900TabelasHiveFaltantes(idBase, registroBloco);
                     dataList.add(hive9900TabelasHiveFaltantes);
                 } catch (NumberFormatException | DateTimeParseException e) {
@@ -613,4 +632,25 @@ public class CSVUtils {
         return dataList;
     }
 
+    /**
+     * Carrega IDs distintos de um arquivo CSV para uma tabela SPED específica.
+     *
+     * @param filePath O caminho do arquivo CSV.
+     * @param tabela A tabela SPED para a qual carregar IDs.
+     * @return Um conjunto de IDs distintos.
+     * @throws IOException Se ocorrer um erro de E/S durante a leitura do arquivo.
+     */
+    public static Set<String> loadDistinctIdsFromCSV(String filePath, TabelasSped tabela) throws IOException {
+        Set<String> distinctIds = new HashSet<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] columns = line.split(",");
+                if (columns.length >= 7 && columns[6].trim().equals(tabela.getFormattedName())) {
+                    distinctIds.add(columns[0].trim());
+                }
+            }
+        }
+        return distinctIds;
+    }
 }

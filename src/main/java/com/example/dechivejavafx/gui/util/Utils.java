@@ -4,8 +4,7 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 import java.util.function.Predicate;
 
 import com.example.dechivejavafx.model.entities.Agenda;
@@ -68,5 +67,41 @@ public class Utils {
             BigDecimal quantidade = item.getQuantidade();
             return quantidade != null && quantidade.compareTo(BigDecimal.ZERO) > 0;
         });
+    }
+    /**
+     * Divide um conjunto de IDs em lotes de tamanho especificado.
+     *
+     * @param ids O conjunto de IDs a ser dividido em lotes.
+     * @param batchSize O tamanho de cada lote.
+     * @return Uma lista de listas de IDs divididos em lotes.
+     */
+    public static List<List<String>> partitionIdsIntoBatches(Set<String> ids, int batchSize) {
+        // Lista para armazenar os lotes de IDs
+        List<List<String>> batches = new ArrayList<>();
+
+        // Lista temporária para armazenar IDs de um único lote
+        List<String> currentBatch = new ArrayList<>();
+
+        // Itera sobre cada ID no conjunto fornecido
+        for (String id : ids) {
+            // Adiciona o ID à lista do lote atual
+            currentBatch.add(id);
+
+            // Verifica se o tamanho do lote atual atingiu o tamanho máximo especificado
+            if (currentBatch.size() == batchSize) {
+                // Se o tamanho do lote atual atingiu o tamanho máximo, adiciona uma cópia dele à lista de lotes e limpa a lista do lote atual
+                batches.add(new ArrayList<>(currentBatch));
+                currentBatch.clear();
+            }
+        }
+
+        // Verifica se ainda existem IDs na lista do lote atual após o loop
+        if (!currentBatch.isEmpty()) {
+            // Se houver IDs restantes na lista do lote atual, adiciona uma cópia dela à lista de lotes
+            batches.add(new ArrayList<>(currentBatch));
+        }
+
+        // Retorna a lista de lotes de IDs
+        return batches;
     }
 }

@@ -57,15 +57,27 @@
                             </items>
                             <items>
                                 <MenuItem fx:id="menuItemPendenciaProcessamento0000" mnemonicParsing="false"
-                                          onAction="#onMenuItemPendenciaProcessamento0000" text="Gerar Ausencias de 0000 no Hive" />
+                                          onAction="#onMenuItemPendenciaProcessamento0000" text="1 - Gerar Ausencias de 0000 no Hive" />
                             </items>
                             <items>
                                 <MenuItem fx:id="menuItemSped0990xTabelasSped" mnemonicParsing="false"
-                                          onAction="#onMenuItemHivedivergencia9900TabelasSpedAction" text="Gerar Divergência 9900 e Tabelas" />
+                                          onAction="#onMenuItemHivedivergencia9900TabelasSpedAction" text="2 - Gerar Divergência 9900 e Tabelas" />
                             </items>
                             <items>
                                 <MenuItem fx:id="menuItemPendenciaFormulario0000" mnemonicParsing="false"
                                           onAction="#onMenuItemPendenciaFormulario0000" text="Carregar Formulário Divergências 9900 e Tabelas" />
+                            </items>
+                            <items>
+                                <MenuItem fx:id="menuItemGerarPendencia9900Oracle_TabelasHive" mnemonicParsing="false"
+                                          onAction="#onMenuItemPendencia9900OracleTabelasHiveAction" text="3 - Gerar Arquivo Pendencia 9900 Oracle e Tabelas Hive" />
+                            </items>
+                            <items>
+                                <MenuItem fx:id="menuItemGerarPendencia9900Oracle_TabelasHiveGeral" mnemonicParsing="false"
+                                          onAction="#onMenuItemPendencia9900OracleTabelasHiveGeralAction" text="4 - Gerar Arquivo Todos e Abrir Formulário" />
+                            </items>
+                            <items>
+                                <MenuItem fx:id="menuItemGerarPendenciaSpedFormulario" mnemonicParsing="false"
+                                          onAction="#onMenuItemPendenciaFormulario" text="4 - Formulário Pendência SPED" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Remover">

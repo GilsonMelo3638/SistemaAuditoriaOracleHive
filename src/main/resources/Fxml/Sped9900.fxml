@@ -18,13 +18,13 @@
    <HBox spacing="10" HBox.hgrow="ALWAYS">
       <VBox spacing="10" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
          <Label text="SPED Registros 0000 Ausentes no Hive:" />
-         <TableView fx:id="tableView9900Orapr12Hive0000" VBox.vgrow="ALWAYS" prefHeight="573.0">
+         <TableView fx:id="tableView9900Orapr12Hive0000" VBox.vgrow="ALWAYS" prefHeight="573.0" >
             <columns>
                <TableColumn fx:id="columnTabelaidBase" text="ID Base" />
-               <TableColumn fx:id="columnTabeladhProcessamento" text="Hora de Processamento" />
+               <TableColumn fx:id="columnTabeladhProcessamento" text="Processamento" />
                <TableColumn fx:id="columnTabelastatusProcessamento" text="Status" />
                <TableColumn fx:id="columnTabelalinha" text="Linhas" />
-               <TableColumn fx:id="columnTabelaquantidadeRegBloco" text="Quantidade de Registro no Bloco" />
+               <TableColumn fx:id="columnTabelaquantidadeRegBloco" text="Registros" />
                <TableColumn fx:id="columnTabelaregistro" text="Registro" />
                <TableColumn fx:id="columnTabelaregistroBloco" text="Registro Bloco" />
             </columns>
@@ -44,13 +44,13 @@
             <Label text="Total de id_base:" />
             <Label fx:id="txtTotalIdBase" />
          </HBox>
-         <TableView fx:id="tableViewHive9900TodasTabelasHive" VBox.vgrow="ALWAYS" prefHeight="573.0">
+         <TableView fx:id="tableViewHive9900TodasTabelasHive" VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="700.0">
             <columns>
                <!-- Adicione as colunas desejadas aqui -->
                <TableColumn fx:id="columnTabelaidBase9900Hive" text="ID Base" />
-               <TableColumn fx:id="columnTabeladhProcessamentoSpedBase" text="DH Processamento(SPED BASE)" />
+               <TableColumn fx:id="columnTabeladhProcessamentoSpedBase" text="Processamento(SPED BASE)" />
                <TableColumn fx:id="columnTabelastatusProcessamentoSpedBase" text="Status" />
-               <TableColumn fx:id="columnTabelasdataHoraFin9900Hive" text="DH Processamento(9900)" />
+               <TableColumn fx:id="columnTabelasdataHoraFin9900Hive" text="Processamento(9900)" />
                <TableColumn fx:id="columnTabelaregistro9900Hive" text="Registro" />
                <TableColumn fx:id="columnTabelaregistroBloco9900Hive" text="Registro Bloco" />
             </columns>
@@ -65,7 +65,7 @@
             <Label text="Total de id_base:" />
             <Label fx:id="txtTotalIdBaseFaltante" />
          </HBox>
-         <TableView fx:id="tableViewHive9900TodasTabelasHiveFaltantes" VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="75.25">
+         <TableView fx:id="tableViewHive9900TodasTabelasHiveFaltantes" VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="170.0">
             <columns>
                <!-- Adicione as colunas desejadas aqui -->
                <TableColumn fx:id="columnTabelaidBase9900HiveFaltantes" text="ID Base" />
