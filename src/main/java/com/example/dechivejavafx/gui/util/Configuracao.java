@@ -12,6 +12,8 @@ public class Configuracao {
     public static int diasSpedRecuo = 2;
 
     public static int inicioDuplicidade = 2024010100;
+    public static int tamanhoLote = 10000;
+
     public static ConnectionStatus connectionOraprd21Status = ConnectionStatus.ENABLED;
 
 }

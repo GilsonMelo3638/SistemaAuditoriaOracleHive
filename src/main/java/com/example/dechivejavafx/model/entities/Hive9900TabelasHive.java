@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 public class Hive9900TabelasHive {
     private BigInteger idBase;
     private LocalDateTime dhProcessamento;
-
     private LocalDateTime dataHoraFin;
     private Integer statusProcessamento;
     private String registro;

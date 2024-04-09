@@ -34,7 +34,10 @@ public class HiveSpedController {
     @FXML private TableView <Hive9900TabelasHiveFaltantes> tableViewHive9900TodasTabelasHiveFaltantes;
 
     @FXML private TableColumn <Hive9900TabelasHiveFaltantes, BigInteger> columnTabelaidBase9900HiveFaltantes;
+    @FXML private TableColumn<Hive9900TabelasHiveFaltantes, LocalDateTime> columnTabelasProcessamentoFin9900Hive;
+    @FXML private TableColumn<Hive9900TabelasHiveFaltantes, Integer> columnTabelaStatus9900HiveFaltantes;
     @FXML private TableColumn <Hive9900TabelasHiveFaltantes, String> columnTabelaregistroBloco9900HiveFaltantes;
+    @FXML private TableColumn <Hive9900TabelasHiveFaltantes, Integer> columnTabela9900QuantidadeLinhasHiveFaltantes;
 
     @FXML private TableColumn<Hive9900TabelasHive, BigInteger>columnTabelaidBase9900Hive;
     @FXML private TableColumn<Hive9900TabelasHive, LocalDateTime> columnTabeladhProcessamentoSpedBase;
@@ -80,7 +83,10 @@ public class HiveSpedController {
         configureColumnHive9900TabelasHive(columnTabelaregistroBloco9900Hive, Hive9900TabelasHive::getRegistroBloco);
 
         configureColumnHive9900TabelasHiveFaltantes(columnTabelaidBase9900HiveFaltantes, Hive9900TabelasHiveFaltantes::getIdBase);
+        configureColumnHive9900TabelasHiveFaltantes(columnTabelasProcessamentoFin9900Hive, Hive9900TabelasHiveFaltantes::getDhProcessamento);
+        configureColumnHive9900TabelasHiveFaltantes(columnTabelaStatus9900HiveFaltantes, Hive9900TabelasHiveFaltantes::getStatusProcessamento);
         configureColumnHive9900TabelasHiveFaltantes(columnTabelaregistroBloco9900HiveFaltantes, Hive9900TabelasHiveFaltantes::getRegistroBloco);
+        configureColumnHive9900TabelasHiveFaltantes(columnTabela9900QuantidadeLinhasHiveFaltantes, Hive9900TabelasHiveFaltantes::getQuantidadeRegBloco);
 
         // Inicializar o ComboBox com os valores da enumeração TabelasSped (sem o sublinhado)
         ObservableList<TabelasSped> tabelasSpedList = FXCollections.observableArrayList(TabelasSped.values());
@@ -111,8 +117,6 @@ public class HiveSpedController {
         // Atualizar a contagem inicial de linhas
         updateRowCounts();
     }
-
-
 
     private void filterTable(TabelasSped selectedValue) {
         // Obter o valor formatado selecionado no ComboBox

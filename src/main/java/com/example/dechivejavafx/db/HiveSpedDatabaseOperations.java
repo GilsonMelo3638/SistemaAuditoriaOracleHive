@@ -9,6 +9,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class HiveSpedDatabaseOperations {
     private static Connection connection;
@@ -181,69 +182,59 @@ public class HiveSpedDatabaseOperations {
      * @throws IOException Em caso de erro de E/S durante a gravação dos resultados no arquivo de saída.
      */
     public void executeQueryWithJoinAndWriteResults(String filePath, String outputFilePath9900OracleTabelasHive) throws SQLException, IOException {
-        // Verifica se a conexão está inicializada corretamente
         if (connection == null) {
             System.err.println("Conexão não inicializada corretamente.");
             return;
         }
 
-        // Abre um BufferedWriter para escrever no arquivo de saída
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilePath9900OracleTabelasHive))) {
-            // Itera sobre cada tabela Sped
             for (TabelasSped tabela : TabelasSped.values()) {
-                // Carrega os IDs distintos do arquivo CSV fornecido para a tabela atual
-                Set<String> ids = CSVUtils.loadDistinctIdsFromCSV(filePath, tabela);
-
-                // Verifica se não há IDs para a tabela atual
-                if (ids.isEmpty()) {
+                Set<String> idsCompletos = CSVUtils.loadDistinctIdsFromCSV(filePath, tabela);
+                if (idsCompletos.isEmpty()) {
                     System.out.println("Nenhum ID encontrado para a tabela " + tabela.getFormattedName());
                     continue;
                 }
 
-                // Divide os IDs em lotes de tamanho especificado (10000 neste caso)
-                List<List<String>> idBatches = Utils.partitionIdsIntoBatches(ids, 10000);
+                // Extrair somente os id_base para uso na consulta
+                Set<String> idsBase = idsCompletos.stream()
+                        .map(id -> id.split(",")[0])
+                        .collect(Collectors.toSet());
 
-                // Itera sobre cada lote de IDs
+                List<List<String>> idBatches = Utils.partitionIdsIntoBatches(idsBase, 10000);
                 for (List<String> idBatch : idBatches) {
-                    // Constrói a consulta SQL usando os IDs do lote atual
                     String query = String.format(
-                            "SELECT DISTINCT id_base FROM seec_prd_declaracao_fiscal.tb_sped_reg_%s r WHERE r.id_base IN (%s)",
+                            "SELECT DISTINCT id_base FROM seec_prd_declaracao_fiscal.tb_sped_reg_%s WHERE id_base IN (%s)",
                             tabela.getFormattedName(),
                             String.join(",", Collections.nCopies(idBatch.size(), "?"))
                     );
                     System.out.println("Query a ser executada: " + query);
-
-                    // Prepara a declaração PreparedStatement com a consulta SQL construída
                     try (PreparedStatement statement = connection.prepareStatement(query)) {
                         int i = 1;
-                        // Define os parâmetros da consulta com os IDs do lote atual
-                        for (String id : idBatch) {
-                            statement.setString(i++, id);
+                        for (String idBase : idBatch) {
+                            statement.setString(i++, idBase);
                         }
 
-                        // Executa a consulta
                         try (ResultSet resultSet = statement.executeQuery()) {
-                            // Cria um conjunto para armazenar os IDs encontrados na consulta
                             Set<String> foundIds = new HashSet<>();
-                            // Itera sobre os resultados da consulta
                             while (resultSet.next()) {
-                                // Adiciona o ID encontrado ao conjunto
-                                foundIds.add(resultSet.getString(1));
+                                foundIds.add(resultSet.getString("id_base"));
                             }
 
-                            // Identifica os IDs não encontrados na consulta
-                            Set<String> notFoundIds = new HashSet<>(idBatch);
-                            notFoundIds.removeAll(foundIds);
-                            // Escreve os IDs não encontrados no arquivo de saída, junto com o nome da tabela
-                            for (String id : notFoundIds) {
-                                writer.write(id + ", " + tabela.getFormattedName() + "\n");
+                            Set<String> notFoundIdsBase = new HashSet<>(idBatch);
+                            notFoundIdsBase.removeAll(foundIds);
+
+                            // Para cada id_base não encontrado, escreve também as colunas [1] e [2]
+                            for (String idCompleto : idsCompletos) {
+                                String[] partes = idCompleto.split(",");
+                                if (notFoundIdsBase.contains(partes[0])) {
+                                    writer.write(idCompleto + ", " + tabela.getFormattedName() + "\n");
+                                }
                             }
                         }
                     }
                 }
             }
         } catch (IOException e) {
-            // Em caso de erro de E/S durante a gravação dos resultados, imprime uma mensagem de erro
             System.err.println("Erro ao escrever no arquivo: " + e.getMessage());
         }
     }

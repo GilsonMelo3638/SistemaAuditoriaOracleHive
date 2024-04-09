@@ -607,7 +607,7 @@ public class CSVUtils {
                 String[] values = line.split(",");
 
                 // Verifica se a linha possui todos os campos esperados
-                if (values.length != 2) {
+                if (values.length != 5) {
                     LOGGER.log(Level.SEVERE, "Erro ao processar linha: " + line + ". Número incorreto de campos.");
                     continue; // Ignora esta linha e passa para a próxima
                 }
@@ -615,10 +615,13 @@ public class CSVUtils {
                 // Tenta converter os valores da linha para os tipos corretos
                 try {
                     BigInteger idBase = new BigInteger(values[0].trim());
-                    String registroBloco = values[1].trim(); // Mantém como String
+                    LocalDateTime dhProcessamento = LocalDateTime.parse(values[1].trim(), localDateTimeFormatter);
+                    int statusProcessamento = Integer.parseInt(values[2].trim());
+                    String registroBloco = values[4].trim(); // Mantém como String
+                    int quantidadeRegBloco = Integer.parseInt(values[3].trim());
 
                     // Cria um objeto Hive9900TabelasHiveFaltantes com os valores extraídos da linha e adiciona à lista
-                    Hive9900TabelasHiveFaltantes hive9900TabelasHiveFaltantes = new Hive9900TabelasHiveFaltantes(idBase, registroBloco);
+                    Hive9900TabelasHiveFaltantes hive9900TabelasHiveFaltantes = new Hive9900TabelasHiveFaltantes(idBase, dhProcessamento, statusProcessamento, registroBloco, quantidadeRegBloco);
                     dataList.add(hive9900TabelasHiveFaltantes);
                 } catch (NumberFormatException | DateTimeParseException e) {
                     // Se ocorrer um erro ao processar a linha, imprime uma mensagem de erro
@@ -646,11 +649,17 @@ public class CSVUtils {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] columns = line.split(",");
+                // Garantir que temos um número suficiente de colunas para evitar ArrayIndexOutOfBoundsException
                 if (columns.length >= 7 && columns[6].trim().equals(tabela.getFormattedName())) {
-                    distinctIds.add(columns[0].trim());
+                    // Verificar também se columns[1] e columns[2] existem
+                    if (columns.length > 2) {
+                        String id = columns[0].trim() + "," + columns[1].trim() + "," + columns[2].trim() + "," + columns[3].trim();
+                        distinctIds.add(id);
+                    }
                 }
             }
         }
         return distinctIds;
     }
+
 }

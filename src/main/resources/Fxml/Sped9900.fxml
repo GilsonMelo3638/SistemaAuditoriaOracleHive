@@ -24,9 +24,9 @@
                <TableColumn fx:id="columnTabeladhProcessamento" text="Processamento" />
                <TableColumn fx:id="columnTabelastatusProcessamento" text="Status" />
                <TableColumn fx:id="columnTabelalinha" text="Linhas" />
-               <TableColumn fx:id="columnTabelaquantidadeRegBloco" text="Registros" />
+               <TableColumn fx:id="columnTabelaquantidadeRegBloco" text="Linhas" />
                <TableColumn fx:id="columnTabelaregistro" text="Registro" />
-               <TableColumn fx:id="columnTabelaregistroBloco" text="Registro Bloco" />
+               <TableColumn fx:id="columnTabelaregistroBloco" text="Bloco" />
             </columns>
             <columnResizePolicy>
                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -51,8 +51,9 @@
                <TableColumn fx:id="columnTabeladhProcessamentoSpedBase" text="Processamento(SPED BASE)" />
                <TableColumn fx:id="columnTabelastatusProcessamentoSpedBase" text="Status" />
                <TableColumn fx:id="columnTabelasdataHoraFin9900Hive" text="Processamento(9900)" />
+               <TableColumn fx:id="columnTabelaregistroBloco9900Hive" text="Bloco" />
                <TableColumn fx:id="columnTabelaregistro9900Hive" text="Registro" />
-               <TableColumn fx:id="columnTabelaregistroBloco9900Hive" text="Registro Bloco" />
+
             </columns>
             <columnResizePolicy>
                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -69,7 +70,10 @@
             <columns>
                <!-- Adicione as colunas desejadas aqui -->
                <TableColumn fx:id="columnTabelaidBase9900HiveFaltantes" text="ID Base" />
-               <TableColumn fx:id="columnTabelaregistroBloco9900HiveFaltantes" text="Registro Bloco" />
+               <TableColumn fx:id="columnTabelasProcessamentoFin9900Hive" text="Processamento(SPED BASE)" />
+               <TableColumn fx:id="columnTabelaStatus9900HiveFaltantes" text="Status" />
+               <TableColumn fx:id="columnTabelaregistroBloco9900HiveFaltantes" text="Bloco" />
+               <TableColumn fx:id="columnTabela9900QuantidadeLinhasHiveFaltantes" text="Linhas" />
             </columns>
             <columnResizePolicy>
                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
