@@ -5,19 +5,23 @@
 <?import javafx.scene.text.Font?>
 
 <VBox id="sped9900Pane" alignment="CENTER" fillWidth="true" prefHeight="700.0" prefWidth="2200.0" style="-fx-border-color: black; -fx-border-width: 1px;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.example.dechivejavafx.gui.HiveSpedController">
-   <Label text="REGISTROS PENDENTES DE CARGAS TOTAL OU PARCIAL">
+   <Label text="TABELAS DE REGISTROS DO PENDENTES DE CARGAS PARCIAL OU TOTAL: COMPARAÇÃO ORACLE 9900 E HIVE 9900">
       <font>
          <Font name="System Bold" size="25.0" />
       </font>
       <padding>
-         <Insets left="5.0" top="5.0" />
+         <Insets left="10.0" top="10.0" />
       </padding>
    </Label>
    <HBox spacing="10" HBox.hgrow="ALWAYS">
    </HBox>
    <HBox spacing="10" HBox.hgrow="ALWAYS">
-      <VBox spacing="10" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-         <Label text="SPED Registros 0000 Ausentes no Hive:" />
+      <VBox spacing="20" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+         <HBox spacing="10">
+            <Label text="0000: Ausentes no Hive:" />
+            <Label text="Total de id_base:" />
+            <Label fx:id="txtTotalIdBaseFaltante0000" />
+         </HBox>
          <TableView fx:id="tableView9900Orapr12Hive0000" VBox.vgrow="ALWAYS" prefHeight="573.0" >
             <columns>
                <TableColumn fx:id="columnTabelaidBase" text="ID Base" />
@@ -40,7 +44,7 @@
             <Button fx:id="btLimpar" mnemonicParsing="false" onAction="#onBtLimparAction" text="Limpar Seleção" />
          </HBox>
          <HBox spacing="10">
-            <Label text="Registro 9900 Carregados no Hive e Ausentes em Outras Tabelas do Hive: " />
+            <Label text="9900: Carregados no Hive e Ausentes em Outras Tabelas do Hive: " />
             <Label text="Total de id_base:" />
             <Label fx:id="txtTotalIdBase" />
          </HBox>
@@ -62,9 +66,11 @@
       </VBox>
       <VBox spacing="10" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
          <HBox spacing="10">
-            <Label text="Registro 9900 Carregados no Oracle e Ausentes em Tabelas do Hive: " />
-            <Label text="Total de id_base:" />
+            <Label text="9900: Carregados no Oracle e Ausentes em Tabelas do Hive: " />
+            <Label text="Total de id_base/linhas:" />
             <Label fx:id="txtTotalIdBaseFaltante" />
+            <Label text="/" />
+            <Label fx:id="txtTotalLinhasFaltante" />
          </HBox>
          <TableView fx:id="tableViewHive9900TodasTabelasHiveFaltantes" VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="170.0">
             <columns>

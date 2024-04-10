@@ -2,6 +2,7 @@ package com.example.dechivejavafx.db;
 
 import com.example.dechivejavafx.Validacoes.TabelasSped;
 import com.example.dechivejavafx.gui.util.CSVUtils;
+import com.example.dechivejavafx.gui.util.Configuracao;
 import com.example.dechivejavafx.gui.util.Utils;
 
 import java.io.*;
@@ -200,7 +201,7 @@ public class HiveSpedDatabaseOperations {
                         .map(id -> id.split(",")[0])
                         .collect(Collectors.toSet());
 
-                List<List<String>> idBatches = Utils.partitionIdsIntoBatches(idsBase, 10000);
+                List<List<String>> idBatches = Utils.partitionIdsIntoBatches(idsBase, Configuracao.tamanhoLote);
                 for (List<String> idBatch : idBatches) {
                     String query = String.format(
                             "SELECT DISTINCT id_base FROM seec_prd_declaracao_fiscal.tb_sped_reg_%s WHERE id_base IN (%s)",

@@ -604,7 +604,7 @@ public class CSVUtils {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] values = line.split(",");
+                String[] values = line.split(",", -1); // Alteração aqui
 
                 // Verifica se a linha possui todos os campos esperados
                 if (values.length != 5) {
@@ -635,6 +635,7 @@ public class CSVUtils {
         return dataList;
     }
 
+
     /**
      * Carrega IDs distintos de um arquivo CSV para uma tabela SPED específica.
      *
@@ -653,7 +654,7 @@ public class CSVUtils {
                 if (columns.length >= 7 && columns[6].trim().equals(tabela.getFormattedName())) {
                     // Verificar também se columns[1] e columns[2] existem
                     if (columns.length > 2) {
-                        String id = columns[0].trim() + "," + columns[1].trim() + "," + columns[2].trim() + "," + columns[3].trim();
+                        String id = columns[0].trim() + "," + columns[1].trim() + "," + columns[2].trim() + "," + columns[4].trim();
                         distinctIds.add(id);
                     }
                 }

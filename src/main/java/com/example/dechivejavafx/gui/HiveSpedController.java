@@ -19,8 +19,12 @@ import javafx.util.StringConverter;
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Function;
 
 public class HiveSpedController {
@@ -28,6 +32,8 @@ public class HiveSpedController {
     public Button btLimpar;
     @FXML public Label txtTotalIdBase;
     @FXML public Label txtTotalIdBaseFaltante;
+    @FXML public Label txtTotalIdBaseFaltante0000;
+    @FXML public Label txtTotalLinhasFaltante;
 
     @FXML private TableView<Sped9900> tableView9900Orapr12Hive0000;
     @FXML private TableView<Hive9900TabelasHive> tableViewHive9900TodasTabelasHive;
@@ -58,6 +64,7 @@ public class HiveSpedController {
     @FXML private TableColumn<Sped9900, Integer> columnTabelaquantidadeRegBloco;
     @FXML private TableColumn<Sped9900, String> columnTabelaregistro;
     @FXML private TableColumn<Sped9900, String> columnTabelaregistroBloco;
+
     @FXML private ComboBox<TabelasSped> comboTabelasSped;
 
     private ObservableList<Hive9900TabelasHive> originalDataList = FXCollections.observableArrayList();
@@ -116,6 +123,11 @@ public class HiveSpedController {
 
         // Atualizar a contagem inicial de linhas
         updateRowCounts();
+
+        // Adicionar ouvintes aos campos txtTotalIdBase e txtTotalIdBaseFaltante
+        tableViewHive9900TodasTabelasHive.itemsProperty().addListener((observable, oldValue, newValue) -> updateRowCounts());
+        tableViewHive9900TodasTabelasHiveFaltantes.itemsProperty().addListener((observable, oldValue, newValue) -> updateRowCounts());
+        tableView9900Orapr12Hive0000.itemsProperty().addListener((observable, oldValue, newValue) -> updateRowCounts());
     }
 
     private void filterTable(TabelasSped selectedValue) {
@@ -274,14 +286,35 @@ public class HiveSpedController {
         }
     }
 
-    // Método para atualizar a contagem de linhas nas TableView
     private void updateRowCounts() {
         // Contar e associar a quantidade de linhas à label txtTotalIdBase
         int totalLinhasHive = tableViewHive9900TodasTabelasHive.getItems().size();
-        txtTotalIdBase.setText(String.valueOf(totalLinhasHive));
+        txtTotalIdBase.setText(formatarNumero(totalLinhasHive));
 
         // Contar e associar a quantidade de linhas à label txtTotalIdBaseFaltante
         int totalLinhasHiveFaltantes = tableViewHive9900TodasTabelasHiveFaltantes.getItems().size();
-        txtTotalIdBaseFaltante.setText(String.valueOf(totalLinhasHiveFaltantes));
+        txtTotalIdBaseFaltante.setText(formatarNumero(totalLinhasHiveFaltantes));
+
+        // Contar e associar a quantidade de linhas à label txtTotalIdBaseFaltante
+        int totalIdBaseFaltante0000 = tableView9900Orapr12Hive0000.getItems().size();
+        txtTotalIdBaseFaltante0000.setText(formatarNumero(totalIdBaseFaltante0000));
+
+        // Calcular a soma da coluna columnTabela9900QuantidadeLinhasHiveFaltantes
+        int totalLinhasFaltantes = 0;
+        for (Hive9900TabelasHiveFaltantes item : tableViewHive9900TodasTabelasHiveFaltantes.getItems()) {
+            totalLinhasFaltantes += item.getQuantidadeRegBloco();
+        }
+
+        // Associar a quantidade total de linhas faltantes à label txtTotalLinhasFaltante
+        txtTotalLinhasFaltante.setText(formatarNumero(totalLinhasFaltantes));
     }
+
+    private String formatarNumero(int numero) {
+        // Criar um formato com separador de milhares como ponto
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+        symbols.setGroupingSeparator('.');
+        DecimalFormat df = new DecimalFormat("#,###", symbols);
+        return df.format(numero);
+    }
+
 }
