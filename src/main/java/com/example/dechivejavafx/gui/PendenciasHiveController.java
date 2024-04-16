@@ -26,6 +26,7 @@ public class PendenciasHiveController {
 
     public StackPane pendenciasHivePane;
     public Button btLimpar;
+    @FXML private  Label tituloTableViews;
     // Labels para exibição de resultados individuais
     @FXML private Label labelArquivo;
     @FXML private Label labelcolumnTabelaDetalhe;

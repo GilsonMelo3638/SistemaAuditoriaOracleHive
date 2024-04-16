@@ -34,6 +34,7 @@ public class HiveSpedController {
     @FXML public Label txtTotalIdBaseFaltante;
     @FXML public Label txtTotalIdBaseFaltante0000;
     @FXML public Label txtTotalLinhasFaltante;
+    @FXML private Label tituloTableViews;
 
     @FXML private TableView<Sped9900> tableView9900Orapr12Hive0000;
     @FXML private TableView<Hive9900TabelasHive> tableViewHive9900TodasTabelasHive;

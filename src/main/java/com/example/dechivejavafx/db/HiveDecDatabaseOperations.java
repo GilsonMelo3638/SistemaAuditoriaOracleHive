@@ -137,8 +137,12 @@ public class HiveDecDatabaseOperations {
 
         System.out.println("Total de resultados da query: " + resultados.size());
 
+        // Aguardar 1 minuto antes de retornar os resultados
+        esperarIntervalo();
+
         return resultados;
     }
+
 
     private void executeQueryDetFaltante(Connection connection) throws SQLException {
         List<PendenciasHive> resultados = new ArrayList<>();
@@ -336,5 +340,15 @@ public class HiveDecDatabaseOperations {
 
     public String getPassword() {
         return password;
+    }
+
+    private static void esperarIntervalo() {
+        try {
+            // Dorme por 1 minuto (60 segundos)
+            Thread.sleep(Configuracao.esperaQuery * 1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            e.printStackTrace();
+        }
     }
 }

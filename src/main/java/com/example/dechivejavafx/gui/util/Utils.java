@@ -3,6 +3,7 @@ package com.example.dechivejavafx.gui.util;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Predicate;
@@ -103,5 +104,10 @@ public class Utils {
 
         // Retorna a lista de lotes de IDs
         return batches;
+    }
+    public static String formatarDataHora(LocalDateTime dateTime, String formato, String textoPrefixo) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formato);
+        String dataHoraFormatada = dateTime.format(formatter);
+        return textoPrefixo + " " + dataHoraFormatada;
     }
 }

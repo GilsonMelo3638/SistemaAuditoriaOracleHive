@@ -7,6 +7,7 @@ import com.example.dechivejavafx.db.HiveSpedDatabaseOperations;
 import com.example.dechivejavafx.db.OracleSpedDatabaseOperations;
 import com.example.dechivejavafx.gui.util.Alerts;
 import com.example.dechivejavafx.gui.util.CSVUtils;
+import com.example.dechivejavafx.gui.util.Utils;
 import com.example.dechivejavafx.model.entities.Agenda;
 import com.example.dechivejavafx.model.services.AgendaService;
 import com.example.dechivejavafx.model.services.SchedulerManager;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +48,8 @@ public class MainViewController implements Initializable {
 
     // Serviço para manipulação de agendas
     private final AgendaService service = new AgendaService();
+
+
     // Private Stage
     private Stage primaryStage;
 
@@ -56,8 +60,8 @@ public class MainViewController implements Initializable {
     @FXML private MenuItem menuItemPendenciaProcessamento0000; // FXML MenuItem
     @FXML private MenuItem menuItemAbout; // FXML MenuItem
     @FXML private MenuItem menuItemTotalizacaoNfe; // FXML MenuItem
+    @FXML private MenuItem menuItemOracleHive;
     @FXML private MenuItem menuItemQuantidadeDocumentoArquivo; // FXML MenuItem
-    @FXML private MenuItem menuItemOracleHive; // FXML MenuItem
     @FXML private MenuItem menuProcessarPendencia; // FXML MenuItem
     @FXML private MenuItem MenuProcessarDuplicidadeId; // FXML MenuItem
     @FXML private MenuItem menuItemGerarPendencia9900Oracle_TabelasHiveGeral;
@@ -80,6 +84,8 @@ public class MainViewController implements Initializable {
     @FXML private ComboBox<TipoDoc> comboTipoDoc; // FXML ComboBox
     @FXML private ComboBox<TipoDoc> comboTipoDocCentral; // FXML ComboBox
     @FXML private TextField txtDias; // FXML TextField
+    @FXML private Label horaProcessamento;
+    @FXML private Label a;
 
     // FXML TitledPane and Layout Nodes
     @FXML private TitledPane titledPanecomboTipoDocCentral; // FXML TitledPane
@@ -109,7 +115,7 @@ public class MainViewController implements Initializable {
         // Inicializa o gerenciador de agendamento
         schedulerManager = new SchedulerManager(this);
         schedulerManager.iniciarAgendamento();
-        schedulerManager.agendarProcessamentoDuplicidadeId(); // Agendamento do método ProcessarDuplicidadeId
+        schedulerManager.agendarProcessamentoFinalSemana(); // Agendamento do método ProcessarDuplicidadeId
     }
 
     // Método chamado quando a opção "About" no menu é selecionada
@@ -262,7 +268,6 @@ public class MainViewController implements Initializable {
         SceneManager.setCurrentScene(Main.getMainScene());
         loadView("/Fxml/AgendaList.fxml", this::initializeAgendaListController);
     }
-
     // Método chamado quando a opção "Agenda" no menu é selecionada
     @FXML
     public void onMenuProcessarPendenciaAction() {
@@ -303,6 +308,14 @@ public class MainViewController implements Initializable {
         loadView("/Fxml/PendenciasHive.fxml", x -> {});
         handleRemoveOracleHive();
         CSVUtils.deleteFilesExceptPendencia("\\\\svmcifs\\ExtracaoXML\\NovoDEC\\Pendencia\\");
+        // Obtenha a data e hora atuais
+        LocalDateTime dataHoraAtual = LocalDateTime.now();
+
+        // Use o método formatarDataHora da classe Utils para formatar a data e hora
+        String dataHoraFormatada = Utils.formatarDataHora(dataHoraAtual, "dd/MM/yyyy HH:mm:ss", "Processamento DEC:");
+
+        // Defina a data e hora formatada como o texto do label horaProcessamento
+        horaProcessamento.setText(dataHoraFormatada);
     }
     @FXML
     public void onMenuProcessarDuplicidadeIdAction() {
@@ -701,6 +714,15 @@ public class MainViewController implements Initializable {
             // Certifique-se de desconectar após o uso
             hiveSpedDB.disconnect();
         }
+
+        // Obtenha a data e hora atuais
+        LocalDateTime dataHoraAtual = LocalDateTime.now();
+
+        // Use o método formatarDataHora da classe Utils para formatar a data e hora
+        String dataHoraFormatada = Utils.formatarDataHora(dataHoraAtual, "dd/MM/yyyy HH:mm:ss", "Processamento SPED:");
+
+        // Defina a data e hora formatada como o texto do label horaProcessamento
+        horaProcessamento.setText(dataHoraFormatada);
 
         loadView("/Fxml/Sped9900.fxml", x -> {});
     }

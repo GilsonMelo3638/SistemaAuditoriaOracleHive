@@ -57,7 +57,7 @@ public class SchedulerManager {
             e.printStackTrace();
         }
     }
-    public void agendarProcessamentoDuplicidadeId() {
+    public void agendarProcessamentoFinalSemana() {
         // Define o horário de início para o próximo domingo às 00:30 horas
         LocalDateTime agora = LocalDateTime.now();
         LocalDateTime proximoDomingo = agora.with(TemporalAdjusters.next(DayOfWeek.SUNDAY)).withHour(0).withMinute(30).withSecond(0).withNano(0);
@@ -66,13 +66,14 @@ public class SchedulerManager {
         long atrasoInicial = ChronoUnit.MILLIS.between(agora, proximoDomingo);
 
         // Agenda a tarefa para ser executada todo domingo às 00:30 horas
-        scheduler.scheduleAtFixedRate(this::executarProcessamentoDuplicidadeId, atrasoInicial, TimeUnit.DAYS.toMillis(7), TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(this::executarProcessamentoFinalSemana, atrasoInicial, TimeUnit.DAYS.toMillis(7), TimeUnit.MILLISECONDS);
     }
-    private void executarProcessamentoDuplicidadeId() {
+    private void executarProcessamentoFinalSemana() {
         try {
             // Lógica para processar duplicidade de IDs
             Platform.runLater(() -> {
                 mainViewController.onMenuProcessarDuplicidadeIdAction(); // Chama o método ProcessarDuplicidadeId do MainViewController
+                mainViewController.onMenuItemPendencia9900OracleTabelasHiveGeralAction();
             });
         } catch (Exception e) {
             e.printStackTrace();
