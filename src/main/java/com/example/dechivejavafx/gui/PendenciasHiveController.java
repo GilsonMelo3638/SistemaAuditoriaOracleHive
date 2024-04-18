@@ -55,7 +55,6 @@ public class PendenciasHiveController {
     // Configurações do banco de dados
     private DatabaseConfig databaseConfig = new DatabaseConfig();
     // Método de inicialização chamado pelo JavaFX quando o arquivo FXML é carregado
-    @FXML
     public void initialize() {
         initializeComboBoxes();
         // Configurar as colunas da tabela
@@ -88,12 +87,22 @@ public class PendenciasHiveController {
         originalOracleHiveList.addAll(tableViewOracleHive.getItems());
         executeQueryAndUpdateUI();
 
+        // Configurar a ordenação inicial da tableViewOracleHive
+        tableViewOracleHive.getSortOrder().addAll(columnTipoDoc, columnArquivoOracle);
+
+        // Configurar a ordenação inicial da tableDuplicidadeId
+        tableDuplicidadeId.getSortOrder().addAll(columnTabelaDuplicidade, columnArquivoDuplicidade);
+
+        // Configurar a ordenação inicial da tableViewDetNFeNFCeInf
+        tableViewDetNFeNFCeInf.getSortOrder().addAll(columnTabelaDetalhe, columnArquivo);
     }
 
     // Método para inicializar os ComboBoxes
     private void initializeComboBoxes() {
         ComboBoxUtil.initializeComboBoxTipoDoc(comboTipoDoc, Arrays.asList(TipoDoc.values()));
     }
+
+
 
 
     // Método para configurar coluna de texto na tabela

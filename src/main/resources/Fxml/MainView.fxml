@@ -6,7 +6,7 @@
             prefWidth="600.0" xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.dechivejavafx.gui.MainViewController"
-            stylesheets="@styles.css"> <!-- Referência ao arquivo CSS -->
+            stylesheets="@Styles.css"> <!-- Referência ao arquivo CSS -->
     <content>
         <VBox fx:id="mainVBox" prefHeight="326.0" prefWidth="513.0">
             <children>

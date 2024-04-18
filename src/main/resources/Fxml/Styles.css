@@ -1,3 +1,13 @@
+/* Definição da cor de fundo da raiz com prioridade */
+.root {
+    -fx-background-color: #690202 !important;
+}
+
+/* Definir cor de fundo para os formulários */
+.form-background {
+    -fx-background-color: #c8d6bf; /* Cor de fundo dos formulários */
+}
+
 /* Estilização básica para o ScrollPane */
 .scroll-pane {
     -fx-background-color: #f0f0f0; /* Define a cor de fundo do ScrollPane como cinza claro */
@@ -5,18 +15,29 @@
 
 /* Estilização para MenuBar e MenuItems */
 .menu-bar {
-    -fx-background-color:#D8DACC; /* Define a cor de fundo da MenuBar como verde */
-    -fx-text-fill: #ADC52E; /* Define a cor do texto da MenuBar como branco */
+    -fx-background-color: #8db986; /* Cor de fundo da MenuBar como verde */
+    -fx-text-fill: #ADC52E; /* Cor do texto da MenuBar como branco */
 }
+
 .menu-item {
     -fx-text-fill: #928558; /* Define a cor do texto dos MenuItems como marrom claro */
 }
+
+.menu-bar .label {
+    -fx-font-size: 15px;
+}
+
+.menu-item .label {
+    -fx-font-size: 15px;
+}
+
 
 /* Estilização para TitledPane e ComboBox dentro dele */
 .titled-pane {
     -fx-background-color: #e0e0e0; /* Define a cor de fundo do TitledPane como cinza claro */
 }
-.combo-box {
+
+.titled-pane > .combo-box {
     -fx-background-color: #D8DACC; /* Define a cor de fundo do ComboBox como amarelo */
 }
 
@@ -30,6 +51,7 @@
 .vbox {
     -fx-spacing: 5; /* Define o espaçamento entre os elementos dentro do VBox como 5 pixels */
     -fx-alignment: center; /* Centraliza os elementos dentro do VBox */
+        -fx-font-size: 18px; /* Define o tamanho da fonte da Label como 14 pixels */
 }
 
 /* Estilização para HBox */
@@ -43,23 +65,27 @@
     -fx-text-fill: #000000; /* Define a cor do texto das labels dentro do HBox como preto */
 }
 
-.table-cell {
+/* Estilização para TableCell e TableHeader */
+.table-cell,
+.column-header {
     -fx-font-weight: normal; /* Define o peso da fonte como normal (sem negrito) */
     -fx-font-size: 11px; /* Define o tamanho da fonte da Label como 14 pixels */
     -fx-text-fill: white; /* Define a cor do texto da Label como preto */
-    -fx-background-color: #565A5A;
+    -fx-background-color: black;
     -fx-alignment: center; /* Centraliza o texto dentro das colunas */
 }
 
 /* Estilização para os títulos das colunas da TableView */
 .column-header {
     -fx-text-fill: white !important; /* Define a cor do texto como branco */
-    -fx-background-color:yellow; /* Define a cor de fundo dos títulos das colunas como verde */
+    -fx-background-color:#b8fd99; /* Define a cor de fundo dos títulos das colunas como verde */
     -fx-font-size: 11px; /* Define o tamanho da fonte como 11 pixels */
     -fx-alignment: center; /* Centraliza o texto dentro dos cabeçalhos das colunas */
 }
 
-.label#tituloTableViews {
+/* Estilização para Labels específicas */
+.label#tituloTableViews,
+.tituloTableViews {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-padding: 10px; /* Espaçamento interno */
@@ -72,8 +98,3 @@
     -fx-border-width: 1px; /* Define a largura da borda como 1 pixel */
     -fx-border-style: solid; /* Define o estilo da borda como sólido */
 }
-
-
-
-
-

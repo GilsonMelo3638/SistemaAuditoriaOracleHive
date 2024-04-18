@@ -27,6 +27,9 @@ public class Main extends Application {
             // Cria a cena principal com o conteúdo carregado do arquivo FXML.
             mainScene = new Scene(scrollPane);
 
+            // Adicione o arquivo CSS à cena
+            mainScene.getStylesheets().add(getClass().getResource("/Fxml/Styles.css").toExternalForm());
+
             // Configura o palco principal com a cena e exibe a aplicação.
             primaryStage.setScene(mainScene);
             primaryStage.setTitle("Aplicação de Auditoria de Bancos de Dados Oracle e Hive");
@@ -35,11 +38,16 @@ public class Main extends Application {
             primaryStage.setMaximized(true);
 
             primaryStage.show();
+
+            // Verifica o estilo aplicado à raiz da cena
+            System.out.println("Verifica o estilo aplicado à raiz da cena: " + mainScene.getRoot().getStyle());
         } catch (IOException e) {
             // Exibe informações sobre exceções durante o carregamento da interface gráfica.
             e.printStackTrace();
         }
     }
+
+
 
     // Obtém a cena principal da aplicação.
     public static Scene getMainScene() {

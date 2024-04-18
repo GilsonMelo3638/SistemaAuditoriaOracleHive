@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox id="sped9900Pane" alignment="CENTER" fillWidth="true" prefHeight="700.0" prefWidth="2200.0"
@@ -8,14 +7,15 @@
     <Label fx:id="tituloTableViews"
            text="TABELAS SPED DO HIVE PENDENTES DE CARGAS PARCIAL OU TOTAL: COMPARAÇÃO ORACLE 9900, HIVE 9900 E TODAS TABELAS NO HIVE">
     </Label>
-    <HBox spacing="10" HBox.hgrow="ALWAYS" styleClass="hbox">
-        <VBox spacing="20" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+    <HBox spacing="10" fillHeight="true" styleClass="hbox">
+        <VBox spacing="25" fillWidth="true" HBox.hgrow="ALWAYS" alignment="TOP_CENTER">
             <HBox spacing="10" styleClass="hbox">
-                <Label text="0000: Ausentes no Hive:" styleClass="label"/>
-                <Label text="Total de id_base:" styleClass="label"/>
-                <Label fx:id="txtTotalIdBaseFaltante0000" styleClass="label"/>
+                <Label text="0000: Ausentes no Hive:" styleClass="tituloTableViews"/>
+                <Label text="Total de id_base:" styleClass="tituloTableViews"/>
+                <Label fx:id="txtTotalIdBaseFaltante0000" styleClass="tituloTableViews"/>
             </HBox>
-            <TableView fx:id="tableView9900Orapr12Hive0000" VBox.vgrow="ALWAYS" prefHeight="573.0">
+            <Region VBox.vgrow="ALWAYS"/>
+            <TableView fx:id="tableView9900Orapr12Hive0000" VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="700.0">
                 <columns>
                     <TableColumn fx:id="columnTabelaidBase" text="ID Base"/>
                     <TableColumn fx:id="columnTabeladhProcessamento" text="Processamento"/>
@@ -30,18 +30,21 @@
                 </columnResizePolicy>
             </TableView>
         </VBox>
-        <VBox spacing="10" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+        <VBox  spacing="3" fillWidth="true" HBox.hgrow="ALWAYS" alignment="TOP_CENTER">
             <HBox spacing="10" styleClass="hbox">
-                <Label text="Selecione a Tabela do Hive:" styleClass="label"/>
-                <ComboBox fx:id="comboTabelasSped" VBox.vgrow="ALWAYS" prefWidth="175" styleClass="label"/>
+                <Label text="9900: Carregados no Hive e Ausentes em Outras Tabelas do Hive: " styleClass="tituloTableViews"/>
+                <Label text="Total de id_base:" styleClass="tituloTableViews"/>
+                <Label fx:id="txtTotalIdBase" styleClass="tituloTableViews"/>
+            </HBox>
+            <HBox spacing="10" styleClass="hbox">
+                <Label text="Selecione a Tabela do Hive:" styleClass="tituloTableViews"/>
+                <ComboBox fx:id="comboTabelasSped" VBox.vgrow="ALWAYS" prefWidth="175" />
                 <Button fx:id="btLimpar" mnemonicParsing="false" onAction="#onBtLimparAction" text="Limpar Seleção"
                         styleClass="label"/>
             </HBox>
-            <HBox spacing="10" styleClass="hbox">
-                <Label text="9900: Carregados no Hive e Ausentes em Outras Tabelas do Hive: " styleClass="label"/>
-                <Label text="Total de id_base:" styleClass="label"/>
-                <Label fx:id="txtTotalIdBase" styleClass="label"/>
-            </HBox>
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
             <TableView fx:id="tableViewHive9900TodasTabelasHive" VBox.vgrow="ALWAYS" prefHeight="573.0"
                        prefWidth="700.0">
                 <columns>
@@ -57,16 +60,17 @@
                 </columnResizePolicy>
             </TableView>
         </VBox>
-        <VBox spacing="10" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+        <VBox spacing="25" fillWidth="true" HBox.hgrow="ALWAYS" alignment="TOP_CENTER">
             <HBox spacing="10" styleClass="hbox">
-                <Label text="9900: Carregados no Oracle e Ausentes em Tabelas do Hive: " styleClass="label"/>
-                <Label text="Total de id_base/linhas:" styleClass="label"/>
-                <Label fx:id="txtTotalIdBaseFaltante" styleClass="label"/>
-                <Label text="/" styleClass="label"/>
-                <Label fx:id="txtTotalLinhasFaltante" styleClass="label"/>
+                <Label text="9900: Id_bases no Oracle e Ausentes no Hive: " styleClass="tituloTableViews"/>
+                <Label fx:id="txtTotalIdBaseFaltante" styleClass="tituloTableViews"/>
+                <Label text="/" styleClass="tituloTableViews"/>
+                <Label text="Total de Linhas:" styleClass="tituloTableViews"/>
+                <Label fx:id="txtTotalLinhasFaltante" styleClass="tituloTableViews"/>
             </HBox>
+            <Region VBox.vgrow="ALWAYS"/>
             <TableView fx:id="tableViewHive9900TodasTabelasHiveFaltantes" VBox.vgrow="ALWAYS" prefHeight="573.0"
-                       prefWidth="170.0">
+                       prefWidth="700.0">
                 <columns>
                     <TableColumn fx:id="columnTabelaidBase9900HiveFaltantes" text="ID Base"/>
                     <TableColumn fx:id="columnTabelasProcessamentoFin9900Hive" text="Processamento(SPED BASE)"/>

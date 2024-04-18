@@ -132,6 +132,7 @@ public class QuantidadeDocumentoArquivoController implements Initializable {
                 List<TipoDoc> tipoDocs = manipuladorBancoDados.obterTipoDocs();
                 // Modificação: Passe o comboBoxTabelas e a lista de TipoDoc explicitamente para o método
                 ComboBoxUtil.initializeComboBoxTipoDoc(comboBoxTabelas, tipoDocs);
+                tableViewQuantidadeDocumentosArquivo.getSortOrder().addAll(columnTabelaHive, columnArquivo);
             } else {
                 LOGGER.log(Level.SEVERE, ERRO_AMBIENTE_NAO_CONFIGURADO);
             }

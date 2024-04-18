@@ -129,6 +129,15 @@ public class HiveSpedController {
         tableViewHive9900TodasTabelasHive.itemsProperty().addListener((observable, oldValue, newValue) -> updateRowCounts());
         tableViewHive9900TodasTabelasHiveFaltantes.itemsProperty().addListener((observable, oldValue, newValue) -> updateRowCounts());
         tableView9900Orapr12Hive0000.itemsProperty().addListener((observable, oldValue, newValue) -> updateRowCounts());
+
+        // Configurar a ordenação inicial da tableView9900Orapr12Hive0000
+        tableView9900Orapr12Hive0000.getSortOrder().addAll(columnTabeladhProcessamento, columnTabelaidBase);
+
+        // Configurar a ordenação inicial da tableView9900Orapr12Hive0000
+        tableViewHive9900TodasTabelasHive.getSortOrder().addAll(columnTabeladhProcessamentoSpedBase, columnTabelaidBase9900Hive);
+
+        // Configurar a ordenação inicial da tableView9900Orapr12Hive0000
+        tableViewHive9900TodasTabelasHiveFaltantes.getSortOrder().addAll(columnTabelasProcessamentoFin9900Hive, columnTabelaidBase9900HiveFaltantes);
     }
 
     private void filterTable(TabelasSped selectedValue) {
