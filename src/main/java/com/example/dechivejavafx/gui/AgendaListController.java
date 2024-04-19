@@ -38,7 +38,8 @@ import java.util.stream.Collectors;
 // Controlador para a tela de listagem de agendas
 public class AgendaListController implements Initializable, DataChangeListener {
 
-	/**
+	@FXML private Label tituloTableViews;
+    /**
 	 * Controlador para a lista de agendas.
 	 */
 	private AgendaService service; // Serviço que manipula as agendas

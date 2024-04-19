@@ -39,8 +39,6 @@ public class Main extends Application {
 
             primaryStage.show();
 
-            // Verifica o estilo aplicado à raiz da cena
-            System.out.println("Verifica o estilo aplicado à raiz da cena: " + mainScene.getRoot().getStyle());
         } catch (IOException e) {
             // Exibe informações sobre exceções durante o carregamento da interface gráfica.
             e.printStackTrace();

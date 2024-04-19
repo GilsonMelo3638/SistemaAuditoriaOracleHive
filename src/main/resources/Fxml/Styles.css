@@ -19,18 +19,10 @@
     -fx-text-fill: #ADC52E; /* Cor do texto da MenuBar como branco */
 }
 
-.menu-item {
-    -fx-text-fill: #928558; /* Define a cor do texto dos MenuItems como marrom claro */
-}
-
 .menu-bar .label {
-    -fx-font-size: 15px;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
 }
-
-.menu-item .label {
-    -fx-font-size: 15px;
-}
-
 
 /* Estilização para TitledPane e ComboBox dentro dele */
 .titled-pane {
@@ -98,3 +90,45 @@
     -fx-border-width: 1px; /* Define a largura da borda como 1 pixel */
     -fx-border-style: solid; /* Define o estilo da borda como sólido */
 }
+
+/* Defina uma classe para HBox com espaçamento de 10px e HBox.hgrow ALWAYS */
+.hbox-custom {
+    -fx-spacing: 6px;
+    -fx-hgrow: ALWAYS;
+}
+
+/* Defina uma classe para VBox com espaçamento de 3px, fillWidth true, HBox.hgrow ALWAYS e alinhamento TOP_CENTER */
+.vbox-custom-3 {
+    -fx-spacing: 3px;
+    -fx-fill-width: true;
+    -fx-hgrow: ALWAYS;
+    -fx-alignment: TOP_CENTER;
+}
+
+/* Defina uma classe para VBox com espaçamento de 9px, fillWidth true, HBox.hgrow ALWAYS e alinhamento TOP_CENTER */
+.vbox-custom-9 {
+    -fx-spacing: 9px;
+    -fx-fill-width: true;
+    -fx-hgrow: ALWAYS;
+    -fx-alignment: TOP_CENTER;
+}
+
+/* Defina uma classe para VBox com espaçamento de 10px, fillWidth true, HBox.hgrow ALWAYS e alinhamento TOP_CENTER */
+.vbox-custom-10 {
+    -fx-spacing: 10px;
+    -fx-fill-width: true;
+    -fx-hgrow: ALWAYS;
+    -fx-alignment: TOP_CENTER;
+}
+
+/* Defina uma classe para VBox com espaçamento de 25px, fillWidth true, HBox.hgrow ALWAYS e alinhamento TOP_CENTER */
+.vbox-custom-25 {
+    -fx-spacing: 25px;
+    -fx-fill-width: true;
+    -fx-hgrow: ALWAYS;
+    -fx-alignment: TOP_CENTER;
+}
+
+
+
+

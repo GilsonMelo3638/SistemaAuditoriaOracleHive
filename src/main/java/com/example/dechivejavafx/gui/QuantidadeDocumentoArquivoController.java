@@ -32,6 +32,8 @@ public class QuantidadeDocumentoArquivoController implements Initializable {
 
     // Mensagem de erro para ambiente não configurado corretamente
     private static final String ERRO_AMBIENTE_NAO_CONFIGURADO = "Erro: As variáveis de ambiente não estão configuradas corretamente.";
+    @FXML
+    private Label tituloTableViews;
 
     // Componentes da interface gráfica mapeados do arquivo FXML
     @FXML

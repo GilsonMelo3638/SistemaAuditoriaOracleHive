@@ -57,6 +57,7 @@ public class OracleHiveController implements Initializable {
     private Label labelTotalHive;
     @FXML
     private Label txtDiferenca;
+    @FXML private Label tituloTableViews;
     @FXML
     private TableColumn<OracleHive, String> columnArquivo;
     @FXML

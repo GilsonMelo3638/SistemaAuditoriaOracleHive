@@ -7,9 +7,9 @@
     <Label fx:id="tituloTableViews"
            text="TABELAS SPED DO HIVE PENDENTES DE CARGAS PARCIAL OU TOTAL: COMPARAÇÃO ORACLE 9900, HIVE 9900 E TODAS TABELAS NO HIVE">
     </Label>
-    <HBox spacing="10" fillHeight="true" styleClass="hbox">
-        <VBox spacing="25" fillWidth="true" HBox.hgrow="ALWAYS" alignment="TOP_CENTER">
-            <HBox spacing="10" styleClass="hbox">
+    <HBox fillHeight="true" styleClass="hbox">
+        <VBox styleClass="vbox-custom-25">
+            <HBox styleClass="hbox">
                 <Label text="0000: Ausentes no Hive:" styleClass="tituloTableViews"/>
                 <Label text="Total de id_base:" styleClass="tituloTableViews"/>
                 <Label fx:id="txtTotalIdBaseFaltante0000" styleClass="tituloTableViews"/>
@@ -30,15 +30,16 @@
                 </columnResizePolicy>
             </TableView>
         </VBox>
-        <VBox  spacing="3" fillWidth="true" HBox.hgrow="ALWAYS" alignment="TOP_CENTER">
-            <HBox spacing="10" styleClass="hbox">
-                <Label text="9900: Carregados no Hive e Ausentes em Outras Tabelas do Hive: " styleClass="tituloTableViews"/>
+        <VBox styleClass="vbox-custom-3">
+            <HBox styleClass="hbox">
+                <Label text="9900: Carregados no Hive e Ausentes em Outras Tabelas do Hive: "
+                       styleClass="tituloTableViews"/>
                 <Label text="Total de id_base:" styleClass="tituloTableViews"/>
                 <Label fx:id="txtTotalIdBase" styleClass="tituloTableViews"/>
             </HBox>
-            <HBox spacing="10" styleClass="hbox">
+            <HBox styleClass="hbox">
                 <Label text="Selecione a Tabela do Hive:" styleClass="tituloTableViews"/>
-                <ComboBox fx:id="comboTabelasSped" VBox.vgrow="ALWAYS" prefWidth="175" />
+                <ComboBox fx:id="comboTabelasSped" VBox.vgrow="ALWAYS" prefWidth="175"/>
                 <Button fx:id="btLimpar" mnemonicParsing="false" onAction="#onBtLimparAction" text="Limpar Seleção"
                         styleClass="label"/>
             </HBox>
@@ -60,8 +61,8 @@
                 </columnResizePolicy>
             </TableView>
         </VBox>
-        <VBox spacing="25" fillWidth="true" HBox.hgrow="ALWAYS" alignment="TOP_CENTER">
-            <HBox spacing="10" styleClass="hbox">
+        <VBox styleClass="vbox-custom-25">
+            <HBox styleClass="hbox">
                 <Label text="9900: Id_bases no Oracle e Ausentes no Hive: " styleClass="tituloTableViews"/>
                 <Label fx:id="txtTotalIdBaseFaltante" styleClass="tituloTableViews"/>
                 <Label text="/" styleClass="tituloTableViews"/>
@@ -84,5 +85,4 @@
             </TableView>
         </VBox>
     </HBox>
-    <Separator style="-fx-border-color: black; -fx-border-width: 2px;"/>
 </VBox>

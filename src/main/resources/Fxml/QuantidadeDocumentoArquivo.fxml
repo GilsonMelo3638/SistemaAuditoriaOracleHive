@@ -1,56 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
+<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.BarChart?>
-<VBox id="quantidadeDocArquivoPane" prefHeight="700.0" prefWidth="2200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dechivejavafx.gui.QuantidadeDocumentoArquivoController">
-	<!-- Restante do conteúdo do VBox -->
-	<Label text="QUANTIDADE DE DOCUMENTOS NO HIVE">
-		<font>
-			<Font name="System Bold" size="14.0" />
-		</font>
-		<padding>
-			<Insets left="5.0" top="5.0" />
-		</padding>
-	</Label>
-	<HBox spacing="10" HBox.hgrow="ALWAYS">
-		<Label text="Selecione a Tabela do Hive:" />
-		<ComboBox fx:id="comboBoxTabelas" VBox.vgrow="ALWAYS" prefWidth="175" />
-		<Label text="Data de Início:" />
-		<ComboBox fx:id="comboBoxData" VBox.vgrow="ALWAYS" prefWidth="100" />
-		<Label fx:id="txtTotalArquivo" />
-		<Label fx:id="txtTotalArquivoDistinto" />
-		<RadioButton fx:id="radioGerarArquivoIndividual" mnemonicParsing="false" text="Gerar Arquivo Individual" />
-		<RadioButton fx:id="radioGerarArquivosTodos" mnemonicParsing="false" text="Gerar Arquivos Todos" />
-	</HBox>
-	<HBox spacing="10" HBox.hgrow="ALWAYS">
-		<TableView fx:id="tableViewQuantidadeDocumentosArquivo" VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="800.0">
-			<columns>
-				<TableColumn fx:id="columnTabelaHive" text="Tabela do Hive" />
-				<TableColumn fx:id="columnArquivo" text="Arquivo" />
-				<TableColumn fx:id="columnDia" text="Dia" />
-				<TableColumn fx:id="columnTotal" text="Total" />
-			</columns>
-			<columnResizePolicy>
-				<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-			</columnResizePolicy>
-		</TableView>
-		<BarChart fx:id="barChart" VBox.vgrow="ALWAYS" prefHeight="400.0" prefWidth="800.0">
-			<xAxis>
-				<CategoryAxis side="BOTTOM" />
-			</xAxis>
-			<yAxis>
-				<NumberAxis side="LEFT" />
-			</yAxis>
-		</BarChart>
-	</HBox>
-	<!-- Linha divisória -->
-	<Separator style="-fx-border-color: black; -fx-border-width: 2px;" />
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox id="quantidadeDocArquivoPane" alignment="CENTER" fillWidth="true" prefHeight="700.0" prefWidth="2200.0" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.dechivejavafx.gui.QuantidadeDocumentoArquivoController">
+    <Label fx:id="tituloTableViews"
+           text="QUANTIDADE DE ARQUIVOS E DOCUMENTOS NO HIVE"/>
+    <HBox styleClass="hbox">
+        <Label text="Total de Arquivos no Hive por Dia e Hora"
+               styleClass="tituloTableViews"/>
+    </HBox>
+    <HBox styleClass="hbox" fillHeight="true">
+        <HBox styleClass="hbox">
+            <Label text="Selecione a Tabela do Hive:"/>
+            <ComboBox fx:id="comboBoxTabelas" VBox.vgrow="ALWAYS" prefWidth="175"/>
+            <Label text="Data de Início:"/>
+            <ComboBox fx:id="comboBoxData" VBox.vgrow="ALWAYS" prefWidth="100"/>
+            <Label fx:id="txtTotalArquivo"/>
+            <Label fx:id="txtTotalArquivoDistinto"/>
+            <RadioButton fx:id="radioGerarArquivoIndividual" mnemonicParsing="false" text="Gerar Arquivo Individual"/>
+            <RadioButton fx:id="radioGerarArquivosTodos" mnemonicParsing="false" text="Gerar Arquivos Todos"/>
+        </HBox>
+    </HBox>
+    <HBox styleClass="hbox-custom">
+        <Region VBox.vgrow="ALWAYS"/>
+        <TableView fx:id="tableViewQuantidadeDocumentosArquivo" VBox.vgrow="ALWAYS" prefHeight="573.0"
+                   prefWidth="800.0">
+            <columns>
+                <TableColumn fx:id="columnTabelaHive" text="Tabela do Hive"/>
+                <TableColumn fx:id="columnArquivo" text="Arquivo"/>
+                <TableColumn fx:id="columnDia" text="Dia"/>
+                <TableColumn fx:id="columnTotal" text="Total"/>
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+        <BarChart fx:id="barChart" VBox.vgrow="ALWAYS" prefHeight="400.0" prefWidth="800.0">
+            <xAxis>
+                <CategoryAxis side="BOTTOM"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis side="LEFT"/>
+            </yAxis>
+        </BarChart>
+    </HBox>
 </VBox>

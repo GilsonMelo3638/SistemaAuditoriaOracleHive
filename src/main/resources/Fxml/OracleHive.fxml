@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 <VBox id="oracleHivePane" prefHeight="700.0" prefWidth="2200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dechivejavafx.gui.OracleHiveController">
-	<!-- Restante do conteúdo do VBox -->
-	<Label text="Diferença de Quantidade entre Oracle e Hive.">
-		<font>
-			<Font name="System Bold" size="14.0" />
-		</font>
-		<padding>
-			<Insets left="5.0" top="5.0" />
-		</padding>
-	</Label>
-	<HBox spacing="10" HBox.hgrow="ALWAYS">
+	<Label fx:id="tituloTableViews"
+		   text="QUANTIDADE DE ARQUIVOS E DOCUMENTOS NO ORACLE E NO HIVE"/>
+	<HBox styleClass="hbox">
+		<Label text="Diferença de Quantidade entre Oracle e Hive"
+			   styleClass="tituloTableViews"/>
+	</HBox>
+	<HBox styleClass="hbox-custom">
 		<Label text="Selecione a Tabela do Hive:" />
 		<ComboBox fx:id="comboTipoDoc" VBox.vgrow="ALWAYS" prefWidth="175" />
 	</HBox>
-	<HBox spacing="10" HBox.hgrow="ALWAYS">
+		<Region VBox.vgrow="ALWAYS"/>
 		<TableView fx:id="tableViewOracleHive" VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="800.0">
 			<columns>
 				<TableColumn fx:id="columnArquivo" text="Arquivo" />
@@ -33,5 +28,5 @@
 				<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
 			</columnResizePolicy>
 		</TableView>
-	</HBox>
+
 </VBox>

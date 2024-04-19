@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<StackPane fx:id="pendenciasHivePane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dechivejavafx.gui.PendenciasHiveController">
+<StackPane fx:id="pendenciasHivePane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.dechivejavafx.gui.PendenciasHiveController">
     <VBox alignment="CENTER" fillWidth="true" prefHeight="700.0" prefWidth="2200.0" style="-fx-padding: 10px;">
-        <Label fx:id="tituloTableViews" text="TABELAS DOCUMENTOS FISCAIS DO HIVE PENDENTES DE CARGAS, DUPLICIDADE DE CARGAS OU DIVERGÊNCIA DE QUANTIDADES" />
-        <HBox spacing="10" styleClass="hbox" fillHeight="true">
+        <Label fx:id="tituloTableViews"
+               text="TABELAS DOCUMENTOS FISCAIS DO HIVE PENDENTES DE CARGAS, DUPLICIDADE DE CARGAS OU DIVERGÊNCIA DE QUANTIDADES"/>
+        <HBox styleClass="hbox" fillHeight="true">
             <!-- TableView Detalhes NFe e NFCe -->
-            <VBox spacing="20" fillWidth="true" HBox.hgrow="ALWAYS">
-                <Label text="Arquivos em Tabelas Principal e Ausentes em Tabelas Detalhes" styleClass="tituloTableViews"/>
+            <VBox styleClass="vbox-custom-10">
+                <HBox styleClass="hbox">
+                    <Label text="Arquivos em Tabelas Principal e Ausentes em Tabelas Detalhes"
+                           styleClass="tituloTableViews"/>
+                </HBox>
                 <TableView fx:id="tableViewDetNFeNFCeInf" prefHeight="573.0" prefWidth="700.0">
                     <columns>
                         <TableColumn fx:id="columnArquivo" text="Arquivo" prefWidth="200"/>
@@ -22,8 +26,10 @@
             </VBox>
 
             <!-- TableView Duplicidade -->
-            <VBox spacing="20" fillWidth="true" HBox.hgrow="ALWAYS">
-                <Label text="Arquivos com Duplicidade de Chave ou Item" styleClass="tituloTableViews"/>
+            <VBox styleClass="vbox-custom-10">
+                <HBox styleClass="hbox">
+                    <Label text="Arquivos com Duplicidade de Chave ou Item" styleClass="tituloTableViews"/>
+                </HBox>
                 <TableView fx:id="tableDuplicidadeId" prefHeight="573.0" prefWidth="700.0">
                     <columns>
                         <TableColumn fx:id="columnArquivoDuplicidade" text="Arquivo" prefWidth="200"/>
@@ -36,11 +42,12 @@
             </VBox>
 
             <!-- TableView Diferença Quantidade Oracle e Hive -->
-            <VBox spacing="10" fillWidth="true" HBox.hgrow="ALWAYS">
+            <VBox styleClass="vbox-custom-9">
                 <HBox styleClass="hbox">
                     <Label text="Divergências Entre ORAPRD21 e HIVE" styleClass="tituloTableViews"/>
                     <ComboBox fx:id="comboTipoDoc" prefWidth="175"/>
-                    <Button fx:id="btLimpar" mnemonicParsing="false" onAction="#onBtLimparAction" text="Limpar Seleção"/>
+                    <Button fx:id="btLimpar" mnemonicParsing="false" onAction="#onBtLimparAction"
+                            text="Limpar Seleção"/>
                 </HBox>
                 <TableView fx:id="tableViewOracleHive" prefHeight="573.0" prefWidth="700.0">
                     <columns>
