@@ -2,26 +2,14 @@
 .root {
     -fx-background-color: #690202 !important;
 }
-
-/* Definir cor de fundo para os formulários */
-.form-background {
-    -fx-background-color: #c8d6bf; /* Cor de fundo dos formulários */
-}
-
 /* Estilização básica para o ScrollPane */
 .scroll-pane {
     -fx-background-color: #f0f0f0; /* Define a cor de fundo do ScrollPane como cinza claro */
 }
-
 /* Estilização para MenuBar e MenuItems */
 .menu-bar {
     -fx-background-color: #8db986; /* Cor de fundo da MenuBar como verde */
     -fx-text-fill: #ADC52E; /* Cor do texto da MenuBar como branco */
-}
-
-.menu-bar .label {
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
 }
 
 /* Estilização para TitledPane e ComboBox dentro dele */
@@ -32,12 +20,7 @@
 .titled-pane > .combo-box {
     -fx-background-color: #D8DACC; /* Define a cor de fundo do ComboBox como amarelo */
 }
-
 /* Estilização para Label */
-.label {
-    -fx-text-fill: black; /* Define a cor do texto da Label como preto */
-    -fx-font-size: 11px; /* Define o tamanho da fonte da Label como 14 pixels */
-}
 
 /* Estilização para VBox */
 .vbox {
@@ -45,28 +28,24 @@
     -fx-alignment: center; /* Centraliza os elementos dentro do VBox */
         -fx-font-size: 18px; /* Define o tamanho da fonte da Label como 14 pixels */
 }
-
 /* Estilização para HBox */
 .hbox {
-    -fx-spacing: 10; /* Define o espaçamento entre os elementos dentro do HBox como 10 pixels */
+    -fx-spacing: 5; /* Define o espaçamento entre os elementos dentro do HBox como 10 pixels */
 }
 
 /* Estilização para Label dentro do HBox */
 .hbox > .label {
     -fx-font-size: 12px; /* Define o tamanho da fonte das labels dentro do HBox como 14 pixels */
-    -fx-text-fill: #000000; /* Define a cor do texto das labels dentro do HBox como preto */
+    -fx-text-fill: #355c7d; /* Define a cor do texto das labels dentro do HBox como #364461 */
 }
-
 /* Estilização para TableCell e TableHeader */
-.table-cell,
-.column-header {
+.table-cell {
     -fx-font-weight: normal; /* Define o peso da fonte como normal (sem negrito) */
     -fx-font-size: 11px; /* Define o tamanho da fonte da Label como 14 pixels */
     -fx-text-fill: white; /* Define a cor do texto da Label como preto */
     -fx-background-color: black;
     -fx-alignment: center; /* Centraliza o texto dentro das colunas */
 }
-
 /* Estilização para os títulos das colunas da TableView */
 .column-header {
     -fx-text-fill: white !important; /* Define a cor do texto como branco */
@@ -74,7 +53,6 @@
     -fx-font-size: 11px; /* Define o tamanho da fonte como 11 pixels */
     -fx-alignment: center; /* Centraliza o texto dentro dos cabeçalhos das colunas */
 }
-
 /* Estilização para Labels específicas */
 .label#tituloTableViews,
 .tituloTableViews {
@@ -83,20 +61,28 @@
     -fx-padding: 10px; /* Espaçamento interno */
     -fx-alignment: center; /* Centraliza horizontalmente */
 }
-
 /* Estilização para TableView */
 .table-view {
     -fx-border-color: black; /* Define a cor da borda como preto */
     -fx-border-width: 1px; /* Define a largura da borda como 1 pixel */
     -fx-border-style: solid; /* Define o estilo da borda como sólido */
 }
-
 /* Defina uma classe para HBox com espaçamento de 10px e HBox.hgrow ALWAYS */
 .hbox-custom {
-    -fx-spacing: 6px;
+    -fx-spacing: 5px;
+    -fx-padding: 5px;
     -fx-hgrow: ALWAYS;
 }
 
+.vbox-custom {
+    -fx-alignment: center;
+    -fx-fill-width: true;
+    -fx-pref-height: 700.0;
+    -fx-pref-width: 2200.0;
+    -fx-padding: 5px;
+    -fx-spacing: 5px;
+    /* Outros estilos, se necessário */
+}
 /* Defina uma classe para VBox com espaçamento de 3px, fillWidth true, HBox.hgrow ALWAYS e alinhamento TOP_CENTER */
 .vbox-custom-3 {
     -fx-spacing: 3px;
@@ -104,29 +90,16 @@
     -fx-hgrow: ALWAYS;
     -fx-alignment: TOP_CENTER;
 }
-
-/* Defina uma classe para VBox com espaçamento de 9px, fillWidth true, HBox.hgrow ALWAYS e alinhamento TOP_CENTER */
-.vbox-custom-9 {
-    -fx-spacing: 9px;
-    -fx-fill-width: true;
-    -fx-hgrow: ALWAYS;
-    -fx-alignment: TOP_CENTER;
-}
-
-/* Defina uma classe para VBox com espaçamento de 10px, fillWidth true, HBox.hgrow ALWAYS e alinhamento TOP_CENTER */
-.vbox-custom-10 {
-    -fx-spacing: 10px;
-    -fx-fill-width: true;
-    -fx-hgrow: ALWAYS;
-    -fx-alignment: TOP_CENTER;
-}
-
 /* Defina uma classe para VBox com espaçamento de 25px, fillWidth true, HBox.hgrow ALWAYS e alinhamento TOP_CENTER */
 .vbox-custom-25 {
     -fx-spacing: 25px;
     -fx-fill-width: true;
     -fx-hgrow: ALWAYS;
     -fx-alignment: TOP_CENTER;
+}
+
+.custom-text-field {
+    -fx-pref-width: 100px; /* Defina a largura desejada */
 }
 
 

@@ -6,64 +6,64 @@
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox id="agendaListPane" alignment="CENTER" fillWidth="true" prefHeight="700.0" prefWidth="2200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dechivejavafx.gui.AgendaListController">
-	<Label fx:id="tituloTableViews"
-		   text="QUANTIDADE DE ARQUIVOS E DOCUMENTOS NO ORACLE"/>
-	<HBox  styleClass="hbox">
-		<Label text="Total de Arquivos no Oracle por Dia e Hora"
-			   styleClass="tituloTableViews"/>
-	</HBox>
+<VBox id="agendaListPane" styleClass="vbox-custom" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dechivejavafx.gui.AgendaListController">
+    <Label fx:id="tituloTableViews"
+           text="QUANTIDADE DE ARQUIVOS E DOCUMENTOS NO ORACLE"/>
+    <HBox styleClass="hbox">
+        <Label text="Total de Arquivos no Oracle por Dia e Hora"
+               styleClass="tituloTableViews"/>
+    </HBox>
 
-	<ToolBar prefHeight="40.0" prefWidth="200.0">
-		<items>
-			<!-- Label -->
-			<Label text="Agendar Nova Extração:" />
-
-			<!-- Botão -->
-			<Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="Registrar" />
-		</items>
-	</ToolBar>
-
-	<HBox styleClass="hbox-custom">
-		<Label text="Código da Agenda:" />
-		<TextField fx:id="txtCodAgenda" />
-		<Button onAction="#handleSearch" text="Pesquisar" />
-		<Label text="Dias:" />
-		<TextField fx:id="txtDias" onAction="#PesquisarTipoDoc" />
-		<ComboBox fx:id="comboTipoDoc" onAction="#PesquisarTipoDoc" promptText="Tipo de Documento">
-			<!-- Os itens do ComboBox serão preenchidos dinamicamente no código Java -->
-		</ComboBox>
-		<Label text="Arquivo:" />
-		<Label fx:id="txtTotalArquivo" />
-		<Label text="Arquivos Dados:" />
-		<Label fx:id="txtComDados" />
-		<Label text="Processados:" />
-		<Label fx:id="txtQuantidadeProcessado" />
-		<Button fx:id="btFechar" mnemonicParsing="false" onAction="#fecharAplicacao" text="Fechar" />
-
-	</HBox>
-	<HBox styleClass="hbox-custom">
-		<TableView fx:id="tableViewAgenda" maxWidth="-Infinity" prefHeight="573.0" prefWidth="1185.0" VBox.vgrow="ALWAYS">
-			<columns>
-				<TableColumn fx:id="tableColumnCodigo" minWidth="-1.0" prefWidth="90.0" text="Codigo" />
-				<TableColumn fx:id="tableColumnTipo" minWidth="0.0" prefWidth="110.0" text="Tipo" />
-				<TableColumn fx:id="tableColumnInicio" prefWidth="140.0" text="Inicio" />
-				<TableColumn fx:id="tableColumnFim" prefWidth="140.0" text="Fim" />
-				<TableColumn fx:id="tableColumnArquivo" prefWidth="140.0" text="Arquivo" />
-				<TableColumn fx:id="tableColumnQuantidade" text="Quantidade" />
-				<TableColumn fx:id="tableColumnSituacao" text="Situacao" />
-				<TableColumn fx:id="tableColumnEDIT" minWidth="0.0" />
-				<TableColumn fx:id="tableColumnREMOVE" minWidth="0.0" />
-			</columns>
-		</TableView>
-		<PieChart fx:id="pieChart" maxWidth="-Infinity" onDragDetected="#updateTableView" prefHeight="573.0" prefWidth="996.0" />
-	</HBox>
-	<LineChart fx:id="lineChart">
-		<xAxis>
-			<CategoryAxis side="BOTTOM" />
-		</xAxis>
-		<yAxis>
-			<NumberAxis side="LEFT" />
-		</yAxis>
-	</LineChart>
+    <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+            <!-- Label -->
+            <Label text="Agendar Nova Extração:"/>
+            <!-- Botão -->
+            <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="Registrar"/>
+        </items>
+    </ToolBar>
+    <HBox styleClass="hbox-custom">
+        <Label text="Código Agenda:"/>
+        <TextField fx:id="txtCodAgenda" styleClass="custom-text-field"/>
+        <Button onAction="#handleSearch" text="Pesquisar"/>
+        <Label text="Dias:"/>
+        <TextField fx:id="txtDias" styleClass="custom-text-field" onAction="#PesquisarTipoDoc"/>
+        <ComboBox fx:id="comboTipoDoc" onAction="#PesquisarTipoDoc" promptText="Tipo de Documento">
+            <!-- Os itens do ComboBox serão preenchidos dinamicamente no código Java -->
+        </ComboBox>
+        <Label text="Arquivos(Total / Com Dados):"/>
+        <Label fx:id="txtTotalArquivo"/>
+        <Label text="/"/>
+        <Label fx:id="txtComDados"/>
+        <Label text="Documentos Extraídos:"/>
+        <Label fx:id="txtQuantidadeProcessado"/>
+        <Button fx:id="btFechar" mnemonicParsing="false" onAction="#fecharAplicacao" text="Fechar"/>
+    </HBox>
+    <HBox styleClass="hbox-custom">
+        <TableView fx:id="tableViewAgenda" maxWidth="-Infinity" prefHeight="573.0" prefWidth="1185.0"
+                   VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="tableColumnCodigo" minWidth="-1.0" prefWidth="90.0" text="Codigo"/>
+                <TableColumn fx:id="tableColumnTipo" minWidth="0.0" prefWidth="110.0" text="Tipo"/>
+                <TableColumn fx:id="tableColumnInicio" prefWidth="140.0" text="Inicio"/>
+                <TableColumn fx:id="tableColumnFim" prefWidth="140.0" text="Fim"/>
+                <TableColumn fx:id="tableColumnArquivo" prefWidth="140.0" text="Arquivo"/>
+                <TableColumn fx:id="tableColumnQuantidade" text="Quantidade"/>
+                <TableColumn fx:id="tableColumnSituacao" text="Situacao"/>
+                <TableColumn fx:id="tableColumnEDIT" minWidth="0.0"/>
+                <TableColumn fx:id="tableColumnREMOVE" minWidth="0.0"/>
+            </columns>
+        </TableView>
+        <PieChart fx:id="pieChart" maxWidth="-Infinity" onDragDetected="#updateTableView" prefHeight="573.0"
+                  prefWidth="996.0"/>
+    </HBox>
+    <LineChart fx:id="lineChart">
+        <xAxis>
+            <CategoryAxis side="BOTTOM"/>
+        </xAxis>
+        <yAxis>
+            <NumberAxis side="LEFT"/>
+        </yAxis>
+    </LineChart>
 </VBox>
