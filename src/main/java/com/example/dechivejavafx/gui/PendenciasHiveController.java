@@ -274,6 +274,7 @@ public class PendenciasHiveController {
         }
     }
     private void loadOracleHiveData(String fileName) {
+        Set<String> uniqueFiles = new HashSet<>(); // Conjunto para armazenar arquivos únicos pelo índice 0
         List<OracleHive> oracleHiveList = new ArrayList<>(); // Lista para os dados da tableViewOracleHive
 
         try (BufferedReader br = new BufferedReader(new FileReader("\\\\svmcifs\\ExtracaoXML\\NovoDEC\\Pendencia\\" + fileName))) {
@@ -282,6 +283,10 @@ public class PendenciasHiveController {
                 String[] parts = line.split(",");
                 if (parts.length >= 7) { // Verificar se a linha possui pelo menos 7 partes
                     String arquivo = parts[0].replaceAll("\"", "").trim();
+                    // Verificar se o arquivo já foi adicionado, se sim, pular para a próxima linha
+                    if (!uniqueFiles.add(arquivo)) {
+                        continue;
+                    }
                     String tipoDoc = parts[1].replaceAll("\"", "").trim();
                     String tabelaOracle = parts[2].replaceAll("\"", "").trim();
                     String tabelaHive = parts[3].replaceAll("\"", "").trim();
@@ -309,9 +314,10 @@ public class PendenciasHiveController {
         // Converter a lista em ObservableList
         ObservableList<OracleHive> observableOracleHiveList = FXCollections.observableArrayList(oracleHiveList);
 
-        // Adicionar os novos dados à tabela sem limpar os dados antigos
-        tableViewOracleHive.getItems().addAll(observableOracleHiveList);
+        // Limpar os itens existentes na tabela e adicionar apenas os novos itens
+        tableViewOracleHive.getItems().setAll(observableOracleHiveList);
     }
+
     // Método para carregar os dados do arquivo CSV para a tabela de pendências
     private void loadPendenciaPrincipalDetalhe(String fileName) {
         List<PendenciasHive> pendenciasHiveList = new ArrayList<>(); // Lista para os dados da tableViewOracleHive

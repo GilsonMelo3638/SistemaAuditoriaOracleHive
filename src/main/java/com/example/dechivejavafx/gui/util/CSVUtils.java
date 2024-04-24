@@ -675,7 +675,6 @@ public class CSVUtils {
                 writer.println(pendencia.getArquivo() + "," + pendencia.getTabelaDetalhe() + "," + pendencia.getQuantidadeNsuchave());
                 // Adicione mais campos conforme necessário
             }
-            System.out.println("Lista de pendências salva com sucesso em: " + filePath);
         } catch (IOException e) {
             // Lidar com exceções de E/S, se houver
             e.printStackTrace();
