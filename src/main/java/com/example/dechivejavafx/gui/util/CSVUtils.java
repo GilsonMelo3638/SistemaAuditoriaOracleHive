@@ -52,6 +52,7 @@ public class CSVUtils {
     private static final String AGENDA_FILE_NAME = "Agenda.csv";
     private static final String DUPLICIDADE_PRINCIPAL_FILE_NAME = "DuplicidadeIdPrincipal.csv";
     private static final String DUPLICIDADE_DETALHE_FILE_NAME = "DuplicidadeIdDetalhe.csv";
+    private static final String PENDENCIA_PRINCIPAL_DETALHE = "PendenciaPrincipalDetalhe.csv";
     private static final String CONSOLIDATED_FILE_NAME = "CargasHive.csv";
     private static List<String> concatenatedData = new ArrayList<>();
     private static QuantidadeDocumentoArquivoController quantidadeDocumentoArquivoController;
@@ -175,7 +176,7 @@ public class CSVUtils {
                             && !file.getName().equalsIgnoreCase(DUPLICIDADE_PRINCIPAL_FILE_NAME)
                             // Mantém arquivos relacionados a Agendas (DUPLICIDADE_DETALHE_FILE_NAME)
                             && !file.getName().equalsIgnoreCase(DUPLICIDADE_DETALHE_FILE_NAME)
-
+                            && !file.getName().equalsIgnoreCase(PENDENCIA_PRINCIPAL_DETALHE)
             );
 
             // Verifica se há arquivos a serem processados
@@ -634,8 +635,6 @@ public class CSVUtils {
 
         return dataList;
     }
-
-
     /**
      * Carrega IDs distintos de um arquivo CSV para uma tabela SPED específica.
      *
@@ -661,6 +660,26 @@ public class CSVUtils {
             }
         }
         return distinctIds;
+    }
+
+    public static void saveListPendenciaPrincipalDetalheToCSV(List<com.example.dechivejavafx.model.entities.PendenciasHive> list) {
+        // Caminho do arquivo CSV
+        String filePath = DIRECTORY_PATH + PENDENCIA_PRINCIPAL_DETALHE;
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+            // Escrever cabeçalhos
+            writer.println("Arquivo,TabelaDetalhe,QuantidadeNsuchave"); // Adicione mais cabeçalhos conforme necessário
+
+            // Escrever os dados no arquivo CSV
+            for (com.example.dechivejavafx.model.entities.PendenciasHive pendencia : list) {
+                writer.println(pendencia.getArquivo() + "," + pendencia.getTabelaDetalhe() + "," + pendencia.getQuantidadeNsuchave());
+                // Adicione mais campos conforme necessário
+            }
+            System.out.println("Lista de pendências salva com sucesso em: " + filePath);
+        } catch (IOException e) {
+            // Lidar com exceções de E/S, se houver
+            e.printStackTrace();
+        }
     }
 
 }

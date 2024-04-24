@@ -3,9 +3,11 @@ package com.example.dechivejavafx.gui;
 import com.example.dechivejavafx.Validacoes.TipoDoc;
 import com.example.dechivejavafx.db.DatabaseConfig;
 import com.example.dechivejavafx.db.HiveDecDatabaseOperations;
+import com.example.dechivejavafx.gui.util.CSVUtils;
 import com.example.dechivejavafx.gui.util.ComboBoxUtil;
 import com.example.dechivejavafx.model.entities.DuplicidadeId;
 import com.example.dechivejavafx.model.entities.OracleHive;
+import com.example.dechivejavafx.model.entities.PendenciasHive;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,51 +18,102 @@ import javafx.scene.layout.StackPane;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class PendenciasHiveController {
 
     public StackPane pendenciasHivePane;
+    // Declaração do conjunto para armazenar os arquivos distintos
+    private Set<String> distinctFiles = new HashSet<>();
+    // Conjunto para armazenar as chaves compostas únicas de arquivo e tabela
+    private Set<String> distinctKeys = new HashSet<>();
+    private boolean executeQuery;
     public Button btLimpar;
-    @FXML private  Label tituloTableViews;
+    @FXML
+    private Label tituloTableViews;
     // Labels para exibição de resultados individuais
-    @FXML private Label labelArquivo;
-    @FXML private Label labelcolumnTabelaDetalhe;
-    @FXML private Label labelQuantidadeNsuchave;
-    @FXML private ComboBox<TipoDoc> comboTipoDoc;
+    @FXML
+    private Label labelArquivo;
+    @FXML
+    private Label labelcolumnTabelaDetalhe;
+    @FXML
+    private Label labelQuantidadeNsuchave;
+    @FXML
+    private ComboBox<TipoDoc> comboTipoDoc;
     // Tabela para exibição de resultados em formato tabular
-    @FXML private TableView<com.example.dechivejavafx.model.entities.PendenciasHive> tableViewDetNFeNFCeInf;
-    @FXML private TableView<DuplicidadeId> tableDuplicidadeId;
-    @FXML private TableView<OracleHive> tableViewOracleHive;
+    @FXML
+    private TableView<PendenciasHive> tableViewDetNFeNFCeInf;
+    @FXML
+    private TableView<DuplicidadeId> tableDuplicidadeId;
+    @FXML
+    private TableView<OracleHive> tableViewOracleHive;
     // Colunas da tabela para diferentes propriedades da entidade TotalizacaoNfe
-    @FXML private TableColumn<com.example.dechivejavafx.model.entities.PendenciasHive, String> columnArquivo;
-    @FXML private TableColumn<com.example.dechivejavafx.model.entities.PendenciasHive, String> columnTabelaDetalhe;
-    @FXML private TableColumn<com.example.dechivejavafx.model.entities.PendenciasHive, Integer> columnQuantidadeNsuchave;
-    @FXML private TableColumn<DuplicidadeId, String> columnArquivoDuplicidade;
-    @FXML private TableColumn<DuplicidadeId, String> columnTabelaDuplicidade;
-    @FXML private TableColumn<OracleHive, String> columnArquivoOracle;
-    @FXML private TableColumn<OracleHive, String> columnTipoDoc;
-    @FXML private TableColumn<OracleHive, String> columnTabelaOracle;
-    @FXML private TableColumn<OracleHive, String> columnTabelaHive;
-    @FXML private TableColumn<OracleHive, Integer> columnTotalOracle;
-    @FXML private TableColumn<OracleHive, Integer> columnTotalHive;
-    @FXML private TableColumn<OracleHive, Integer> columnDiferenca;
+    @FXML
+    private TableColumn<PendenciasHive, String> columnArquivo;
+    @FXML
+    private TableColumn<PendenciasHive, String> columnTabelaDetalhe;
+    @FXML
+    private TableColumn<PendenciasHive, Integer> columnQuantidadeNsuchave;
+    @FXML
+    private TableColumn<DuplicidadeId, String> columnArquivoDuplicidade;
+    @FXML
+    private TableColumn<DuplicidadeId, String> columnTabelaDuplicidade;
+    @FXML
+    private TableColumn<OracleHive, String> columnArquivoOracle;
+    @FXML
+    private TableColumn<OracleHive, String> columnTipoDoc;
+    @FXML
+    private TableColumn<OracleHive, String> columnTabelaOracle;
+    @FXML
+    private TableColumn<OracleHive, String> columnTabelaHive;
+    @FXML
+    private TableColumn<OracleHive, Integer> columnTotalOracle;
+    @FXML
+    private TableColumn<OracleHive, Integer> columnTotalHive;
+    @FXML
+    private TableColumn<OracleHive, Integer> columnDiferenca;
     // Operações no banco de dados Hive
     private HiveDecDatabaseOperations hiveDatabaseOperations;
     private ObservableList<OracleHive> originalOracleHiveList = FXCollections.observableArrayList(); // Lista para armazenar os resultados originais
     // Configurações do banco de dados
     private DatabaseConfig databaseConfig = new DatabaseConfig();
+
     // Método de inicialização chamado pelo JavaFX quando o arquivo FXML é carregado
     public void initialize() {
+        // Inicializa as ComboBoxes na interface
         initializeComboBoxes();
-        // Configurar as colunas da tabela
-        configureColumn(columnArquivo, com.example.dechivejavafx.model.entities.PendenciasHive::getArquivo);
-        configureColumn(columnTabelaDetalhe, com.example.dechivejavafx.model.entities.PendenciasHive::getTabelaDetalhe);
-        configureColumn(columnQuantidadeNsuchave, com.example.dechivejavafx.model.entities.PendenciasHive::getQuantidadeNsuchave);
+
+        // Configura as colunas das tabelas na interface
+        configureTableColumns();
+
+        // Configura as operações de banco de dados Hive
+        configureHiveDatabaseOperations();
+
+        // Carrega os dados dos arquivos CSV para as tabelas na interface
+        loadCSVData();
+
+        // Configura um ouvinte de alteração para a ComboBox comboTipoDoc
+        setupComboBoxListener();
+
+        // Copia a lista original de itens da tabela OracleHive
+        copyOriginalList();
+
+        // Executa a consulta inicial e atualiza a interface gráfica
+        if (executeQuery) {
+            executeQueryAndUpdateUI();
+        }
+        // Configura a ordenação inicial das tabelas na interface
+        configureTableSorting();
+    }
+
+    // Método para configurar as colunas das tabelas na interface
+    private void configureTableColumns() {
+        // Configuração das colunas específicas para exibir diferentes dados
+        configureColumn(columnArquivo, PendenciasHive::getArquivo);
+        configureColumn(columnTabelaDetalhe, PendenciasHive::getTabelaDetalhe);
+        configureColumn(columnQuantidadeNsuchave, PendenciasHive::getQuantidadeNsuchave);
         configureColumnDuplicidade(columnArquivoDuplicidade, DuplicidadeId::getArquivo);
         configureColumnDuplicidade(columnTabelaDuplicidade, DuplicidadeId::getTabela);
         configureColumOracleHive(columnArquivoOracle, OracleHive::getArquivo);
@@ -70,40 +123,51 @@ public class PendenciasHiveController {
         configureColumOracleHive(columnTotalOracle, OracleHive::getTotalOracle);
         configureColumOracleHive(columnTotalHive, OracleHive::getTotalHive);
         configureColumOracleHive(columnDiferenca, OracleHive::getDiferenca);
+    }
 
-        // Configurar a instância HiveDatabaseOperations
+    // Método para configurar as operações de banco de dados Hive
+    private void configureHiveDatabaseOperations() {
+        // Cria a instância das operações de banco de dados Hive
         hiveDatabaseOperations = createHiveDatabaseOperations();
-        // Carregar dados dos arquivos CSV para a tabela de duplicidade
+    }
+
+    // Método para carregar os dados dos arquivos CSV para as tabelas na interface
+    private void loadCSVData() {
+        // Carrega os dados dos arquivos CSV específicos para as tabelas na interface
         loadDuplicidadeIdData("DuplicidadeIdDetalhe.csv");
         loadDuplicidadeIdData("DuplicidadeIdPrincipal.csv");
-        loadOracleHiveData("pendencias.csv"); // Adicione esta linha para carregar dados para tableViewOracleHive
-        // Executar a consulta e atualizar a interface gráfica
-        // Adicionar um ouvinte de alteração ao ComboBox comboTipoDoc
+        loadOracleHiveData("pendencias.csv");
+        loadPendenciaPrincipalDetalhe("PendenciaPrincipalDetalhe.csv");
+    }
+
+    // Método para configurar um ouvinte de alteração para a ComboBox comboTipoDoc
+    private void setupComboBoxListener() {
+        // Configura um ouvinte de alteração para a ComboBox comboTipoDoc
         comboTipoDoc.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            // Filtrar a tabela OracleHive com base no novo valor selecionado
+            // Filtra a tabela OracleHive com base no novo valor selecionado na ComboBox
             filterOracleHiveTable(newValue.toString());
         });
-        // Copie a lista original ao iniciar
+    }
+
+    // Método para copiar a lista original de itens da tabela OracleHive
+    private void copyOriginalList() {
+        // Copia a lista original de itens da tabela OracleHive para uso posterior
         originalOracleHiveList.addAll(tableViewOracleHive.getItems());
-        executeQueryAndUpdateUI();
+    }
 
-        // Configurar a ordenação inicial da tableViewOracleHive
+    // Método para configurar a ordenação inicial das tabelas na interface
+    private void configureTableSorting() {
+        // Configura a ordenação inicial das tabelas na interface
         tableViewOracleHive.getSortOrder().addAll(columnTipoDoc, columnArquivoOracle);
-
-        // Configurar a ordenação inicial da tableDuplicidadeId
         tableDuplicidadeId.getSortOrder().addAll(columnTabelaDuplicidade, columnArquivoDuplicidade);
-
-        // Configurar a ordenação inicial da tableViewDetNFeNFCeInf
         tableViewDetNFeNFCeInf.getSortOrder().addAll(columnTabelaDetalhe, columnArquivo);
     }
+
 
     // Método para inicializar os ComboBoxes
     private void initializeComboBoxes() {
         ComboBoxUtil.initializeComboBoxTipoDoc(comboTipoDoc, Arrays.asList(TipoDoc.values()));
     }
-
-
-
 
     // Método para configurar coluna de texto na tabela
     private <T> void configureColumn(TableColumn<com.example.dechivejavafx.model.entities.PendenciasHive, T> column, Function<com.example.dechivejavafx.model.entities.PendenciasHive, T> valueExtractor) {
@@ -143,7 +207,6 @@ public class PendenciasHiveController {
         // Configurar a ordenação inicial
         column.setSortType(TableColumn.SortType.ASCENDING);
     }
-
     private <T> void configureColumOracleHive(TableColumn<OracleHive, T> column, Function<OracleHive, T> valueExtractor) {
         column.setCellValueFactory(cellData -> new SimpleObjectProperty<>(valueExtractor.apply(cellData.getValue())));
 
@@ -162,6 +225,7 @@ public class PendenciasHiveController {
         // Configurar a ordenação inicial
         column.setSortType(TableColumn.SortType.ASCENDING);
     }
+
     // Método para criar uma instância de HiveDatabaseOperations
     private HiveDecDatabaseOperations createHiveDatabaseOperations() {
         String jdbcUrl = System.getenv("HIVE_JDBC_URL");
@@ -176,30 +240,39 @@ public class PendenciasHiveController {
     }
 
     // Método para carregar dados de um arquivo CSV para a tabela de duplicidade
-    private void loadDuplicidadeIdData(String fileName) {
-        List<DuplicidadeId> duplicidadeIdList = new ArrayList<>();
 
+    private void loadDuplicidadeIdData(String fileName) {
         try (BufferedReader br = new BufferedReader(new FileReader("\\\\svmcifs\\ExtracaoXML\\NovoDEC\\Pendencia\\" + fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 2) {
-                    String arquivo = parts[0];
-                    String tabela = parts[1];
-                    duplicidadeIdList.add(new DuplicidadeId(arquivo, tabela));
+                if (parts.length >= 2) { // Verificar se a linha possui pelo menos 2 partes
+                    String arquivo = parts[0].replaceAll("\"", "").trim();
+                    String tabela = parts[1].replaceAll("\"", "").trim();
+
+                    // Criar uma chave composta combinando os valores dos índices 0 e 1
+                    String compositeKey = arquivo + tabela;
+
+                    // Verificar se a chave composta já existe no conjunto global de chaves
+                    if (!distinctKeys.contains(compositeKey)) {
+                        // Adicionar a chave composta ao conjunto global se não existir
+                        distinctKeys.add(compositeKey);
+
+                        // Adicionar os valores à tabela apenas se for a primeira ocorrência da chave composta
+                        tableDuplicidadeId.getItems().add(new DuplicidadeId(arquivo, tabela));
+
+                        // Log dos valores adicionados
+                        System.out.println("Adicionado: " + arquivo + ", " + tabela);
+                    } else {
+                        // Log das duplicatas encontradas
+                        System.out.println("Duplicata encontrada: " + arquivo + ", " + tabela);
+                    }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // Converter a lista em ObservableList
-        ObservableList<DuplicidadeId> observableDuplicidadeIdList = FXCollections.observableArrayList(duplicidadeIdList);
-
-        // Adicionar os novos dados à tabela sem limpar os dados antigos
-        tableDuplicidadeId.getItems().addAll(observableDuplicidadeIdList);
     }
-
     private void loadOracleHiveData(String fileName) {
         List<OracleHive> oracleHiveList = new ArrayList<>(); // Lista para os dados da tableViewOracleHive
 
@@ -239,6 +312,40 @@ public class PendenciasHiveController {
         // Adicionar os novos dados à tabela sem limpar os dados antigos
         tableViewOracleHive.getItems().addAll(observableOracleHiveList);
     }
+    // Método para carregar os dados do arquivo CSV para a tabela de pendências
+    private void loadPendenciaPrincipalDetalhe(String fileName) {
+        List<PendenciasHive> pendenciasHiveList = new ArrayList<>(); // Lista para os dados da tableViewOracleHive
+
+        try (BufferedReader br = new BufferedReader(new FileReader("\\\\svmcifs\\ExtracaoXML\\NovoDEC\\Pendencia\\" + fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length < 3) {
+                    continue; // Ignorar linhas com menos de 3 partes
+                }
+
+                String arquivo = parts[0].replaceAll("\"", "").trim();
+                String tabelaDetalhe = parts[1].replaceAll("\"", "").trim();
+
+                // Tentar converter o valor para inteiro, se falhar, continue para a próxima linha
+                int quantidadeNsuchave;
+                try {
+                    quantidadeNsuchave = Integer.parseInt(parts[2].replaceAll("\"", "").trim());
+                } catch (NumberFormatException e) {
+                    continue;
+                }
+
+                pendenciasHiveList.add(new PendenciasHive(arquivo, tabelaDetalhe, quantidadeNsuchave));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Converter a lista em ObservableList e adicionar à tabela
+        tableViewDetNFeNFCeInf.getItems().setAll(FXCollections.observableArrayList(pendenciasHiveList));
+    }
+
+
     private void filterOracleHiveTable(String filter) {
         if (filter == null || filter.isEmpty()) {
             // Se o filtro estiver vazio, restaurar a lista original
@@ -274,6 +381,12 @@ public class PendenciasHiveController {
             // Preencher a tabela com os resultados
             tableViewDetNFeNFCeInf.setItems(observableResultList);
 
+            // Salvar a lista em um arquivo CSV
+            CSVUtils.saveListPendenciaPrincipalDetalheToCSV(resultList);
         }
+    }
+
+    public void setExecuteQuery(boolean execute) {
+        this.executeQuery = execute;
     }
 }

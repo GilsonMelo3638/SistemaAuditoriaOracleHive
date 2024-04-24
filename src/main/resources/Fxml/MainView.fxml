@@ -27,9 +27,12 @@
                                 <MenuItem fx:id="menuItemQuantidadeDocumentoArquivo"
                                           mnemonicParsing="false" onAction="#onMenuItemQuantidadeDocumentoArquivoAction"
                                           text="Quantidades" />
-                                <MenuItem fx:id="menuItemPendenciasHive"
+                               <MenuItem fx:id="menuItemPendenciasHive"
                                           mnemonicParsing="false" onAction="#onMenuItemProcessarPendenciaHiveAction"
-                                          text="Processar Pendências Hive(fxml)" />
+                                          text="Processar Pendências Principal e Datalhes" />
+                                <MenuItem fx:id="menuItemPendenciasFormularioHive"
+                                          mnemonicParsing="false" onAction="#onMenuItemPendenciaFormularioHiveAction"
+                                          text="Abrir Formulároo de Pendências" />
                                 <MenuItem fx:id="menuItemOracleHive"
                                           mnemonicParsing="false" onAction="#onMenuItemOracleHive"
                                           text="Diferença Oracle e Hive" />

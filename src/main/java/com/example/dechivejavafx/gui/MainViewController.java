@@ -48,6 +48,7 @@ public class MainViewController implements Initializable {
 
     // Serviço para manipulação de agendas
     private final AgendaService service = new AgendaService();
+    public MenuItem menuItemPendenciasFormularioHive;
 
 
     // Private Stage
@@ -305,7 +306,10 @@ public class MainViewController implements Initializable {
         // Chama o método para processar a seleção do tipo de documento central e tabelas
         selecionarTipoDocCentralETabelas(tipoDocNFCeCanc);
         loadView("/Fxml/OracleHive.fxml", x -> {});
-        loadView("/Fxml/PendenciasHive.fxml", x -> {});
+        loadView("/Fxml/PendenciasHive.fxml", (PendenciasHiveController controller) -> {
+            controller.setExecuteQuery(true); // Informa ao controlador para executar a consulta
+            controller.initialize(); // Chama o método de inicialização se necessário
+        });
         handleRemoveOracleHive();
         CSVUtils.deleteFilesExceptPendencia("\\\\svmcifs\\ExtracaoXML\\NovoDEC\\Pendencia\\");
         // Obtenha a data e hora atuais
@@ -336,12 +340,19 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onMenuItemProcessarPendenciaHiveAction() {
-        // Define a cena atual e carrega a view de quantidade de documentos em arquivo
-        SceneManager.setCurrentScene(Main.getMainScene());
-        loadView("/Fxml/PendenciasHive.fxml", x -> {});
+        loadView("/Fxml/PendenciasHive.fxml", (PendenciasHiveController controller) -> {
+            controller.setExecuteQuery(true); // Informa ao controlador para executar a consulta
+            controller.initialize(); // Chama o método de inicialização se necessário
+        });
     }
 
-
+    @FXML
+    public void onMenuItemPendenciaFormularioHiveAction() {
+        loadView("/Fxml/PendenciasHive.fxml", (PendenciasHiveController controller) -> {
+            controller.setExecuteQuery(false); // Informa ao controlador para NÃO executar a consulta
+            controller.initialize(); // Chama o método de inicialização se necessário
+        });
+    }
     @FXML
     public void onMenuItemDetNFeNFCeInfAction() {
         // Define a cena atual e carrega a view de quantidade de documentos em arquivo

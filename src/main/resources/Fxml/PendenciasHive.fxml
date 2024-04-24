@@ -6,58 +6,56 @@
     <VBox styleClass="vbox-custom" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
         <Label fx:id="tituloTableViews"
                text="TABELAS DOCUMENTOS FISCAIS DO HIVE PENDENTES DE CARGAS, DUPLICIDADE DE CARGAS OU DIVERGÊNCIA DE QUANTIDADES"/>
-        <HBox styleClass="hbox" fillHeight="true">
+        <HBox styleClass="hbox">
             <!-- TableView Detalhes NFe e NFCe -->
             <VBox styleClass="vbox-custom">
                 <HBox styleClass="hbox">
                     <Label text="Arquivos em Tabelas Principal e Ausentes em Tabelas Detalhes"
                            styleClass="tituloTableViews"/>
                 </HBox>
-                <TableView fx:id="tableViewDetNFeNFCeInf" prefHeight="573.0" prefWidth="700.0">
+                <TableView fx:id="tableViewDetNFeNFCeInf">
                     <columns>
-                        <TableColumn fx:id="columnArquivo" text="Arquivo" prefWidth="200"/>
-                        <TableColumn fx:id="columnTabelaDetalhe" text="Tabela de Detalhe" prefWidth="200"/>
-                        <TableColumn fx:id="columnQuantidadeNsuchave" text="Quantidade de nsuchave" prefWidth="200"/>
+                        <TableColumn fx:id="columnArquivo" text="Arquivo"/>
+                        <TableColumn fx:id="columnTabelaDetalhe" text="Tabela de Detalhe"/>
+                        <TableColumn fx:id="columnQuantidadeNsuchave" text="Quantidade de nsuchave"/>
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                     </columnResizePolicy>
                 </TableView>
             </VBox>
-
             <!-- TableView Duplicidade -->
             <VBox styleClass="vbox-custom">
                 <HBox styleClass="hbox">
                     <Label text="Arquivos com Duplicidade de Chave ou Item" styleClass="tituloTableViews"/>
                 </HBox>
-                <TableView fx:id="tableDuplicidadeId" prefHeight="573.0" prefWidth="700.0">
+                <TableView fx:id="tableDuplicidadeId">
                     <columns>
-                        <TableColumn fx:id="columnArquivoDuplicidade" text="Arquivo" prefWidth="200"/>
-                        <TableColumn fx:id="columnTabelaDuplicidade" text="Tabela de Detalhe" prefWidth="200"/>
+                        <TableColumn fx:id="columnArquivoDuplicidade" text="Arquivo"/>
+                        <TableColumn fx:id="columnTabelaDuplicidade" text="Tabela de Detalhe"/>
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                     </columnResizePolicy>
                 </TableView>
             </VBox>
-
             <!-- TableView Diferença Quantidade Oracle e Hive -->
             <VBox styleClass="vbox-custom">
                 <HBox styleClass="hbox">
                     <Label text="Divergências Entre ORAPRD21 e HIVE" styleClass="tituloTableViews"/>
-                    <ComboBox fx:id="comboTipoDoc" prefWidth="175"/>
+                    <ComboBox fx:id="comboTipoDoc"/>
                     <Button fx:id="btLimpar" mnemonicParsing="false" onAction="#onBtLimparAction"
                             text="Limpar Seleção"/>
                 </HBox>
-                <TableView fx:id="tableViewOracleHive" prefHeight="573.0" prefWidth="700.0">
+                <TableView fx:id="tableViewOracleHive">
                     <columns>
-                        <TableColumn fx:id="columnArquivoOracle" text="Arquivo" prefWidth="200"/>
-                        <TableColumn fx:id="columnTipoDoc" text="Documento" prefWidth="200"/>
-                        <TableColumn fx:id="columnTabelaOracle" text="Tabela Oracle" prefWidth="200"/>
-                        <TableColumn fx:id="columnTabelaHive" text="Tabela Hive" prefWidth="200"/>
-                        <TableColumn fx:id="columnTotalOracle" text="Total Oracle" prefWidth="200"/>
-                        <TableColumn fx:id="columnTotalHive" text="Total Hive" prefWidth="200"/>
-                        <TableColumn fx:id="columnDiferenca" text="Diferença" prefWidth="200"/>
+                        <TableColumn fx:id="columnArquivoOracle" text="Arquivo Original(XML)"/>
+                        <TableColumn fx:id="columnTipoDoc" text="Documento"/>
+                        <TableColumn fx:id="columnTabelaOracle" text="Tabela Oracle"/>
+                        <TableColumn fx:id="columnTabelaHive" text="Tabela Hive"/>
+                        <TableColumn fx:id="columnTotalOracle" text="Total Oracle"/>
+                        <TableColumn fx:id="columnTotalHive" text="Total Hive"/>
+                        <TableColumn fx:id="columnDiferenca" text="Diferença"/>
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>

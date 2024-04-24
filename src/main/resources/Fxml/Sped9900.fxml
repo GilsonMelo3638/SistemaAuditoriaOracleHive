@@ -5,7 +5,7 @@
     <Label fx:id="tituloTableViews"
            text="TABELAS SPED DO HIVE PENDENTES DE CARGAS PARCIAL OU TOTAL: COMPARAÇÃO ORACLE 9900, HIVE 9900 E TODAS TABELAS NO HIVE">
     </Label>
-    <HBox fillHeight="true" styleClass="hbox">
+    <HBox styleClass="hbox">
         <VBox styleClass="vbox-custom-25">
             <HBox styleClass="hbox">
                 <Label text="0000: Ausentes no Hive:" styleClass="tituloTableViews"/>
@@ -13,7 +13,7 @@
                 <Label fx:id="txtTotalIdBaseFaltante0000" styleClass="tituloTableViews"/>
             </HBox>
             <Region VBox.vgrow="ALWAYS"/>
-            <TableView fx:id="tableView9900Orapr12Hive0000" VBox.vgrow="ALWAYS" prefHeight="573.0" prefWidth="700.0">
+            <TableView fx:id="tableView9900Orapr12Hive0000">
                 <columns>
                     <TableColumn fx:id="columnTabelaidBase" text="ID Base"/>
                     <TableColumn fx:id="columnTabeladhProcessamento" text="Processamento"/>
@@ -37,15 +37,14 @@
             </HBox>
             <HBox styleClass="hbox">
                 <Label text="Selecione a Tabela do Hive:" styleClass="tituloTableViews"/>
-                <ComboBox fx:id="comboTabelasSped" VBox.vgrow="ALWAYS" prefWidth="175"/>
+                <ComboBox fx:id="comboTabelasSped" VBox.vgrow="ALWAYS"/>
                 <Button fx:id="btLimpar" mnemonicParsing="false" onAction="#onBtLimparAction" text="Limpar Seleção"
                         styleClass="label"/>
             </HBox>
             <Region VBox.vgrow="ALWAYS"/>
 
             <Region VBox.vgrow="ALWAYS"/>
-            <TableView fx:id="tableViewHive9900TodasTabelasHive" VBox.vgrow="ALWAYS" prefHeight="573.0"
-                       prefWidth="700.0">
+            <TableView fx:id="tableViewHive9900TodasTabelasHive">
                 <columns>
                     <TableColumn fx:id="columnTabelaidBase9900Hive" text="ID Base"/>
                     <TableColumn fx:id="columnTabeladhProcessamentoSpedBase" text="Processamento(SPED BASE)"/>
@@ -68,8 +67,7 @@
                 <Label fx:id="txtTotalLinhasFaltante" styleClass="tituloTableViews"/>
             </HBox>
             <Region VBox.vgrow="ALWAYS"/>
-            <TableView fx:id="tableViewHive9900TodasTabelasHiveFaltantes" VBox.vgrow="ALWAYS" prefHeight="573.0"
-                       prefWidth="700.0">
+            <TableView fx:id="tableViewHive9900TodasTabelasHiveFaltantes">
                 <columns>
                     <TableColumn fx:id="columnTabelaidBase9900HiveFaltantes" text="ID Base"/>
                     <TableColumn fx:id="columnTabelasProcessamentoFin9900Hive" text="Processamento(SPED BASE)"/>
