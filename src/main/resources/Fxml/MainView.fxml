@@ -21,24 +21,32 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Hive">
                             <items>
-                                <MenuItem fx:id="menuItemTotalizacaoNfe"
-                                          mnemonicParsing="false" onAction="#onMenuItemTotalizacaoNfeAction"
-                                          text="Soma Nfe" />
-                                <MenuItem fx:id="menuItemQuantidadeDocumentoArquivo"
-                                          mnemonicParsing="false" onAction="#onMenuItemQuantidadeDocumentoArquivoAction"
-                                          text="Quantidades" />
-                               <MenuItem fx:id="menuItemPendenciasHive"
-                                          mnemonicParsing="false" onAction="#onMenuItemProcessarPendenciaHiveAction"
-                                          text="Processar Pendências Principal e Datalhes" />
-                                <MenuItem fx:id="menuItemPendenciasFormularioHive"
-                                          mnemonicParsing="false" onAction="#onMenuItemPendenciaFormularioHiveAction"
-                                          text="Abrir Formulároo de Pendências" />
-                                <MenuItem fx:id="menuItemOracleHive"
-                                          mnemonicParsing="false" onAction="#onMenuItemOracleHive"
-                                          text="Diferença Oracle e Hive" />
-                                <MenuItem fx:id="MenuProcessarDuplicidadeId"
-                                          mnemonicParsing="false" onAction="#onMenuProcessarDuplicidadeIdAction"
-                                          text="Processar Duplicidades de IDs" />
+                                <Menu mnemonicParsing="false" text="Formulários">
+                                    <items>
+                                        <MenuItem fx:id="menuItemOracleHive"
+                                                  mnemonicParsing="false" onAction="#onMenuItemOracleHive"
+                                                  text="Diferença Oracle e Hive" />
+                                        <MenuItem fx:id="menuItemPendenciasFormularioHive"
+                                                  mnemonicParsing="false" onAction="#onMenuItemPendenciaFormularioHiveAction"
+                                                  text="Pendências" />
+                                        <MenuItem fx:id="menuItemQuantidadeDocumentoArquivo"
+                                                  mnemonicParsing="false" onAction="#onMenuItemQuantidadeDocumentoArquivoAction"
+                                                  text="Quantidades" />
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="Processamentos">
+                                    <items>
+                                        <MenuItem fx:id="menuItemPendenciasHive"
+                                                  mnemonicParsing="false" onAction="#onMenuItemProcessarPendenciaHiveAction"
+                                                  text="Pendências Principal e Datalhes" />
+                                        <MenuItem fx:id="MenuProcessarDuplicidadeId"
+                                                  mnemonicParsing="false" onAction="#onMenuProcessarDuplicidadeIdAction"
+                                                  text="Duplicidades de IDs" />
+                                        <MenuItem fx:id="menuItemTotalizacaoNfe"
+                                                  mnemonicParsing="false" onAction="#onMenuItemTotalizacaoNfeAction"
+                                                  text="Soma Nfe" />
+                                    </items>
+                                </Menu>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Oracle e Hive">
@@ -50,39 +58,35 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Sped">
                             <items>
-                                <MenuItem fx:id="menuItemSped_9900" mnemonicParsing="false"
-                                          onAction="#onMenuItemSped9900Action" text="Gerar Oracle SPED 9900" />
-                            </items>
-                            <items>
-                                <MenuItem fx:id="menuItemHiveSped_9900" mnemonicParsing="false"
-                                          onAction="#onMenuItemHiveSped9900Action" text="Gerar Hive SPED 9900" />
-                            </items>
-                            <items>
-                                <MenuItem fx:id="menuItemPendenciaProcessamento0000" mnemonicParsing="false"
-                                          onAction="#onMenuItemPendenciaProcessamento0000" text="1 - Gerar Ausencias de 0000 no Hive" />
-                            </items>
-                            <items>
-                                <MenuItem fx:id="menuItemSped0990xTabelasSped" mnemonicParsing="false"
-                                          onAction="#onMenuItemHivedivergencia9900TabelasSpedAction" text="2 - Gerar Divergência 9900 e Tabelas" />
-                            </items>
-                            <items>
-                                <MenuItem fx:id="menuItemPendenciaFormulario0000" mnemonicParsing="false"
-                                          onAction="#onMenuItemPendenciaFormulario0000" text="Carregar Formulário Divergências 9900 e Tabelas" />
-                            </items>
-                            <items>
-                                <MenuItem fx:id="menuItemGerarPendencia9900Oracle_TabelasHive" mnemonicParsing="false"
-                                          onAction="#onMenuItemPendencia9900OracleTabelasHiveAction" text="3 - Gerar Arquivo Pendencia 9900 Oracle e Tabelas Hive" />
-                            </items>
-                            <items>
-                                <MenuItem fx:id="menuItemGerarPendencia9900Oracle_TabelasHiveGeral" mnemonicParsing="false"
-                                          onAction="#onMenuItemPendencia9900OracleTabelasHiveGeralAction" text="4 - Gerar Arquivo Todos e Abrir Formulário" />
-                            </items>
-                            <items>
-                                <MenuItem fx:id="menuItemGerarPendenciaSpedFormulario" mnemonicParsing="false"
-                                          onAction="#onMenuItemPendenciaFormulario" text="5 - Formulário Pendência SPED" />
+                                <Menu mnemonicParsing="false" text="Processamento">
+                                    <items>
+                                        <MenuItem fx:id="menuItemPendenciaProcessamento0000" mnemonicParsing="false"
+                                                  onAction="#onMenuItemPendenciaProcessamento0000" text="1 - 0000: Ausentes no Hive" />
+                                        <MenuItem fx:id="menuItemSped0990xTabelasSped" mnemonicParsing="false"
+                                                  onAction="#onMenuItemHivedivergencia9900TabelasSpedAction" text="2 - Carregados no Hive e Ausentes em Outras Tabelas do Hive" />
+                                        <MenuItem fx:id="menuItemGerarPendencia9900Oracle_TabelasHive" mnemonicParsing="false"
+                                                  onAction="#onMenuItemPendencia9900OracleTabelasHiveAction" text="3 - Id_bases no Oracle e Ausentes no Hive" />
+                                        <MenuItem fx:id="menuItemGerarPendencia9900Oracle_TabelasHiveGeral" mnemonicParsing="false"
+                                                  onAction="#onMenuItemPendencia9900OracleTabelasHiveGeralAction" text="4 - Agendado" />
+                                        <MenuItem fx:id="menuItemHiveSped_9900" mnemonicParsing="false"
+                                                  onAction="#onMenuItemHiveSped9900Action" text="Hive SPED 9900" />
+                                        <MenuItem fx:id="menuItemSped_9900" mnemonicParsing="false"
+                                                  onAction="#onMenuItemSped9900Action" text="Oracle SPED 9900" />
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="Formulários">
+                                    <items>
+                                        <MenuItem fx:id="menuItemPendenciaFormulario0000" mnemonicParsing="false"
+                                                  onAction="#onMenuItemPendenciaFormulario0000" text="0000: Ausentes no Hive" />
+                                        <MenuItem fx:id="menuItemGerarPendenciaSpedFormulario" mnemonicParsing="false"
+                                                  onAction="#onMenuItemPendenciaFormulario" text="Pendências" />
+                                    </items>
+                                </Menu>
+
+
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Remover">
+                        <Menu mnemonicParsing="false" text="Remoções">
                             <items>
                                 <MenuItem fx:id="menuItemFecharAgenda"
                                           mnemonicParsing="false" onAction="#handleRemoveAgendaList"

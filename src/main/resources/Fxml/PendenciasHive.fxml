@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<StackPane fx:id="pendenciasHivePane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.example.dechivejavafx.gui.PendenciasHiveController">
+<VBox id="pendenciasHivePane" styleClass="vbox-custom" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.dechivejavafx.gui.PendenciasHiveController">
     <VBox styleClass="vbox-custom" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
         <Label fx:id="tituloTableViews"
                text="TABELAS DOCUMENTOS FISCAIS DO HIVE PENDENTES DE CARGAS, DUPLICIDADE DE CARGAS OU DIVERGÊNCIA DE QUANTIDADES"/>
@@ -64,4 +65,4 @@
             </VBox>
         </HBox>
     </VBox>
-</StackPane>
+</VBox>

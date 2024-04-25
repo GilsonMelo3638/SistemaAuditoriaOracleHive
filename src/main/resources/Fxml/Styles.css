@@ -42,6 +42,7 @@
     -fx-border-style: solid; /* Estilo da borda sólido */
     -fx-font-weight: normal; /* Peso da fonte normal */
     -fx-alignment: center; /* Centraliza texto */
+    -fx-pref-height: 1000.0; /* Altura preferencial 500.0 */
 }
 /* Estilização para TableCell */
 .table-cell {
@@ -72,7 +73,7 @@
 .vbox-custom {
     -fx-alignment: center; /* Centraliza elementos */
     -fx-fill-width: true; /* Preenche largura */
-    -fx-pref-height: 530.0; /* Altura preferencial 530.0 */
+    -fx-pref-height: 1000.0; /* Altura preferencial 1000.0 */
     -fx-pref-width: 2200.0; /* Largura preferencial 2200.0 */
     -fx-padding: 5px; /* Espaçamento interno 5px */
     -fx-spacing: 5px; /* Espaçamento entre elementos 5px */
@@ -81,7 +82,7 @@
 /* Defina uma classe para VBox com espaçamento de 3px, fillWidth true e alinhamento TOP_CENTER */
 .vbox-custom-3 {
     -fx-fill-width: true; /* Preenche largura */
-    -fx-pref-height: 530.0; /* Altura preferencial 530.0 */
+    -fx-pref-height: 1000.0; /* Altura preferencial 1000.0 */
     -fx-pref-width: 2200.0; /* Largura preferencial 2200.0 */
     -fx-hgrow: ALWAYS; /* VBox.hgrow ALWAYS */
     -fx-padding: 5px; /* Espaçamento interno 5px */
@@ -91,7 +92,7 @@
 /* Defina uma classe para VBox com espaçamento de 25px, fillWidth true e alinhamento TOP_CENTER */
 .vbox-custom-25 {
     -fx-fill-width: true; /* Preenche largura */
-    -fx-pref-height: 530.0; /* Altura preferencial 530.0 */
+    -fx-pref-height: 1000.0; /* Altura preferencial 1000.0 */
     -fx-pref-width: 2200.0; /* Largura preferencial 2200.0 */
     -fx-padding: 5px; /* Espaçamento interno 5px */
     -fx-spacing: 25px; /* Espaçamento entre elementos 25px */

@@ -240,32 +240,18 @@ public class PendenciasHiveController {
     }
 
     // Método para carregar dados de um arquivo CSV para a tabela de duplicidade
-
     private void loadDuplicidadeIdData(String fileName) {
         try (BufferedReader br = new BufferedReader(new FileReader("\\\\svmcifs\\ExtracaoXML\\NovoDEC\\Pendencia\\" + fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 2) { // Verificar se a linha possui pelo menos 2 partes
+                if (parts.length >= 2) {
                     String arquivo = parts[0].replaceAll("\"", "").trim();
                     String tabela = parts[1].replaceAll("\"", "").trim();
-
-                    // Criar uma chave composta combinando os valores dos índices 0 e 1
                     String compositeKey = arquivo + tabela;
-
-                    // Verificar se a chave composta já existe no conjunto global de chaves
                     if (!distinctKeys.contains(compositeKey)) {
-                        // Adicionar a chave composta ao conjunto global se não existir
                         distinctKeys.add(compositeKey);
-
-                        // Adicionar os valores à tabela apenas se for a primeira ocorrência da chave composta
                         tableDuplicidadeId.getItems().add(new DuplicidadeId(arquivo, tabela));
-
-                        // Log dos valores adicionados
-                        System.out.println("Adicionado: " + arquivo + ", " + tabela);
-                    } else {
-                        // Log das duplicatas encontradas
-                        System.out.println("Duplicata encontrada: " + arquivo + ", " + tabela);
                     }
                 }
             }
