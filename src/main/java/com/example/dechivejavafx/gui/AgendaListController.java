@@ -11,6 +11,7 @@ import com.example.dechivejavafx.model.services.AgendaService;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -150,7 +151,8 @@ public class AgendaListController implements Initializable, DataChangeListener {
 		// Define o valor padrão para o campo de dias
 		txtDias.setText(String.valueOf(Configuracao.dias)); // Configura o campo de texto com o valor padrão de dias obtido da classe de configurações
 		comboTipoDoc.setItems(FXCollections.observableArrayList(TipoDoc.values())); // Preenche o ComboBox com os valores do enum TipoDoc
-		comboTipoDoc.valueProperty().addListener((obs, oldVal, newVal) -> updateFilteredContent()); // Adiciona um ouvinte para detectar alterações na seleção do ComboBox
+		// Adiciona um ouvinte para detectar alterações na seleção do ComboBox e atualizar o conteúdo filtrado e os rótulos
+		comboTipoDoc.valueProperty().addListener((obs, oldVal, newVal) -> updateFilteredContentAndLabels());
 		comboTipoDoc.valueProperty().addListener((observable, oldValue, newValue) -> {
 			// O código dentro deste bloco será executado quando o valor do comboTipoDoc for alterado
 			updateFilteredContent(); // Atualiza a tabela com base no tipo de documento selecionado
@@ -167,32 +169,80 @@ public class AgendaListController implements Initializable, DataChangeListener {
 		updateCharts(filteredList); // Atualiza os gráficos com a lista filtrada
 		calculateAndSetLabels(); // Calcula e define os rótulos (labels) na interface gráfica
 	}
+
 	/**
 	 * Calcula e define os rótulos (labels) na interface gráfica.
 	 */
+	/**
+	 * Este método calcula e define os rótulos (labels) na interface gráfica.
+	 */
 	private void calculateAndSetLabels() {
-		DecimalFormat decimalFormat = new DecimalFormat("#,###"); // Define o formato desejado
+		// Define o formato desejado para números, com separadores de milhar
+		DecimalFormat decimalFormat = new DecimalFormat("#,###");
 
-		// Obtém a soma da quantidade
+		// Calcula a soma da quantidade de todos os itens da lista observável 'obsList'
+		// Filtra itens que têm quantidade não nula, mapeia para suas quantidades e reduz (soma) os valores
 		BigDecimal sumQuantity = obsList.stream()
 				.filter(item -> item.getQuantidade() != null)
 				.map(Agenda::getQuantidade)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 
-		txtTotalArquivo.setText(decimalFormat.format(obsList.size())); // Aplica o formato na quantidade total
-		long totalLinesComDados = obsList.stream().filter(item -> item.getQuantidade() != null && item.getQuantidade().compareTo(BigDecimal.ZERO) > 0).count();
-		txtComDados.setText(decimalFormat.format(totalLinesComDados)); // Aplica o formato na quantidade com dados
-		txtQuantidadeProcessado.setText(decimalFormat.format(sumQuantity)); // Aplica o formato na soma da quantidade
+		// Define o texto do rótulo 'txtTotalArquivo' com o tamanho da lista formatado
+		txtTotalArquivo.setText(decimalFormat.format(obsList.size()));
+
+		// Conta o número de itens na lista que têm quantidade não nula e maior que zero
+		long totalLinesComDados = obsList.stream()
+				.filter(item -> item.getQuantidade() != null && item.getQuantidade().compareTo(BigDecimal.ZERO) > 0)
+				.count();
+
+		// Define o texto do rótulo 'txtComDados' com o número de itens com dados formatado
+		txtComDados.setText(decimalFormat.format(totalLinesComDados));
+
+		// Define o texto do rótulo 'txtQuantidadeProcessado' com a soma das quantidades formatada
+		txtQuantidadeProcessado.setText(decimalFormat.format(sumQuantity));
 	}
+
 	/**
-	 * Método para filtrar a lista de acordo com o tipo selecionado.
-	 *
-	 * @param tipo  Tipo de documento para filtrar a lista.
-	 * @return      Lista filtrada de agendas.
+	 * Este método atualiza o conteúdo filtrado da tabela e os rótulos associados.
+	 * É chamado ao alterar o valor do ComboBox ou ao perder o foco do TextField.
+	 */
+	private void updateFilteredContentAndLabels() {
+		try {
+			// Verifica se o campo txtDias contém um valor numérico válido
+			int dias = Integer.parseInt(txtDias.getText());
+
+			// Obtém o tipo de documento selecionado no ComboBox
+			TipoDoc tipoDoc = comboTipoDoc.getValue();
+
+			// Filtra a lista de agendas com base no tipo de documento selecionado
+			List<Agenda> filteredList = filterAgendaListByTipo(tipoDoc);
+
+			// Atualiza a lista observável 'obsList' com a lista filtrada
+			obsList.setAll(filteredList);
+
+			// Atualiza os gráficos com a lista filtrada
+			updateCharts(filteredList);
+
+			// Calcula e define os rótulos (labels) na interface gráfica com base na lista filtrada
+			calculateAndSetLabels();
+		} catch (NumberFormatException e) {
+			// Lida com a exceção se o valor em txtDias não for um número inteiro válido
+			Alerts.showAlert("Erro", null, "Por favor, inserir um valor válido para dias.", AlertType.ERROR);
+		}
+	}
+
+	/**
+	 * Este método filtra a lista de agendas com base no tipo de documento selecionado.
+	 * @param tipo O tipo de documento pelo qual filtrar a lista.
+	 * @return Uma lista de agendas filtradas.
 	 */
 	private List<Agenda> filterAgendaListByTipo(TipoDoc tipo) {
-		return originalAgendaList.stream().filter(agenda -> agenda.getTipo_doc() == tipo).collect(Collectors.toList());
+		// Filtra a lista original de agendas, retornando apenas os itens que correspondem ao tipo de documento selecionado
+		return originalAgendaList.stream()
+				.filter(agenda -> agenda.getTipo_doc() == tipo)
+				.collect(Collectors.toList());
 	}
+
 
 	/**
 	 * Inicializa os nós da tabela.
@@ -252,6 +302,11 @@ public class AgendaListController implements Initializable, DataChangeListener {
 			obsList = FXCollections.observableArrayList(originalAgendaList);
 			tableViewAgenda.setItems(obsList);
 
+			// Adiciona o observador aqui
+			obsList.addListener((ListChangeListener<Agenda>) change -> calculateAndSetLabels());
+
+			tableViewAgenda.setItems(obsList);
+
 			// Inicializa os botões de edição e remoção
 			initEditButtons();
 			initRemoveButtons();
@@ -276,7 +331,6 @@ public class AgendaListController implements Initializable, DataChangeListener {
 			CSVUtils.saveAllDataToFile(originalAgendaList);
 		}
 	}
-
 	/**
 	 * Cria um formulário de diálogo para adicionar ou editar uma agenda.
 	 *
