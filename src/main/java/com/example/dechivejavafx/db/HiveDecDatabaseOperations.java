@@ -71,7 +71,26 @@ public class HiveDecDatabaseOperations {
             DatabaseExceptions.handleException("Erro ao conectar ao Hive", e);
         }
     }
+    public void executeQueryMdfeInfMdfeInfCteInfNfe() {
+        try {
+            Class.forName("org.apache.hive.jdbc.HiveDriver");
+            System.out.println("Driver Hive JDBC registrado com sucesso!");
+        } catch (ClassNotFoundException e) {
+            DatabaseExceptions.handleException("Erro ao registrar o driver Hive JDBC", e);
+        }
 
+        try (Connection connection = DriverManager.getConnection(jdbcURL, username, password)) {
+            System.out.println("Conexão com o Hive estabelecida com sucesso!");
+
+            try {
+                executeQueryMdfeInfMdfeInfCteInfNfe(connection); // Substitua pelos nomes reais das tabelas
+            } catch (SQLException e) {
+                DatabaseExceptions.handleException("Erro ao executar a consulta Hive", e);
+            }
+        } catch (SQLException e) {
+            DatabaseExceptions.handleException("Erro ao conectar ao Hive", e);
+        }
+    }
 
 
     public static Connection getHiveConnection(String jdbcUrl, String username, String password) throws SQLException {
@@ -91,8 +110,6 @@ public class HiveDecDatabaseOperations {
             throw e;
         }
     }
-
-
     private void executeQueryNfeTotalizacao(Connection connection) throws SQLException {
         String sqlQuery = "SELECT count(arquivo) as Total_NFe, arquivo, enderemit_uf as uf, SUM(issqntot_vserv) as vserv, " +
                 "SUM(issqntot_viss) as viss, SUM(icmstot_vbc) as vbc, SUM(icmstot_vicms) as vicms, " +
@@ -142,9 +159,7 @@ public class HiveDecDatabaseOperations {
 
         return resultados;
     }
-
-
-    private void executeQueryDetFaltante(Connection connection) throws SQLException {
+    public void executeQueryDetFaltante(Connection connection) throws SQLException {
         List<PendenciasHive> resultados = new ArrayList<>();
         String[] detTables = {"tb_nfe_detnfe", "tb_nfe", "tb_nfce_detnfce", "tb_nfce", "tb_nf3e_detnf3e"};
         String[] infTables = {"tb_nfe_infnfe", "tb_nfe_infnfe", "tb_nfce_infnfce", "tb_nfce_infnfce", "tb_nf3e_infnf3e"};
@@ -193,6 +208,43 @@ public class HiveDecDatabaseOperations {
 
         // Retorna a lista completa de resultados
         queryResultsDet = resultados;
+    }
+
+    public void executeQueryMdfeInfMdfeInfCteInfNfe(Connection connection) throws SQLException {
+        String sql = "SELECT DISTINCT a.arquivo, b.infcte, c.infnfe " +
+                "FROM seec_prd_documento_fiscal.tb_mdfe_infmdfe a " +
+                "LEFT JOIN (SELECT DISTINCT arquivo, 'x' AS infcte " +
+                "FROM seec_prd_documento_fiscal.tb_mdfe_infcte) b " +
+                "ON a.arquivo = b.arquivo " +
+                "LEFT JOIN (SELECT DISTINCT arquivo, 'x' AS infnfe " +
+                " FROM seec_prd_documento_fiscal.tb_mdfe_infnfe) c " +
+                "ON a.arquivo = c.arquivo " +
+                "WHERE (b.infcte IS NULL OR c.infnfe IS NULL) AND SUBSTRING(a.arquivo, 1, 8) >= ? " +
+                "ORDER BY a.arquivo";
+
+        System.out.println("Query a ser executada: " + sql);
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            // Defina o parâmetro de data
+            LocalDate hoje = LocalDate.now();
+            LocalDate varquivo = hoje.minusDays(Configuracao.dias);
+            DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("yyyyMMdd");
+            String varquivoString = varquivo.format(formatoData);
+
+            // Vincule o valor do parâmetro ao marcador de posição
+            preparedStatement.setString(1, varquivoString);
+
+            // Execute a query e processe os resultados
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    String arquivo = resultSet.getString("arquivo");
+                    String infcte = resultSet.getString("infcte");
+                    String infnfe = resultSet.getString("infnfe");
+
+                    System.out.println("Resultado da query - Arquivo: " + arquivo + ", infcte: " + infcte + ", infnfe: " + infnfe);
+                }
+            }
+        }
     }
 
     public static void executeHiveQueryIdDuplicidadePrincipal(String jdbcURL, String username, String password) {

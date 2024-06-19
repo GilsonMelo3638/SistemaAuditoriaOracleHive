@@ -55,8 +55,8 @@ public class OracleSpedDatabaseOperations {
                     "ON b.ID = r.ID_BASE " +
                     "WHERE (b.status_processamento IN ('10', '12', '13', '14')) " +
                     "AND b.datahora_processamento >= TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS') " +
-                    "AND b.datahora_processamento <= TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS')";
-
+                    "AND b.datahora_processamento <= TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS') " +
+                    "AND r.qtd_reg_blc > 0";
             // Nome do arquivo CSV e caminho
             String filePath = "X:\\Dados\\SPED\\ORACLE_SPED_9900.csv";
 

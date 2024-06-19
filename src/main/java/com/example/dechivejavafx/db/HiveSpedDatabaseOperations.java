@@ -74,7 +74,7 @@ public class HiveSpedDatabaseOperations {
     private String queryHiveSpedReg9900(LocalDateTime startDate) {
         return "SELECT datahora_fin, id_base, linha, qtd_reg_blc, reg, reg_blc " +
                 "FROM seec_prd_declaracao_fiscal.tb_sped_reg_9900 " +
-                "WHERE datahora_fin >= ?";
+                "WHERE datahora_fin >= ? and  qtd_reg_blc > 0";
     }
 
     public static void divergencia9900TabelasSpedAndWriteToCSV(LocalDateTime startDate, String fileName) {
