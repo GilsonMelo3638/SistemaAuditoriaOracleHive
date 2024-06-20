@@ -20,9 +20,7 @@ public class PendenciasTabelasSecudariasController {
 
     public StackPane pendenciasHivePane;
     // Declaração do conjunto para armazenar os arquivos distintos
-    private boolean executeQuery;
-    public Button btLimpar;
-    @FXML
+    private boolean executeQuery;    @FXML
     private Label tituloTableViews;
     // Labels para exibição de resultados individuais
     @FXML

@@ -112,6 +112,9 @@
                                 <MenuItem fx:id="menuItemFecharSped9900"
                                           mnemonicParsing="false" onAction="#handleRemoveSped9900"
                                           text="Carregar Formulário Divergências 9900 e Tabelas" />
+                                <MenuItem fx:id="menuItemFecharTabelasSecundarias"
+                                          mnemonicParsing="false" onAction="#handleTabelasSecundarias"
+                                          text="Carregar Formulário Tabelas Secundárias" />
                                 <MenuItem fx:id="menuItemFecharAbout"
                                           mnemonicParsing="false" onAction="#handleRemoveAboutForm"
                                           text="Ajuda" />

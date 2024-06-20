@@ -14,6 +14,7 @@ import com.example.dechivejavafx.model.services.AgendaService;
 import com.example.dechivejavafx.model.services.SchedulerManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -52,8 +53,6 @@ public class MainViewController implements Initializable {
     public MenuItem menuItemPendenciasFormularioHive;
     public MenuItem MenuProcessarTabelasDependente;
     public MenuItem menuItemTabelasDependenteHive;
-
-
     // Private Stage
     private Stage primaryStage;
 
@@ -79,6 +78,7 @@ public class MainViewController implements Initializable {
     @FXML private MenuItem menuItemFecharQuantidadeDocumentoArquivo; // FXML MenuItem
     @FXML private MenuItem menuItemFecharSped9900; // FXML MenuItem
     @FXML private MenuItem menuItemFecharTotalizacaoNfe; // FXML MenuItem
+    @FXML public MenuItem menuItemFecharTabelasSecundarias;// FXML MenuItem
 
     // Public MenuItems Sped
     public MenuItem menuItemPendenciasHive;
@@ -441,7 +441,7 @@ public class MainViewController implements Initializable {
     private void configurarVisibilidadeInicialItensMenu() {
         // Lista dos itens de menu a serem configurados
         Arrays.asList(menuItemFecharAgenda, menuItemFecharTotalizacaoNfe, menuItemFecharProcessarPendenciaHive,
-                        menuItemFecharQuantidadeDocumentoArquivo, menuItemFecharOracleHive, menuItemFecharSped9900,
+                        menuItemFecharQuantidadeDocumentoArquivo, menuItemFecharOracleHive, menuItemFecharSped9900, menuItemFecharTabelasSecundarias,
                         menuItemFecharAbout).forEach(menuItem -> menuItem.setVisible(false));
     }
 
@@ -463,7 +463,9 @@ public class MainViewController implements Initializable {
                 "#pendenciasHivePane", menuItemFecharProcessarPendenciaHive,
                 "#oracleHivePane", menuItemFecharOracleHive,
                 "#sped9900Pane", menuItemFecharSped9900,
+                "#tabelasSecundariasPane",menuItemFecharTabelasSecundarias,
                 "#aboutPane", menuItemFecharAbout
+
         );
 
         // Verifica a visibilidade de cada elemento e configura os itens de menu correspondentes
@@ -500,6 +502,8 @@ public class MainViewController implements Initializable {
     private void handleGenericException(Exception e) {
         Alerts.showAlert("Error", null, e.getMessage(), AlertType.ERROR);
     }
+
+
 
     // Classe estática para gerenciar cenas
     public class SceneManager {
@@ -619,6 +623,7 @@ public class MainViewController implements Initializable {
         boolean isPendenciaHiveActive = mainVBox.lookup("#pendenciasHivePane") != null;
         boolean isOracleHiveActive = mainVBox.lookup("#OracleHivePane") != null;
         boolean isOracleSped9900 = mainVBox.lookup("#sped9900Pane") != null;
+        boolean isTabelasSecudadaria = mainVBox.lookup("#tabelasSecundariasPane") != null;
         boolean isAboutActive = mainVBox.lookup("#aboutPane") != null;
 
         titledPanecomboTipoDocCentral.setVisible(isAgendaListActive && isQuantidadeDocumentoArquivoActive);
@@ -631,6 +636,7 @@ public class MainViewController implements Initializable {
         correspondingMenuItem.setVisible(isPendenciaHiveActive);
         correspondingMenuItem.setVisible(isOracleHiveActive);
         correspondingMenuItem.setVisible(isOracleSped9900);
+        correspondingMenuItem.setVisible(isTabelasSecudadaria);
         correspondingMenuItem.setVisible(isAboutActive);
     }
 
@@ -674,6 +680,10 @@ public class MainViewController implements Initializable {
     private void handleRemoveSped9900() {
         // Chama o método genérico para remover o formulário, passando o ID do formulário e o item de menu correspondente
         removeForm("sped9900Pane", menuItemFecharSped9900);
+    }
+
+    public void handleTabelasSecundarias(ActionEvent actionEvent) {
+        removeForm("tabelasSecundariasPane", menuItemFecharTabelasSecundarias);
     }
 
     // Manipula a ação de remoção do formulário "aboutPane"

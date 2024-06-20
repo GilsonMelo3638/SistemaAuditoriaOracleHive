@@ -54,6 +54,13 @@ public class CSVUtils {
     private static final String DUPLICIDADE_DETALHE_FILE_NAME = "DuplicidadeIdDetalhe.csv";
     private static final String PENDENCIA_PRINCIPAL_DETALHE = "PendenciaPrincipalDetalhe.csv";
     private static final String CONSOLIDATED_FILE_NAME = "CargasHive.csv";
+    private static final String NFE_DETPAG_FILE_NAME = "NfeDetpagVolNfref.csv";
+    private static final String ITENS_AVERBADOS_FILE_NAME = "nfeItensAverbados.csv";
+    private static final String NFCE_DETPAG_FILE_NAME = "NfceDetpag.csv";
+    private static final String CTE_INFCTE_FILE_NAME = "CteInfcteInfq.csv";
+    private static final String MDFE_INFCTE_FILE_NAME = "MdfeInfMdfeInfCteInfNfe.csv";
+    private static final String BPE_COMP_FILE_NAME = "BpeComp.csv";
+    private static final String NF3E_GRANDFAT_FILE_NAME = "Nf3egrandfatGrcontrat.csv";
     private static List<String> concatenatedData = new ArrayList<>();
     private static QuantidadeDocumentoArquivoController quantidadeDocumentoArquivoController;
 
@@ -177,6 +184,13 @@ public class CSVUtils {
                             // Mantém arquivos relacionados a Agendas (DUPLICIDADE_DETALHE_FILE_NAME)
                             && !file.getName().equalsIgnoreCase(DUPLICIDADE_DETALHE_FILE_NAME)
                             && !file.getName().equalsIgnoreCase(PENDENCIA_PRINCIPAL_DETALHE)
+                            && !file.getName().equalsIgnoreCase(NFE_DETPAG_FILE_NAME)
+                            && !file.getName().equalsIgnoreCase(ITENS_AVERBADOS_FILE_NAME)
+                            && !file.getName().equalsIgnoreCase(NFCE_DETPAG_FILE_NAME)
+                            && !file.getName().equalsIgnoreCase(CTE_INFCTE_FILE_NAME)
+                            && !file.getName().equalsIgnoreCase(MDFE_INFCTE_FILE_NAME)
+                            && !file.getName().equalsIgnoreCase(BPE_COMP_FILE_NAME)
+                            && !file.getName().equalsIgnoreCase(NF3E_GRANDFAT_FILE_NAME)
             );
 
             // Verifica se há arquivos a serem processados
