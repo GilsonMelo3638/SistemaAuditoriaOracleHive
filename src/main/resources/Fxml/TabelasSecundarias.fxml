@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox id="tabelasSecundariasPane" styleClass="vbox-custom" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.dechivejavafx.gui.PendenciasTabelasSecudariasController">
+    <VBox styleClass="vbox-custom" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+        <Label fx:id="tituloTableViews"
+               text="TABELAS SECUNDÁRIAS DE DOCUMENTOS FISCAIS DO HIVE PENDENTES DE CARGAS"/>
+        <HBox styleClass="hbox">
+            <!-- TableView Detalhes NFe e NFCe -->
+            <VBox styleClass="vbox-custom">
+                <HBox styleClass="hbox">
+                    <Label text="Bpe - Comp"
+                           styleClass="tituloTableViews"/>
+                </HBox>
+                <TableView fx:id="tableViewBpeComp">
+                    <columns>
+                        <TableColumn fx:id="columnBpeArquivo" text="Arquivo"/>
+                        <TableColumn fx:id="columnTotalInfBpe" text="Total"/>
+                        <TableColumn fx:id="columnBpeComp" text="Comp"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+            <!-- TableView Duplicidade -->
+            <VBox styleClass="vbox-custom">
+                <HBox styleClass="hbox">
+                    <Label text="CTe - InfCTe e InfQ" styleClass="tituloTableViews"/>
+                </HBox>
+                <TableView fx:id="tableViewCteInfcteInfq">
+                    <columns>
+                        <TableColumn fx:id="columnCteArquivo" text="Arquivo"/>
+                        <TableColumn fx:id="columnTotalInfCte" text="Total"/>
+                        <TableColumn fx:id="columnCteinfnfe" text="InfCTe"/>
+                        <TableColumn fx:id="columnCteinfq" text="InfQ"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+            <!-- TableView Diferença Quantidade Oracle e Hive -->
+            <VBox styleClass="vbox-custom">
+                <HBox styleClass="hbox">
+                    <Label text="MDFe - InfMDFe, InfCTe e InfNFe" styleClass="tituloTableViews"/>
+                </HBox>
+                <TableView fx:id="tableViewMdfeInfMdfeInfCteInfNfe">
+                    <columns>
+                        <TableColumn fx:id="columnMdfeArquivo" text="Arquivo"/>
+                        <TableColumn fx:id="columntotalInfMdfe" text="Total"/>
+                        <TableColumn fx:id="columnMdfeInfCte" text="InfCTe"/>
+                        <TableColumn fx:id="columnMdfeInfNfe" text="InfNFe"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+            <!-- TableView Duplicidade -->
+            <VBox styleClass="vbox-custom">
+                <HBox styleClass="hbox">
+                    <Label text="NF3e - GrandFat e GrContrat" styleClass="tituloTableViews"/>
+                </HBox>
+                <TableView fx:id="tableViewNf3eGrandfatGrcontrat">
+                    <columns>
+                        <TableColumn fx:id="columnNf3eArquivo" text="Arquivo"/>
+                        <TableColumn fx:id="columnTotalInfNf3e" text="Total"/>
+                        <TableColumn fx:id="columnNf3eGgrandfat" text="GGgrandFat"/>
+                        <TableColumn fx:id="columnNf3eGgrcontrat" text="GGrContrat"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+            <!-- TableView Duplicidade -->
+            <VBox styleClass="vbox-custom">
+                <HBox styleClass="hbox">
+                    <Label text="NFCe - DetPag" styleClass="tituloTableViews"/>
+                </HBox>
+                <TableView fx:id="tableViewNfceDetpag">
+                    <columns>
+                        <TableColumn fx:id="columnNfceArquivo" text="Arquivo"/>
+                        <TableColumn fx:id="columnTotalInfNfce" text="Total"/>
+                        <TableColumn fx:id="columnNfceDetPag" text="DetPag"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+            <!-- TableView Duplicidade -->
+            <VBox styleClass="vbox-custom">
+                <HBox styleClass="hbox">
+                    <Label text="NFe - DetPag, Vol e Nfref" styleClass="tituloTableViews"/>
+                </HBox>
+                <TableView fx:id="tableViewNfeDetpagVolNfref">
+                    <columns>
+                        <TableColumn fx:id="columnNfeArquivo" text="Arquivo"/>
+                        <TableColumn fx:id="columnTotalInfNfe" text="Total"/>
+                        <TableColumn fx:id="columnNfeDetpag" text="DetPag"/>
+                        <TableColumn fx:id="columnNfeVol" text="Vol"/>
+                        <TableColumn fx:id="columnNfeNfRef" text="NfRef"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+            <!-- TableView Duplicidade -->
+            <VBox styleClass="vbox-custom">
+                <HBox styleClass="hbox">
+                    <Label text="NFe - ItensAverbados" styleClass="tituloTableViews"/>
+                </HBox>
+                <TableView fx:id="tableViewNfeItensAverbados">
+                    <columns>
+                        <TableColumn fx:id="columnNfeItensArquivo" text="Arquivo"/>
+                        <TableColumn fx:id="columnNfeTotalItensAverbados" text="Total"/>
+                        <TableColumn fx:id="columnItensAverbados" text="IAverb"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+        </HBox>
+    </VBox>
+</VBox>

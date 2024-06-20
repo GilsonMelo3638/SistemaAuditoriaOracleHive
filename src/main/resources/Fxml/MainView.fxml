@@ -29,6 +29,9 @@
                                         <MenuItem fx:id="menuItemPendenciasFormularioHive"
                                                   mnemonicParsing="false" onAction="#onMenuItemPendenciaFormularioHiveAction"
                                                   text="Pendências" />
+                                        <MenuItem fx:id="menuItemTabelasDependenteHive"
+                                                  mnemonicParsing="false" onAction="#onMenuTabelasDependentesHiveAction"
+                                                  text="Tabelas Secundarias" />
                                         <MenuItem fx:id="menuItemQuantidadeDocumentoArquivo"
                                                   mnemonicParsing="false" onAction="#onMenuItemQuantidadeDocumentoArquivoAction"
                                                   text="Quantidades" />
@@ -42,6 +45,9 @@
                                         <MenuItem fx:id="MenuProcessarDuplicidadeId"
                                                   mnemonicParsing="false" onAction="#onMenuProcessarDuplicidadeIdAction"
                                                   text="Duplicidades de IDs" />
+                                        <MenuItem fx:id="MenuProcessarTabelasDependente"
+                                                  mnemonicParsing="false" onAction="#onMenuTabelasDependenteAction"
+                                                  text="Tabelas Dependentes" />
                                         <MenuItem fx:id="menuItemTotalizacaoNfe"
                                                   mnemonicParsing="false" onAction="#onMenuItemTotalizacaoNfeAction"
                                                   text="Soma Nfe" />

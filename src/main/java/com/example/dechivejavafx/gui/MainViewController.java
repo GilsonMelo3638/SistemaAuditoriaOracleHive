@@ -3,6 +3,7 @@ package com.example.dechivejavafx.gui;
 import com.example.dechivejavafx.Validacoes.TipoDoc;
 import com.example.dechivejavafx.application.Main;
 import com.example.dechivejavafx.db.HiveDecDatabaseOperations;
+import com.example.dechivejavafx.db.HiveQueryExecutorTabelasDependentes;
 import com.example.dechivejavafx.db.HiveSpedDatabaseOperations;
 import com.example.dechivejavafx.db.OracleSpedDatabaseOperations;
 import com.example.dechivejavafx.gui.util.Alerts;
@@ -49,6 +50,8 @@ public class MainViewController implements Initializable {
     // Serviço para manipulação de agendas
     private final AgendaService service = new AgendaService();
     public MenuItem menuItemPendenciasFormularioHive;
+    public MenuItem MenuProcessarTabelasDependente;
+    public MenuItem menuItemTabelasDependenteHive;
 
 
     // Private Stage
@@ -64,6 +67,7 @@ public class MainViewController implements Initializable {
     @FXML private MenuItem menuItemOracleHive;
     @FXML private MenuItem menuItemQuantidadeDocumentoArquivo; // FXML MenuItem
     @FXML private MenuItem menuProcessarPendencia; // FXML MenuItem
+    @FXML private MenuItem menuItemGerarPendencia9900Oracle_TabelasHive;
     @FXML private MenuItem MenuProcessarDuplicidadeId; // FXML MenuItem
     @FXML private MenuItem menuItemGerarPendencia9900Oracle_TabelasHiveGeral;
     @FXML private MenuItem menuItemGerarPendenciaSpedFormulario;
@@ -75,7 +79,7 @@ public class MainViewController implements Initializable {
     @FXML private MenuItem menuItemFecharQuantidadeDocumentoArquivo; // FXML MenuItem
     @FXML private MenuItem menuItemFecharSped9900; // FXML MenuItem
     @FXML private MenuItem menuItemFecharTotalizacaoNfe; // FXML MenuItem
-    @FXML private MenuItem menuItemGerarPendencia9900Oracle_TabelasHive;
+
     // Public MenuItems Sped
     public MenuItem menuItemPendenciasHive;
     public MenuItem menuItemPendenciaFormulario0000;
@@ -332,6 +336,14 @@ public class MainViewController implements Initializable {
         // Gerar arquivo de duplicidades de Id e itens das tabelas detalhe.
         HiveDecDatabaseOperations.executeHiveQueryIdDuplicidadeDetalhe(jdbcURL, username, password);
     }
+
+    @FXML
+    public void onMenuTabelasDependenteAction() {
+        // Obtém os valores das variáveis de ambiente
+        HiveQueryExecutorTabelasDependentes executor = new HiveQueryExecutorTabelasDependentes();
+        executor.executeAllQueries();
+    }
+
     // Verifica se um formulário específico está presente na cena
     private boolean isFormularioPresente(String formId) {
         VBox mainVBox = (VBox) ((ScrollPane) Main.getMainScene().getRoot()).getContent();
@@ -353,6 +365,15 @@ public class MainViewController implements Initializable {
             controller.initialize(); // Chama o método de inicialização se necessário
         });
     }
+
+    @FXML
+    public void onMenuTabelasDependentesHiveAction() {
+        loadView("/Fxml/TabelasSecundarias.fxml", (PendenciasTabelasSecudariasController controller) -> {
+            controller.setExecuteQuery(false); // Informa ao controlador para NÃO executar a consulta
+            controller.initialize(); // Chama o método de inicialização se necessário
+        });
+    }
+
     @FXML
     public void onMenuItemDetNFeNFCeInfAction() {
         // Define a cena atual e carrega a view de quantidade de documentos em arquivo
