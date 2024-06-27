@@ -106,6 +106,9 @@ public class PendenciasTabelasSecudariasController {
     // Método de inicialização chamado pelo JavaFX quando o arquivo FXML é carregado
     public void initialize() {
 
+        HiveQueryExecutorTabelasDependentes executor = new HiveQueryExecutorTabelasDependentes();
+        executor.executeAllQueries();
+
         // Configura as colunas das tabelas na interface
         configureTableColumns();
 

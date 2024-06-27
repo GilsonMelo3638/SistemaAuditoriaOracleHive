@@ -106,7 +106,10 @@ public class HiveQueryExecutorTabelasDependentes {
                 "SELECT DISTINCT a.arquivo AS arquivo, " +
                         "a.total AS totalInfMdfe, " +
                         "COALESCE(b.infcte, 'Null') AS infcte, " +
-                        "COALESCE(c.infnfe, 'Null') AS infnfe " +
+                        "CASE " +
+                        "WHEN a.total < 5 THEN 'ok' " +
+                        "ELSE COALESCE(c.infnfe, 'Null') " +
+                        "END AS infnfe " +
                         "FROM (SELECT arquivo, COUNT(*) AS total " +
                         "FROM seec_prd_documento_fiscal.tb_mdfe_infmdfe " +
                         "GROUP BY arquivo) a " +
@@ -116,7 +119,7 @@ public class HiveQueryExecutorTabelasDependentes {
                         "LEFT JOIN (SELECT DISTINCT arquivo, 'ok' AS infnfe " +
                         "FROM seec_prd_documento_fiscal.tb_mdfe_infnfe) c " +
                         "ON a.arquivo = c.arquivo " +
-                        "WHERE (b.infcte IS NULL OR c.infnfe IS NULL) " +
+                        "WHERE (b.infcte IS NULL AND c.infnfe IS NULL) " +
                         "AND SUBSTRING(a.arquivo, 1, 8) >= ? " +
                         "AND SUBSTRING(a.arquivo, 9, 2) > '06' " +
                         "AND SUBSTRING(a.arquivo, 9, 2) < '23' " +
@@ -124,7 +127,6 @@ public class HiveQueryExecutorTabelasDependentes {
                 directory + "MdfeInfMdfeInfCteInfNfe.csv",
                 "arquivo,totalInfMdfe,infcte,infnfe"
         );
-
 
         executeQueryAndSaveResults(
                 "SELECT DISTINCT a.arquivo arquivo, a.total totalInfBpe, b.comp comp " +
@@ -170,7 +172,7 @@ public class HiveQueryExecutorTabelasDependentes {
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 LocalDate hoje = LocalDate.now();
-                LocalDate varquivo = hoje.minusDays(Configuracao.dias);
+                LocalDate varquivo = hoje.minusDays(Configuracao.diasLegado);
                 DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("yyyyMMdd");
                 String varquivoString = varquivo.format(formatoData);
 

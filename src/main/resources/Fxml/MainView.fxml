@@ -17,6 +17,9 @@
                                 <MenuItem fx:id="menuItemAgenda"
                                           mnemonicParsing="false" onAction="#onMenuItemAgendaAction"
                                           text="Agendamentos" />
+                                <MenuItem fx:id="menuItemDecArquivos"
+                                          mnemonicParsing="false" onAction="#onMenuItemDecArquivos"
+                                          text="Arquivos Tags DEC" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Hive">

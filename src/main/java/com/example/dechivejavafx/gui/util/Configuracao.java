@@ -4,9 +4,10 @@ import com.example.dechivejavafx.Validacoes.ConnectionStatus;
 
 public class Configuracao {
     public static int dias = 30;
+    public static int diasLegado = 2005;
     public static int minutoInicial =59;
     public static int intervaloHora = 6;
-    public static int diasSped = 168;
+    public static int diasSped = 8;
     public static int diasSpedHive = diasSped + 1;
     public static int diasSpedRecuo = 2;
     public static int inicioDuplicidade = 2024010130;

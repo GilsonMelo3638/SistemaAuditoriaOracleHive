@@ -2,10 +2,7 @@ package com.example.dechivejavafx.gui;
 
 import com.example.dechivejavafx.Validacoes.TipoDoc;
 import com.example.dechivejavafx.application.Main;
-import com.example.dechivejavafx.db.HiveDecDatabaseOperations;
-import com.example.dechivejavafx.db.HiveQueryExecutorTabelasDependentes;
-import com.example.dechivejavafx.db.HiveSpedDatabaseOperations;
-import com.example.dechivejavafx.db.OracleSpedDatabaseOperations;
+import com.example.dechivejavafx.db.*;
 import com.example.dechivejavafx.gui.util.Alerts;
 import com.example.dechivejavafx.gui.util.CSVUtils;
 import com.example.dechivejavafx.gui.util.Utils;
@@ -53,6 +50,7 @@ public class MainViewController implements Initializable {
     public MenuItem menuItemPendenciasFormularioHive;
     public MenuItem MenuProcessarTabelasDependente;
     public MenuItem menuItemTabelasDependenteHive;
+    public MenuItem menuItemDecArquivos;
     // Private Stage
     private Stage primaryStage;
 
@@ -342,6 +340,13 @@ public class MainViewController implements Initializable {
         // Obtém os valores das variáveis de ambiente
         HiveQueryExecutorTabelasDependentes executor = new HiveQueryExecutorTabelasDependentes();
         executor.executeAllQueries();
+    }
+
+    @FXML
+    public void onMenuItemDecArquivos() {
+        // Obtém os valores das variáveis de ambiente
+        OracleDecDatabaseOperations executor = new OracleDecDatabaseOperations();
+        executor.executeQueryAndSaveToCSV();
     }
 
     // Verifica se um formulário específico está presente na cena

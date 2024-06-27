@@ -61,6 +61,8 @@ public class CSVUtils {
     private static final String MDFE_INFCTE_FILE_NAME = "MdfeInfMdfeInfCteInfNfe.csv";
     private static final String BPE_COMP_FILE_NAME = "BpeComp.csv";
     private static final String NF3E_GRANDFAT_FILE_NAME = "Nf3egrandfatGrcontrat.csv";
+    private static final String NF3E_GGRANDFAT_ARQUIVOS_FILE_NAME = "gGrContratArquivo.csv";
+    private static final String NF3E_GGRCONTRAT_ARQUIVOS_FILE_NAME = "gGrandFatArquivos.csv";
     private static List<String> concatenatedData = new ArrayList<>();
     private static QuantidadeDocumentoArquivoController quantidadeDocumentoArquivoController;
 
@@ -191,8 +193,9 @@ public class CSVUtils {
                             && !file.getName().equalsIgnoreCase(MDFE_INFCTE_FILE_NAME)
                             && !file.getName().equalsIgnoreCase(BPE_COMP_FILE_NAME)
                             && !file.getName().equalsIgnoreCase(NF3E_GRANDFAT_FILE_NAME)
+                            && !file.getName().equalsIgnoreCase(NF3E_GGRCONTRAT_ARQUIVOS_FILE_NAME)
+                            && !file.getName().equalsIgnoreCase(NF3E_GGRANDFAT_ARQUIVOS_FILE_NAME)
             );
-
             // Verifica se há arquivos a serem processados
             if (files != null) {
                 for (File file : files) {
