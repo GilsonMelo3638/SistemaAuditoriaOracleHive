@@ -2,15 +2,16 @@ module com.example.dechivejavafx {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
-    requires opencsv; // Adiciona a dependência para a biblioteca OpenCSV
+    requires opencsv;
+    requires jsch; // Adiciona a dependência para a biblioteca OpenCSV
 
-    opens com.example.dechivejavafx to javafx.fxml;
-    opens com.example.dechivejavafx.gui to javafx.fxml;
-    opens com.example.dechivejavafx.model.entities to javafx.base;
+    opens br.gov.df.economia.sistemaauditoriaoraclehive to javafx.fxml;
+    opens br.gov.df.economia.sistemaauditoriaoraclehive.gui to javafx.fxml;
+    opens br.gov.df.economia.sistemaauditoriaoraclehive.model.entities to javafx.base;
 
-    exports com.example.dechivejavafx.application;
-    exports com.example.dechivejavafx.gui;
-    exports com.example.dechivejavafx.Validacoes;
-    exports com.example.dechivejavafx.application.Testes;
-    exports com.example.dechivejavafx.application.Testes.Sped;
+    exports br.gov.df.economia.sistemaauditoriaoraclehive.application;
+    exports br.gov.df.economia.sistemaauditoriaoraclehive.gui;
+    exports br.gov.df.economia.sistemaauditoriaoraclehive.Validacoes;
+    exports br.gov.df.economia.sistemaauditoriaoraclehive.application.Testes;
+    exports br.gov.df.economia.sistemaauditoriaoraclehive.application.Testes.Sped;
 }

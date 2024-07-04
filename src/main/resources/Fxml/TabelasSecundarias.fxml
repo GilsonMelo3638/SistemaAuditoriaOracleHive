@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <VBox id="tabelasSecundariasPane" styleClass="vbox-custom" xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.dechivejavafx.gui.PendenciasTabelasSecudariasController">
+      fx:controller="br.gov.df.economia.sistemaauditoriaoraclehive.gui.PendenciasTabelasSecudariasController">
     <VBox styleClass="vbox-custom" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
         <Label fx:id="tituloTableViews"
                text="TABELAS SECUNDÁRIAS DE DOCUMENTOS FISCAIS DO HIVE PENDENTES DE CARGAS"/>

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="300.0" prefWidth="829.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dechivejavafx.gui.AgendaFormController">
+<AnchorPane prefHeight="300.0" prefWidth="829.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.gov.df.economia.sistemaauditoriaoraclehive.gui.AgendaFormController">
 	<children>
 		<GridPane layoutX="20.0" layoutY="34.0" prefHeight="197.0" prefWidth="570.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="339.0" AnchorPane.topAnchor="60.0">
 			<columnConstraints>

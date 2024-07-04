@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox id="agendaListPane" styleClass="vbox-custom" xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dechivejavafx.gui.AgendaListController">
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.gov.df.economia.sistemaauditoriaoraclehive.gui.AgendaListController">
     <Label fx:id="tituloTableViews"
            text="QUANTIDADE DE ARQUIVOS E DOCUMENTOS NO ORACLE"/>
     <HBox styleClass="hbox">

@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox id="oracleHivePane" styleClass="vbox-custom" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.dechivejavafx.gui.OracleHiveController">
+<VBox id="oracleHivePane" styleClass="vbox-custom" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.gov.df.economia.sistemaauditoriaoraclehive.gui.OracleHiveController">
 	<Label fx:id="tituloTableViews"
 		   text="QUANTIDADE DE ARQUIVOS E DOCUMENTOS NO ORACLE E NO HIVE"/>
 	<HBox styleClass="hbox">

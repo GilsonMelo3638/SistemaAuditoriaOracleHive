@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <VBox id="quantidadeDocArquivoPane" styleClass="vbox-custom" xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.dechivejavafx.gui.QuantidadeDocumentoArquivoController">
+      fx:controller="br.gov.df.economia.sistemaauditoriaoraclehive.gui.QuantidadeDocumentoArquivoController">
     <Label fx:id="tituloTableViews"
            text="QUANTIDADE DE ARQUIVOS E DOCUMENTOS NO HIVE"/>
     <HBox styleClass="hbox">
